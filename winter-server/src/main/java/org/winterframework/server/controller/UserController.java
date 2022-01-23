@@ -13,10 +13,10 @@ import org.winterframework.data.redis.RedisTemplate;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @RequestMapping("/getUser")
     public Object getUser() {
-        return redisTemplate.oper().get("abc");
+        return redisTemplate.get("abc");
     }
 }

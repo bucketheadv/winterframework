@@ -1,7 +1,5 @@
 package org.winterframework.data.redis.configuration;
 
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.RedisURI;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.winterframework.data.redis.RedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
+import redis.clients.jedis.JedisPool;
 
 /**
  * @author sven
@@ -25,12 +24,9 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         redisConfig.getTemplate().forEach((k, v) -> {
-            RedisClient redisClient = RedisClient.create(RedisURI.builder()
-                            .withHost(v.getHost())
-                            .withPort(v.getPort())
-                    .build());
+            JedisPool jedisPool = new JedisPool();
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RedisTemplate.class)
-                    .addConstructorArgValue(redisClient.connect().sync())
+                    .addConstructorArgValue(jedisPool)
                     .getBeanDefinition();
             beanDefinitionRegistry.registerBeanDefinition(k + "RedisTemplate", beanDefinition);
         });
