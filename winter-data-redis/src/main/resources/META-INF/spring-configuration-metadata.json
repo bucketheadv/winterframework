@@ -1,0 +1,17 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "winter.data.redis.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用winter配置redis"
+    },
+    {
+      "name": "winter.data.redis.template",
+      "type": "java.util.Map<java.lang.String, org.winterframework.data.redis.props.RedisProperties>",
+      "sourceType": "org.winterframework.data.redis.props.RedisConfig",
+      "description": "Redis配置"
+    }
+  ],
+  "hints": []
+}

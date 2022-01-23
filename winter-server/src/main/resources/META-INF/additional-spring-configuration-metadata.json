@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "winter.data.redis.template.user.host",
+      "type": "java.lang.String",
+      "description": "Description for winter.data.redis.template.user.host."
+  }
+] }

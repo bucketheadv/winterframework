@@ -8,7 +8,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.winterframework.data.redis.RedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
+import redis.clients.jedis.DefaultJedisClientConfig;
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author sven
@@ -24,7 +27,12 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         redisConfig.getTemplate().forEach((k, v) -> {
-            JedisPool jedisPool = new JedisPool();
+            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+            HostAndPort hostAndPort = new HostAndPort(v.getHost(), v.getPort());
+            JedisPool jedisPool = new JedisPool(jedisPoolConfig, hostAndPort, DefaultJedisClientConfig.builder()
+                    .password(v.getPassword())
+                    .database(v.getDb())
+                    .build());
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RedisTemplate.class)
                     .addConstructorArgValue(jedisPool)
                     .getBeanDefinition();
