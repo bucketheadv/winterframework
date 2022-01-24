@@ -1,8 +1,0 @@
-winter:
-  data:
-    redis:
-      enabled: true
-      template:
-        user:
-          host: localhost
-          port: 6379
