@@ -32,7 +32,7 @@ public class RedisTemplate implements ServerCommands, DatabaseCommands, JedisCom
         try (Jedis jedis = jedisPool.getResource()){
             return callback.apply(jedis);
         } catch (Exception e) {
-            log.error("RedisTemplate#doFunc error: ", e);
+            log.error("RedisTemplate#tryGetResource error: ", e);
             throw new RuntimeException(e);
         }
     }
