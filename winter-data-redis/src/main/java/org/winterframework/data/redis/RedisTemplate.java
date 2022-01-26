@@ -2,6 +2,8 @@ package org.winterframework.data.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.winterframework.data.redis.function.JedisCallback;
+import org.winterframework.data.redis.function.JedisMultiCallback;
+import org.winterframework.data.redis.function.JedisPipelineCallback;
 import redis.clients.jedis.*;
 import redis.clients.jedis.Module;
 import redis.clients.jedis.args.*;
@@ -3401,5 +3403,21 @@ public class RedisTemplate implements ServerCommands, DatabaseCommands, JedisCom
     @Override
     public LCSMatchResult strAlgoLCSKeys(String keyA, String keyB, StrAlgoLCSParams params) {
         return tryGetResource(jedis -> jedis.strAlgoLCSKeys(keyA, keyB, params));
+    }
+
+    public List<Object> multi(JedisMultiCallback callback) {
+        return tryGetResource(jedis -> {
+            Transaction transaction = jedis.multi();
+            callback.apply(transaction);
+            return transaction.exec();
+        });
+    }
+
+    public List<Object> pipeline(JedisPipelineCallback callback) {
+        return tryGetResource(jedis -> {
+            Pipeline pipeline = jedis.pipelined();
+            callback.apply(pipeline);
+            return pipeline.syncAndReturnAll();
+        });
     }
 }
