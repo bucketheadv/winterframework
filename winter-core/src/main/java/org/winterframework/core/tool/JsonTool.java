@@ -59,11 +59,17 @@ public final class JsonTool implements ApplicationContextAware {
         return null;
     }
 
+    public static <T> List<T> convert2List(Object value, Class<T> clazz) {
+        try {
+            return om.convertValue(value, new TypeReference<ArrayList<T>>() {});
+        } catch (IllegalArgumentException e) {
+            log.error("JsonTool#convert2List异常:", e);
+        }
+        return new ArrayList<>();
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ObjectMapper objectMapper = applicationContext.getBean(ObjectMapper.class);
-        if (objectMapper != null) {
-            om = objectMapper;
-        }
+        om = applicationContext.getBean(ObjectMapper.class);
     }
 }

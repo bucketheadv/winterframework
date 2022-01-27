@@ -1,9 +1,10 @@
 package org.winterframework.server.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.winterframework.data.redis.RedisTemplate;
+
+import javax.annotation.Resource;
 
 /**
  * @author sven
@@ -12,7 +13,7 @@ import org.winterframework.data.redis.RedisTemplate;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
+    @Resource
     private RedisTemplate redisTemplate;
 
     @RequestMapping("/getUser")
