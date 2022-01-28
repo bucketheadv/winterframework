@@ -13,5 +13,7 @@ import java.util.Map;
 @Data
 @ConfigurationProperties(prefix = Constants.CONFIG_PREFIX)
 public class RedisConfig {
+    private String primary;
+
     private Map<String, RedisProperties> template;
 }

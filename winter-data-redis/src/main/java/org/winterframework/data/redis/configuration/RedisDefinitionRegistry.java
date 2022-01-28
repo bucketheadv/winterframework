@@ -46,11 +46,16 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .password(v.getPassword())
                     .database(v.getDb())
                     .build());
+            boolean primary = k.equals(redisConfig.getPrimary());
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RedisTemplate.class)
                     .addConstructorArgValue(jedisPool)
+                    .setPrimary(primary)
                     .getBeanDefinition();
             String key = k + "RedisTemplate";
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
+            if (primary) {
+                log.info("Bean: {} 设置为Primary", key);
+            }
             log.info("Bean: {} 注册成功", key);
         });
     }
