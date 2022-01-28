@@ -7,6 +7,11 @@
       "description": "是否启用winter配置redis"
     },
     {
+      "name": "winter.data.redis.primary",
+      "type": "java.lang.String",
+      "description": "主redis名称，对应template设置中的key"
+    },
+    {
       "name": "winter.data.redis.template",
       "type": "java.util.Map<java.lang.String, org.winterframework.data.redis.props.RedisProperties>",
       "sourceType": "org.winterframework.data.redis.props.RedisConfig",
