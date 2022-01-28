@@ -26,7 +26,10 @@ import java.util.Set;
 public class RedisTemplate implements ServerCommands, DatabaseCommands, JedisCommands, JedisBinaryCommands, ControlCommands, ControlBinaryCommands, ClusterCommands, ModuleCommands, GenericControlCommands, SentinelCommands, Closeable {
     private final JedisPool jedisPool;
 
-    public RedisTemplate(JedisPool jedisPool) {
+    private final String name;
+
+    public RedisTemplate(String name, JedisPool jedisPool) {
+        this.name = name;
         this.jedisPool = jedisPool;
     }
 
@@ -41,6 +44,7 @@ public class RedisTemplate implements ServerCommands, DatabaseCommands, JedisCom
 
     @Override
     public void close() throws IOException {
+        log.info("RedisTemplate: [{}] shutdown.", name);
         jedisPool.close();
     }
 

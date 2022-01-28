@@ -9,6 +9,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.winterframework.data.redis.RedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
+import org.winterframework.data.redis.props.RedisProperties;
 import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPool;
@@ -28,7 +29,9 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        redisConfig.getTemplate().forEach((k, v) -> {
+        String primaryKey = null;
+        for (String k : redisConfig.getTemplate().keySet()) {
+            RedisProperties v = redisConfig.getTemplate().get(k);
             JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
             jedisPoolConfig.setTestOnReturn(v.isTestOnReturn());
             jedisPoolConfig.setTestOnBorrow(v.isTestOnBorrow());
@@ -47,17 +50,20 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .database(v.getDb())
                     .build());
             boolean primary = k.equals(redisConfig.getPrimary());
+            String key = k + "RedisTemplate";
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RedisTemplate.class)
+                    .addConstructorArgValue(key)
                     .addConstructorArgValue(jedisPool)
                     .setPrimary(primary)
+                    .setDestroyMethodName("close")
                     .getBeanDefinition();
-            String key = k + "RedisTemplate";
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
             if (primary) {
-                log.info("Bean: {} 设置为Primary", key);
+                primaryKey = key;
             }
             log.info("Bean: {} 注册成功", key);
-        });
+        }
+        log.info("加载redis数据源 {} 个, primary 数据源名称为 [{}]", redisConfig.getTemplate().size(), primaryKey);
     }
 
     @Override
