@@ -44,7 +44,7 @@ public class RedisTemplate implements ServerCommands, DatabaseCommands, JedisCom
 
     @Override
     public void close() throws IOException {
-        log.info("RedisTemplate: [{}] shutdown.", name);
+        log.info("[{}] shutdown, bye.", name);
         jedisPool.close();
     }
 

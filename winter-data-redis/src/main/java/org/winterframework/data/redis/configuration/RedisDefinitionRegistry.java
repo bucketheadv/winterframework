@@ -59,7 +59,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .getBeanDefinition();
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
             if (primary) {
-                primaryKey = key;
+                primaryKey = k;
             }
             log.info("Bean: {} 注册成功", key);
         }
