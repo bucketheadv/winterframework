@@ -5,7 +5,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>winter-core</module>
-        <module>winter-server</module>
         <module>winter-data-redis</module>
     </modules>
     <parent>
