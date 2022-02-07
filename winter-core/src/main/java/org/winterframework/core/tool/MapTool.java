@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MapTool {
+
+    private MapTool() {}
     /**
      * 通过jsonpath获取map路径数据
      * @param data 数据对象
@@ -20,7 +22,8 @@ public class MapTool {
      */
     public static <T> T tryDeepGet(Object data, String jsonPath, T defaultValue) {
         try {
-            return JsonPath.read(data, "$." + jsonPath);
+            T result = JsonPath.read(data, "$." + jsonPath);
+            return result == null ? defaultValue : result;
         } catch (PathNotFoundException ex) {
             log.error("MapTool#tryDeepGet error, stacktrace: ", ex);
             return defaultValue;

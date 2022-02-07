@@ -7,6 +7,8 @@ import java.util.Date;
  * Created on 2021/12/30 11:02 下午
  */
 public final class DateTool {
+    private DateTool() {}
+
     public static long currentTimeMills() {
         return System.currentTimeMillis();
     }
