@@ -18,7 +18,7 @@ public final class BeanTool {
 
     public static <T> T copyAs(Object source, Class<T> clazz) {
         try {
-            T obj = clazz.newInstance();
+            T obj = clazz.getDeclaredConstructor().newInstance();
             getBeanCopier(source.getClass(), clazz).copy(source, obj, null);
             return obj;
         } catch (Exception e) {

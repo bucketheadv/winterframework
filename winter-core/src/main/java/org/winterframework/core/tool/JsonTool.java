@@ -17,7 +17,7 @@ import java.util.List;
  * Created on 2021/12/30 10:43 下午
  */
 @Slf4j
-@Component
+@Component("JsonTool")
 public final class JsonTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
