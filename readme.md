@@ -13,7 +13,7 @@
 <dependency>
     <groupId>com.github.bucketheadv</groupId>
     <artifactId>winterframework</artifactId>
-    <version>v0.1.0</version>
+    <version>v0.1.2</version>
 </dependency>
 ```
 
