@@ -7,7 +7,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.winterframework.data.redis.RedisTemplate;
+import org.winterframework.data.redis.DefaultRedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
 import org.winterframework.data.redis.props.RedisProperties;
 import redis.clients.jedis.DefaultJedisClientConfig;
@@ -51,7 +51,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .build());
             boolean primary = k.equals(redisConfig.getPrimary());
             String key = k + "RedisTemplate";
-            BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RedisTemplate.class)
+            BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(DefaultRedisTemplate.class)
                     .addConstructorArgValue(key)
                     .addConstructorArgValue(jedisPool)
                     .setPrimary(primary)
