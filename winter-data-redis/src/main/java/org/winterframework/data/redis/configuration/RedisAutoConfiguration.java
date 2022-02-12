@@ -15,7 +15,7 @@ import org.winterframework.data.redis.support.Constants;
  */
 @Slf4j
 @Configuration
-@ConditionalOnProperty(prefix = Constants.CONFIG_PREFIX, value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Constants.CONFIG_PREFIX, value = "enabled", havingValue = "true", matchIfMissing = true)
 public class RedisAutoConfiguration {
     @Bean
     public static RedisConfig redisConfig(Environment env) {
