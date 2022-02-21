@@ -1,7 +1,6 @@
 package org.winterframework.core.tool;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sven
@@ -43,9 +43,18 @@ public final class JsonTool implements ApplicationContextAware {
 
     public static <T> List<T> parseList(String str, Class<T> clazz) {
         try {
-            return om.readValue(str, new TypeReference<ArrayList<T>>() {});
+            return om.readValue(str, om.getTypeFactory().constructCollectionType(List.class, clazz));
         } catch (JsonProcessingException e) {
             log.error("JsonTool#parseList异常:", e);
+        }
+        return null;
+    }
+
+    public static <K, V>Map<K, V> parseMap(String str, Class<K> kClass, Class<V> vClass) {
+        try {
+            return om.readValue(str, om.getTypeFactory().constructMapType(Map.class, kClass, vClass));
+        } catch (JsonProcessingException e) {
+            log.error("JsonTool#parseMap异常:", e);
         }
         return null;
     }
@@ -61,7 +70,7 @@ public final class JsonTool implements ApplicationContextAware {
 
     public static <T> List<T> convert2List(Object value, Class<T> clazz) {
         try {
-            return om.convertValue(value, new TypeReference<ArrayList<T>>() {});
+            return om.convertValue(value, om.getTypeFactory().constructCollectionType(List.class, clazz));
         } catch (IllegalArgumentException e) {
             log.error("JsonTool#convert2List异常:", e);
         }
