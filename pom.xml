@@ -6,6 +6,7 @@
     <modules>
         <module>winter-core</module>
         <module>winter-data-redis</module>
+        <module>winter-kafka</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
