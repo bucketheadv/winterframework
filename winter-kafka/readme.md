@@ -1,4 +1,4 @@
-# 用法
+# USAGE
 
 ```yaml
 winter:

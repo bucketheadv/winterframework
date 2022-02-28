@@ -7,6 +7,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.lang.NonNull;
 import org.winterframework.data.redis.DefaultRedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
 import org.winterframework.data.redis.props.RedisProperties;
@@ -28,7 +29,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
     }
 
     @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(@NonNull BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         String primaryKey = null;
         for (String k : redisConfig.getTemplate().keySet()) {
             RedisProperties v = redisConfig.getTemplate().get(k);
@@ -67,6 +68,6 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+    public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
     }
 }

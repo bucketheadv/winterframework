@@ -19,23 +19,4 @@
 
 ## Usage
 
-```properties
-winter.data.redis.enabled=true
-winter.data.redis.primary=risk
-winter.data.redis.template.user.host=localhost
-winter.data.redis.template.user.port=6379
-
-winter.data.redis.template.risk.host=localhost
-winter.data.redis.template.risk.port=6379
-```
-
-```java
-@Service
-class YourService {
-    @Resource("userRedisTemplate")
-    private RedisTemplate userRedisTemplate;
-    
-    @Resource("riskRedisTemplate")
-    private RedisTemplate riskRedisTemplate;
-}
-```
+See `readme.md` in every module.

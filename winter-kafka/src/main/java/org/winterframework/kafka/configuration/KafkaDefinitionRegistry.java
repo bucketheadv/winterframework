@@ -57,6 +57,7 @@ public class KafkaDefinitionRegistry implements BeanDefinitionRegistryPostProces
             BeanDefinition producerFactoryBean = BeanDefinitionBuilder.rootBeanDefinition(DefaultKafkaProducerFactory.class)
                     .setPrimary(isPrimary)
                     .addConstructorArgValue(kafkaConfigMap)
+                    .setDestroyMethodName("destroy")
                     .getBeanDefinition();
             String producerFactoryName = name + "ProducerFactory";
             beanDefinitionRegistry.registerBeanDefinition(producerFactoryName, producerFactoryBean);
@@ -65,6 +66,7 @@ public class KafkaDefinitionRegistry implements BeanDefinitionRegistryPostProces
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(KafkaTemplate.class)
                     .setPrimary(isPrimary)
                     .addConstructorArgReference(producerFactoryName)
+                    .setDestroyMethodName("destroy")
                     .getBeanDefinition();
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
             log.info("注册KafkaTemplate [{}] 成功", key);
