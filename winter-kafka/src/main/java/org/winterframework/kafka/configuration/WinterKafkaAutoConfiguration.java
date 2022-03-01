@@ -17,7 +17,7 @@ import org.winterframework.kafka.properties.KafkaConfig;
  */
 @Configuration
 @ComponentScan(basePackages = "org.winterframework.kafka")
-@ConditionalOnProperty(prefix = "winter.data.kafka", value = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "winter.data.kafka", value = "enabled", havingValue = "true")
 public class WinterKafkaAutoConfiguration implements EnvironmentAware {
     private Environment environment;
 

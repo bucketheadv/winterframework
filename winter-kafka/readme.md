@@ -4,6 +4,7 @@
 winter:
   data:
     kafka:
+      enabled: true
       consumers:
         main:
           bootstrap-servers: localhost:9092

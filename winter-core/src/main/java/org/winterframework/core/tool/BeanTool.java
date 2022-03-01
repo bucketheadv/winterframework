@@ -3,6 +3,9 @@ package org.winterframework.core.tool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.beans.BeanCopier;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -25,6 +28,17 @@ public final class BeanTool {
             log.error("BeanTool#copyAs异常: ", e);
         }
         return null;
+    }
+
+    public static <T> List<T> copyList(Collection<?> c, Class<T> clazz) {
+        List<T> result = new ArrayList<>();
+        if (CollectionTool.isEmpty(c)) {
+            return result;
+        }
+        for (Object o : c) {
+            result.add(copyAs(o, clazz));
+        }
+        return result;
     }
 
     private static BeanCopier getBeanCopier(Class<?> sourceClass, Class<?> destClass) {

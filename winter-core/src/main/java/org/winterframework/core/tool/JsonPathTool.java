@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
  * Created on 2022/1/26 6:17 下午
  */
 @Slf4j
-public class MapTool {
+public final class JsonPathTool {
 
-    private MapTool() {}
+    private JsonPathTool() {}
     /**
      * 通过jsonpath获取map路径数据
      * @param data 数据对象
@@ -20,7 +20,7 @@ public class MapTool {
      * @param <T> 默认值类型
      * @return T
      */
-    public static <T> T tryDeepGet(Object data, String jsonPath, T defaultValue) {
+    public static <T> T tryRead(Object data, String jsonPath, T defaultValue) {
         try {
             T result = JsonPath.read(data, "$." + jsonPath);
             return result == null ? defaultValue : result;

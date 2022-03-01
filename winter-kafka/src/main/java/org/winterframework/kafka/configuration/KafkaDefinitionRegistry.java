@@ -110,6 +110,9 @@ public class KafkaDefinitionRegistry implements BeanDefinitionRegistryPostProces
             String key = name + "KafkaContainerFactory";
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
             log.info("注册KafkaContainerFactory [{}] 成功", key);
+            if (isPrimary) {
+                log.info("KafkaContainerFactory [{}] 被设置为 primary", key);
+            }
             isPrimary = false;
         }
     }
