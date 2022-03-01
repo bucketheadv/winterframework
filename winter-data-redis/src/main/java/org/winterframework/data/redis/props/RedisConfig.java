@@ -12,5 +12,5 @@ import java.util.Map;
 public class RedisConfig {
     private String primary;
 
-    private Map<String, RedisProperties> template;
+    private Map<String, RedisMasterSlaveConfig> template;
 }

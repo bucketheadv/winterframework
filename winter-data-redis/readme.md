@@ -16,13 +16,19 @@ winter:
       primary: risk
       template:
         user:
-          host: localhost
-          port: 6379
-          db: 0
+          master:
+            host: localhost
+            port: 6379
+            db: 0
+          slaves:
+            - host: localhost
+              port: 6379
+              db: 1
         risk:
-          host: localhost
-          port: 6379
-          db: 5
+          master:
+            host: localhost
+            port: 6379
+            db: 5
 ```
 
 ```java

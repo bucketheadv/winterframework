@@ -24,5 +24,12 @@ public interface RedisTemplate extends ServerCommands, DatabaseCommands, JedisCo
      * @param callback 回调方法
      * @return java.util.List<Object>
      */
-    List<Object> pipeline(JedisPipelineCallback callback);
+    List<Object> doInMasterPipeline(JedisPipelineCallback callback);
+
+    /**
+     * 管道操作
+     * @param callback 回调方法
+     * @return java.util.List<Object>
+     */
+    List<Object> doInSlavePipeline(JedisPipelineCallback callback);
 }

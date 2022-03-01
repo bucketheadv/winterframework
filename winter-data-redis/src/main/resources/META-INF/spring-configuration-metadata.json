@@ -13,7 +13,7 @@
     },
     {
       "name": "winter.data.redis.template",
-      "type": "java.util.Map<java.lang.String, org.winterframework.data.redis.props.RedisProperties>",
+      "type": "java.util.Map<java.lang.String, org.winterframework.data.redis.props.RedisMasterSlaveConfig>",
       "sourceType": "org.winterframework.data.redis.props.RedisConfig",
       "description": "Redis配置"
     }

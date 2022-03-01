@@ -1,5 +1,6 @@
 package org.winterframework.data.redis.configuration;
 
+import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -8,13 +9,19 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.lang.NonNull;
+import org.winterframework.core.tool.StringTool;
 import org.winterframework.data.redis.DefaultRedisTemplate;
 import org.winterframework.data.redis.props.RedisConfig;
+import org.winterframework.data.redis.props.RedisMasterSlaveConfig;
 import org.winterframework.data.redis.props.RedisProperties;
 import redis.clients.jedis.DefaultJedisClientConfig;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author sven
@@ -28,40 +35,55 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
         this.redisConfig = redisConfig;
     }
 
+    private JedisPool buildJedisPool(RedisProperties v) {
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setTestOnReturn(v.isTestOnReturn());
+        jedisPoolConfig.setTestOnBorrow(v.isTestOnBorrow());
+        jedisPoolConfig.setTestOnCreate(v.isTestOnCreate());
+        jedisPoolConfig.setTestWhileIdle(v.isTestWhileIdle());
+        jedisPoolConfig.setJmxEnabled(v.isJmxEnabled());
+        jedisPoolConfig.setJmxNameBase(v.getJmxNameBase());
+        jedisPoolConfig.setJmxNamePrefix(v.getJmxNamePrefix());
+        jedisPoolConfig.setMaxIdle(v.getMaxIdle());
+        jedisPoolConfig.setMaxTotal(v.getMaxTotal());
+        jedisPoolConfig.setMinIdle(v.getMinIdle());
+
+        HostAndPort hostAndPort = new HostAndPort(v.getHost(), v.getPort());
+        return new JedisPool(jedisPoolConfig, hostAndPort, DefaultJedisClientConfig.builder()
+                .password(v.getPassword())
+                .database(v.getDb())
+                .build());
+    }
+
     @Override
     public void postProcessBeanDefinitionRegistry(@NonNull BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        String primaryKey = null;
-        for (String k : redisConfig.getTemplate().keySet()) {
-            RedisProperties v = redisConfig.getTemplate().get(k);
-            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-            jedisPoolConfig.setTestOnReturn(v.isTestOnReturn());
-            jedisPoolConfig.setTestOnBorrow(v.isTestOnBorrow());
-            jedisPoolConfig.setTestOnCreate(v.isTestOnCreate());
-            jedisPoolConfig.setTestWhileIdle(v.isTestWhileIdle());
-            jedisPoolConfig.setJmxEnabled(v.isJmxEnabled());
-            jedisPoolConfig.setJmxNameBase(v.getJmxNameBase());
-            jedisPoolConfig.setJmxNamePrefix(v.getJmxNamePrefix());
-            jedisPoolConfig.setMaxIdle(v.getMaxIdle());
-            jedisPoolConfig.setMaxTotal(v.getMaxTotal());
-            jedisPoolConfig.setMinIdle(v.getMinIdle());
+        String primaryKey = redisConfig.getPrimary();
+        Map<String, RedisMasterSlaveConfig> templates = redisConfig.getTemplate();
+        for (String k : templates.keySet()) {
+            RedisMasterSlaveConfig v = templates.get(k);
 
-            HostAndPort hostAndPort = new HostAndPort(v.getHost(), v.getPort());
-            JedisPool jedisPool = new JedisPool(jedisPoolConfig, hostAndPort, DefaultJedisClientConfig.builder()
-                    .password(v.getPassword())
-                    .database(v.getDb())
-                    .build());
-            boolean primary = k.equals(redisConfig.getPrimary());
+            JedisPool masterPool = buildJedisPool(v.getMaster());
+            List<JedisPool> slavePools = new ArrayList<>();
+            if (CollectionUtil.isNotEmpty(v.getSlaves())) {
+                for (RedisProperties slave : v.getSlaves()) {
+                    slavePools.add(buildJedisPool(slave));
+                }
+            }
+
+            if (StringTool.isBlank(primaryKey)) {
+                primaryKey = k;
+            }
+
+            boolean primary = k.equals(primaryKey);
             String key = k + "RedisTemplate";
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(DefaultRedisTemplate.class)
                     .addConstructorArgValue(key)
-                    .addConstructorArgValue(jedisPool)
+                    .addConstructorArgValue(masterPool)
+                    .addConstructorArgValue(slavePools)
                     .setPrimary(primary)
                     .setDestroyMethodName("close")
                     .getBeanDefinition();
             beanDefinitionRegistry.registerBeanDefinition(key, beanDefinition);
-            if (primary) {
-                primaryKey = k;
-            }
             log.info("Bean: {} 注册成功", key);
         }
         log.info("加载redis数据源 {} 个, primary 数据源名称为 [{}]", redisConfig.getTemplate().size(), primaryKey);

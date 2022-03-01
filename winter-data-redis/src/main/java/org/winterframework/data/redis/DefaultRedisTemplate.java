@@ -1,5 +1,7 @@
 package org.winterframework.data.redis;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.winterframework.data.redis.function.JedisCallback;
 import org.winterframework.data.redis.function.JedisMultiCallback;
@@ -10,6 +12,7 @@ import redis.clients.jedis.args.*;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.jedis.params.*;
 import redis.clients.jedis.resps.*;
+import redis.clients.jedis.util.Pool;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,16 +25,28 @@ import java.util.Set;
  */
 @Slf4j
 public class DefaultRedisTemplate implements RedisTemplate {
-    private final JedisPool jedisPool;
+    private final JedisPool masterPool;
+
+    private final List<JedisPool> slavePools;
 
     private final String name;
 
-    public DefaultRedisTemplate(String name, JedisPool jedisPool) {
+    public DefaultRedisTemplate(String name, JedisPool masterPool, List<JedisPool> slavePools) {
         this.name = name;
-        this.jedisPool = jedisPool;
+        this.masterPool = masterPool;
+        this.slavePools = slavePools;
     }
 
     private <T> T tryGetResource(JedisCallback<T> callback) {
+        return tryGetResource(callback, false);
+    }
+
+    private <T> T tryGetResource(JedisCallback<T> callback, boolean slave) {
+        JedisPool jedisPool = masterPool;
+        if (slave && CollectionUtil.isNotEmpty(slavePools)) {
+            int n = RandomUtil.randomInt(slavePools.size());
+            jedisPool = slavePools.get(n);
+        }
         try (Jedis jedis = jedisPool.getResource()){
             return callback.apply(jedis);
         } catch (Exception e) {
@@ -43,7 +58,10 @@ public class DefaultRedisTemplate implements RedisTemplate {
     @Override
     public void close() throws IOException {
         log.info("[{}] shutdown, bye.", name);
-        jedisPool.close();
+        masterPool.close();
+        if (CollectionUtil.isNotEmpty(slavePools)) {
+            slavePools.forEach(Pool::close);
+        }
     }
 
     @Override
@@ -763,7 +781,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public byte[] hget(byte[] key, byte[] field) {
-        return tryGetResource(jedis -> jedis.hget(key, field));
+        return tryGetResource(jedis -> jedis.hget(key, field), true);
     }
 
     @Override
@@ -778,7 +796,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<byte[]> hmget(byte[] key, byte[]... fields) {
-        return tryGetResource(jedis -> jedis.hmget(key, fields));
+        return tryGetResource(jedis -> jedis.hmget(key, fields), true);
     }
 
     @Override
@@ -803,22 +821,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long hlen(byte[] key) {
-        return tryGetResource(jedis -> jedis.hlen(key));
+        return tryGetResource(jedis -> jedis.hlen(key), true);
     }
 
     @Override
     public Set<byte[]> hkeys(byte[] key) {
-        return tryGetResource(jedis -> jedis.hkeys(key));
+        return tryGetResource(jedis -> jedis.hkeys(key), true);
     }
 
     @Override
     public List<byte[]> hvals(byte[] key) {
-        return tryGetResource(jedis -> jedis.hvals(key));
+        return tryGetResource(jedis -> jedis.hvals(key), true);
     }
 
     @Override
     public Map<byte[], byte[]> hgetAll(byte[] key) {
-        return tryGetResource(jedis -> jedis.hgetAll(key));
+        return tryGetResource(jedis -> jedis.hgetAll(key), true);
     }
 
     @Override
@@ -838,7 +856,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<Map.Entry<byte[], byte[]>> hscan(byte[] key, byte[] cursor, ScanParams params) {
-        return tryGetResource(jedis -> jedis.hscan(key, cursor, params));
+        return tryGetResource(jedis -> jedis.hscan(key, cursor, params), true);
     }
 
     @Override
@@ -858,7 +876,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public String hget(String key, String field) {
-        return tryGetResource(jedis -> jedis.hget(key, field));
+        return tryGetResource(jedis -> jedis.hget(key, field), true);
     }
 
     @Override
@@ -873,7 +891,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<String> hmget(String key, String... fields) {
-        return tryGetResource(jedis -> jedis.hmget(key, fields));
+        return tryGetResource(jedis -> jedis.hmget(key, fields), true);
     }
 
     @Override
@@ -898,22 +916,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long hlen(String key) {
-        return tryGetResource(jedis -> jedis.hlen(key));
+        return tryGetResource(jedis -> jedis.hlen(key), true);
     }
 
     @Override
     public Set<String> hkeys(String key) {
-        return tryGetResource(jedis -> jedis.hkeys(key));
+        return tryGetResource(jedis -> jedis.hkeys(key), true);
     }
 
     @Override
     public List<String> hvals(String key) {
-        return tryGetResource(jedis -> jedis.hvals(key));
+        return tryGetResource(jedis -> jedis.hvals(key), true);
     }
 
     @Override
     public Map<String, String> hgetAll(String key) {
-        return tryGetResource(jedis -> jedis.hgetAll(key));
+        return tryGetResource(jedis -> jedis.hgetAll(key), true);
     }
 
     @Override
@@ -933,7 +951,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<Map.Entry<String, String>> hscan(String key, String cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.hscan(key, cursor, scanParams));
+        return tryGetResource(jedis -> jedis.hscan(key, cursor, scanParams), true);
     }
 
     @Override
@@ -1153,22 +1171,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Set<byte[]> keys(byte[] pattern) {
-        return tryGetResource(jedis -> jedis.keys(pattern));
+        return tryGetResource(jedis -> jedis.keys(pattern), true);
     }
 
     @Override
     public ScanResult<byte[]> scan(byte[] cursor) {
-        return tryGetResource(jedis -> jedis.scan(cursor));
+        return tryGetResource(jedis -> jedis.scan(cursor), true);
     }
 
     @Override
     public ScanResult<byte[]> scan(byte[] cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.scan(cursor, scanParams));
+        return tryGetResource(jedis -> jedis.scan(cursor, scanParams), true);
     }
 
     @Override
     public ScanResult<byte[]> scan(byte[] cursor, ScanParams scanParams, byte[] type) {
-        return tryGetResource(jedis -> jedis.scan(cursor, scanParams, type));
+        return tryGetResource(jedis -> jedis.scan(cursor, scanParams, type), true);
     }
 
     @Override
@@ -1348,22 +1366,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Set<String> keys(String pattern) {
-        return tryGetResource(jedis -> jedis.keys(pattern));
+        return tryGetResource(jedis -> jedis.keys(pattern), true);
     }
 
     @Override
     public ScanResult<String> scan(String cursor) {
-        return tryGetResource(jedis -> jedis.scan(cursor));
+        return tryGetResource(jedis -> jedis.scan(cursor), true);
     }
 
     @Override
     public ScanResult<String> scan(String cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.scan(cursor, scanParams));
+        return tryGetResource(jedis -> jedis.scan(cursor, scanParams), true);
     }
 
     @Override
     public ScanResult<String> scan(String cursor, ScanParams scanParams, String type) {
-        return tryGetResource(jedis -> jedis.scan(cursor, scanParams, type));
+        return tryGetResource(jedis -> jedis.scan(cursor, scanParams, type), true);
     }
 
     @Override
@@ -1383,12 +1401,12 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long llen(byte[] key) {
-        return tryGetResource(jedis -> jedis.llen(key));
+        return tryGetResource(jedis -> jedis.llen(key), true);
     }
 
     @Override
     public List<byte[]> lrange(byte[] key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.lrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.lrange(key, start, stop), true);
     }
 
     @Override
@@ -1398,7 +1416,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public byte[] lindex(byte[] key, long index) {
-        return tryGetResource(jedis -> jedis.lindex(key, index));
+        return tryGetResource(jedis -> jedis.lindex(key, index), true);
     }
 
     @Override
@@ -1423,17 +1441,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Long lpos(byte[] key, byte[] element) {
-        return tryGetResource(jedis -> jedis.lpos(key, element));
+        return tryGetResource(jedis -> jedis.lpos(key, element), true);
     }
 
     @Override
     public Long lpos(byte[] key, byte[] element, LPosParams lPosParams) {
-        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams));
+        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams), true);
     }
 
     @Override
     public List<Long> lpos(byte[] key, byte[] element, LPosParams lPosParams, long count) {
-        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams, count));
+        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams, count), true);
     }
 
     @Override
@@ -1513,12 +1531,12 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long llen(String key) {
-        return tryGetResource(jedis -> jedis.llen(key));
+        return tryGetResource(jedis -> jedis.llen(key), true);
     }
 
     @Override
     public List<String> lrange(String key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.lrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.lrange(key, start, stop), true);
     }
 
     @Override
@@ -1528,7 +1546,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public String lindex(String key, long index) {
-        return tryGetResource(jedis -> jedis.lindex(key, index));
+        return tryGetResource(jedis -> jedis.lindex(key, index), true);
     }
 
     @Override
@@ -1553,17 +1571,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Long lpos(String key, String element) {
-        return tryGetResource(jedis -> jedis.lpos(key, element));
+        return tryGetResource(jedis -> jedis.lpos(key, element), true);
     }
 
     @Override
     public Long lpos(String key, String element, LPosParams lPosParams) {
-        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams));
+        return tryGetResource(jedis -> jedis.lpos(key, element, lPosParams), true);
     }
 
     @Override
     public List<Long> lpos(String key, String element, LPosParams params, long count) {
-        return tryGetResource(jedis -> jedis.lpos(key, element, params, count));
+        return tryGetResource(jedis -> jedis.lpos(key, element, params, count), true);
     }
 
     @Override
@@ -1949,7 +1967,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Set<byte[]> smembers(byte[] key) {
-        return tryGetResource(jedis -> jedis.smembers(key));
+        return tryGetResource(jedis -> jedis.smembers(key), true);
     }
 
     @Override
@@ -1969,17 +1987,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long scard(byte[] key) {
-        return tryGetResource(jedis -> jedis.scard(key));
+        return tryGetResource(jedis -> jedis.scard(key), true);
     }
 
     @Override
     public boolean sismember(byte[] key, byte[] member) {
-        return tryGetResource(jedis -> jedis.sismember(key, member));
+        return tryGetResource(jedis -> jedis.sismember(key, member), true);
     }
 
     @Override
     public List<Boolean> smismember(byte[] key, byte[]... members) {
-        return tryGetResource(jedis -> jedis.smismember(key, members));
+        return tryGetResource(jedis -> jedis.smismember(key, members), true);
     }
 
     @Override
@@ -1994,7 +2012,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<byte[]> sscan(byte[] key, byte[] cursor, ScanParams params) {
-        return tryGetResource(jedis -> jedis.sscan(key, cursor, params));
+        return tryGetResource(jedis -> jedis.sscan(key, cursor, params), true);
     }
 
     @Override
@@ -2039,7 +2057,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public Set<String> smembers(String key) {
-        return tryGetResource(jedis -> jedis.smembers(key));
+        return tryGetResource(jedis -> jedis.smembers(key), true);
     }
 
     @Override
@@ -2059,17 +2077,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long scard(String key) {
-        return tryGetResource(jedis -> jedis.scard(key));
+        return tryGetResource(jedis -> jedis.scard(key), true);
     }
 
     @Override
     public boolean sismember(String key, String member) {
-        return tryGetResource(jedis -> jedis.sismember(key, member));
+        return tryGetResource(jedis -> jedis.sismember(key, member), true);
     }
 
     @Override
     public List<Boolean> smismember(String key, String... members) {
-        return tryGetResource(jedis -> jedis.smismember(key, members));
+        return tryGetResource(jedis -> jedis.smismember(key, members), true);
     }
 
     @Override
@@ -2084,7 +2102,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<String> sscan(String key, String cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.sscan(key, cursor, scanParams));
+        return tryGetResource(jedis -> jedis.sscan(key, cursor, scanParams), true);
     }
 
     @Override
@@ -2204,22 +2222,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<byte[]> zrange(byte[] key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrange(key, start, stop), true);
     }
 
     @Override
     public List<byte[]> zrevrange(byte[] key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrevrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrevrange(key, start, stop), true);
     }
 
     @Override
     public List<Tuple> zrangeWithScores(byte[] key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrangeWithScores(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrangeWithScores(key, start, stop), true);
     }
 
     @Override
     public List<Tuple> zrevrangeWithScores(byte[] key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop), true);
     }
 
     @Override
@@ -2239,17 +2257,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long zcard(byte[] key) {
-        return tryGetResource(jedis -> jedis.zcard(key));
+        return tryGetResource(jedis -> jedis.zcard(key), true);
     }
 
     @Override
     public Double zscore(byte[] key, byte[] member) {
-        return tryGetResource(jedis -> jedis.zscore(key, member));
+        return tryGetResource(jedis -> jedis.zscore(key, member), true);
     }
 
     @Override
     public List<Double> zmscore(byte[] key, byte[]... members) {
-        return tryGetResource(jedis -> jedis.zmscore(key, members));
+        return tryGetResource(jedis -> jedis.zmscore(key, members), true);
     }
 
     @Override
@@ -2274,92 +2292,92 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long zcount(byte[] key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zcount(key, min, max));
+        return tryGetResource(jedis -> jedis.zcount(key, min, max), true);
     }
 
     @Override
     public long zcount(byte[] key, byte[] min, byte[] max) {
-        return tryGetResource(jedis -> jedis.zcount(key, min, max));
+        return tryGetResource(jedis -> jedis.zcount(key, min, max), true);
     }
 
     @Override
     public List<byte[]> zrangeByScore(byte[] key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max), true);
     }
 
     @Override
     public List<byte[]> zrangeByScore(byte[] key, byte[] min, byte[] max) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max), true);
     }
 
     @Override
     public List<byte[]> zrevrangeByScore(byte[] key, double max, double min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min), true);
     }
 
     @Override
     public List<byte[]> zrangeByScore(byte[] key, double min, double max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count), true);
     }
 
     @Override
     public List<byte[]> zrevrangeByScore(byte[] key, byte[] max, byte[] min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min), true);
     }
 
     @Override
     public List<byte[]> zrangeByScore(byte[] key, byte[] min, byte[] max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count), true);
     }
 
     @Override
     public List<byte[]> zrevrangeByScore(byte[] key, double max, double min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(byte[] key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(byte[] key, double max, double min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(byte[] key, double min, double max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count), true);
     }
 
     @Override
     public List<byte[]> zrevrangeByScore(byte[] key, byte[] max, byte[] min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(byte[] key, byte[] min, byte[] max) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(byte[] key, byte[] max, byte[] min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(byte[] key, byte[] min, byte[] max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(byte[] key, double max, double min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(byte[] key, byte[] max, byte[] min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count), true);
     }
 
     @Override
@@ -2409,7 +2427,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<Tuple> zscan(byte[] key, byte[] cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.zscan(key, cursor, scanParams));
+        return tryGetResource(jedis -> jedis.zscan(key, cursor, scanParams), true);
     }
 
     @Override
@@ -2529,22 +2547,22 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<String> zrange(String key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrange(key, start, stop), true);
     }
 
     @Override
     public List<String> zrevrange(String key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrevrange(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrevrange(key, start, stop), true);
     }
 
     @Override
     public List<Tuple> zrangeWithScores(String key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrangeWithScores(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrangeWithScores(key, start, stop), true);
     }
 
     @Override
     public List<Tuple> zrevrangeWithScores(String key, long start, long stop) {
-        return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop));
+        return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop), true);
     }
 
     @Override
@@ -2564,17 +2582,17 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long zcard(String key) {
-        return tryGetResource(jedis -> jedis.zcard(key));
+        return tryGetResource(jedis -> jedis.zcard(key), true);
     }
 
     @Override
     public Double zscore(String key, String member) {
-        return tryGetResource(jedis -> jedis.zscore(key, member));
+        return tryGetResource(jedis -> jedis.zscore(key, member), true);
     }
 
     @Override
     public List<Double> zmscore(String key, String... members) {
-        return tryGetResource(jedis -> jedis.zmscore(key, members));
+        return tryGetResource(jedis -> jedis.zmscore(key, members), true);
     }
 
     @Override
@@ -2599,92 +2617,92 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long zcount(String key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zcount(key, min, max));
+        return tryGetResource(jedis -> jedis.zcount(key, min, max), true);
     }
 
     @Override
     public long zcount(String key, String min, String max) {
-        return tryGetResource(jedis -> jedis.zcount(key, min, max));
+        return tryGetResource(jedis -> jedis.zcount(key, min, max), true);
     }
 
     @Override
     public List<String> zrangeByScore(String key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max), true);
     }
 
     @Override
     public List<String> zrangeByScore(String key, String min, String max) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max), true);
     }
 
     @Override
     public List<String> zrevrangeByScore(String key, double max, double min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min), true);
     }
 
     @Override
     public List<String> zrangeByScore(String key, double min, double max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count), true);
     }
 
     @Override
     public List<String> zrevrangeByScore(String key, String max, String min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min), true);
     }
 
     @Override
     public List<String> zrangeByScore(String key, String min, String max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScore(key, min, max, offset, count), true);
     }
 
     @Override
     public List<String> zrevrangeByScore(String key, double max, double min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(String key, double min, double max) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(String key, double max, double min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(String key, double min, double max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count), true);
     }
 
     @Override
     public List<String> zrevrangeByScore(String key, String max, String min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScore(key, max, min, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(String key, String min, String max) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(String key, String max, String min) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min), true);
     }
 
     @Override
     public List<Tuple> zrangeByScoreWithScores(String key, String min, String max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(String key, double min, double max, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count));
+        return tryGetResource(jedis -> jedis.zrangeByScoreWithScores(key, min, max, offset, count), true);
     }
 
     @Override
     public List<Tuple> zrevrangeByScoreWithScores(String key, String max, String min, int offset, int count) {
-        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count));
+        return tryGetResource(jedis -> jedis.zrevrangeByScoreWithScores(key, max, min, offset, count), true);
     }
 
     @Override
@@ -2734,7 +2752,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public ScanResult<Tuple> zscan(String key, String cursor, ScanParams scanParams) {
-        return tryGetResource(jedis -> jedis.zscan(key, cursor, scanParams));
+        return tryGetResource(jedis -> jedis.zscan(key, cursor, scanParams), true);
     }
 
     @Override
@@ -2923,12 +2941,14 @@ public class DefaultRedisTemplate implements RedisTemplate {
     }
 
     @Override
-    public List<byte[]> xread(XReadParams xReadParams, Map.Entry<byte[], byte[]>... streams) {
+    @SafeVarargs
+    public final List<byte[]> xread(XReadParams xReadParams, Map.Entry<byte[], byte[]>... streams) {
         return tryGetResource(jedis -> jedis.xread(xReadParams, streams));
     }
 
     @Override
-    public List<byte[]> xreadGroup(byte[] groupname, byte[] consumer, XReadGroupParams xReadGroupParams, Map.Entry<byte[], byte[]>... streams) {
+    @SafeVarargs
+    public final List<byte[]> xreadGroup(byte[] groupname, byte[] consumer, XReadGroupParams xReadGroupParams, Map.Entry<byte[], byte[]>... streams) {
         return tryGetResource(jedis -> jedis.xreadGroup(groupname, consumer, xReadGroupParams, streams));
     }
 
@@ -3099,7 +3119,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public byte[] get(byte[] key) {
-        return tryGetResource(jedis -> jedis.get(key));
+        return tryGetResource(jedis -> jedis.get(key), true);
     }
 
     @Override
@@ -3154,7 +3174,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<byte[]> mget(byte[]... keys) {
-        return tryGetResource(jedis -> jedis.mget(keys));
+        return tryGetResource(jedis -> jedis.mget(keys), true);
     }
 
     @Override
@@ -3204,7 +3224,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long strlen(byte[] key) {
-        return tryGetResource(jedis -> jedis.strlen(key));
+        return tryGetResource(jedis -> jedis.strlen(key), true);
     }
 
     @Override
@@ -3259,7 +3279,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public String get(String key) {
-        return tryGetResource(jedis -> jedis.get(key));
+        return tryGetResource(jedis -> jedis.get(key), true);
     }
 
     @Override
@@ -3314,7 +3334,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public List<String> mget(String... keys) {
-        return tryGetResource(jedis -> jedis.mget(keys));
+        return tryGetResource(jedis -> jedis.mget(keys), true);
     }
 
     @Override
@@ -3364,7 +3384,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
 
     @Override
     public long strlen(String key) {
-        return tryGetResource(jedis -> jedis.strlen(key));
+        return tryGetResource(jedis -> jedis.strlen(key), true);
     }
 
     @Override
@@ -3417,11 +3437,20 @@ public class DefaultRedisTemplate implements RedisTemplate {
     }
 
     @Override
-    public List<Object> pipeline(JedisPipelineCallback callback) {
+    public List<Object> doInMasterPipeline(JedisPipelineCallback callback) {
         return tryGetResource(jedis -> {
             Pipeline pipeline = jedis.pipelined();
             callback.apply(pipeline);
             return pipeline.syncAndReturnAll();
         });
+    }
+
+    @Override
+    public List<Object> doInSlavePipeline(JedisPipelineCallback callback) {
+        return tryGetResource(jedis -> {
+            Pipeline pipeline = jedis.pipelined();
+            callback.apply(pipeline);
+            return pipeline.syncAndReturnAll();
+        }, true);
     }
 }
