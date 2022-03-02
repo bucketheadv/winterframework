@@ -57,8 +57,8 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
     @Override
     public void postProcessBeanDefinitionRegistry(@NonNull BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        String primaryKey = redisConfig.getPrimary();
         Map<String, RedisMasterSlaveConfig> templates = redisConfig.getTemplate();
+        String primaryKey = templates.containsKey(redisConfig.getPrimary()) ? redisConfig.getPrimary() : null;
         for (String k : templates.keySet()) {
             RedisMasterSlaveConfig v = templates.get(k);
 
