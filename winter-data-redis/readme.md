@@ -1,13 +1,5 @@
 ## 用法
 
-```xml
-<dependency>
-    <groupId>redis.clients</groupId>
-    <artifactId>jedis</artifactId>
-    <version>4.0.1</version>
-</dependency>
-```
-
 ```yaml
 winter:
   data:
