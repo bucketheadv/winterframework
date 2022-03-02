@@ -20,6 +20,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.winterframework.core.tool.StringTool;
+import org.winterframework.rocketmq.core.DefaultRocketMQTemplate;
+import org.winterframework.rocketmq.properties.RocketMQConfig;
 
 import java.util.Map;
 

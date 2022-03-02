@@ -6,8 +6,7 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.winterframework.data.redis.props.RedisConfig;
-import org.winterframework.data.redis.support.Constants;
+import org.winterframework.data.redis.properties.RedisConfig;
 
 /**
  * @author sven
@@ -15,13 +14,13 @@ import org.winterframework.data.redis.support.Constants;
  */
 @Slf4j
 @Configuration
-@ConditionalOnProperty(prefix = Constants.CONFIG_PREFIX, value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "winter.data.redis", value = "enabled", havingValue = "true")
 public class RedisAutoConfiguration {
     @Bean
     public static RedisConfig redisConfig(Environment env) {
         RedisConfig redisConfig = null;
         try {
-            redisConfig = Binder.get(env).bind(Constants.CONFIG_PREFIX, RedisConfig.class).get();
+            redisConfig = Binder.get(env).bind("winter.data.redis", RedisConfig.class).get();
         } catch (Exception e) {
             log.error("绑定Redis配置失败: ", e);
         }

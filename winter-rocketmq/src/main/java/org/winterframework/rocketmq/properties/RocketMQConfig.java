@@ -1,4 +1,4 @@
-package org.winterframework.rocketmq.configuration;
+package org.winterframework.rocketmq.properties;
 
 import lombok.Data;
 import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;

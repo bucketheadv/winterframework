@@ -1,4 +1,4 @@
-package org.winterframework.data.redis.props;
+package org.winterframework.data.redis.properties;
 
 import lombok.Data;
 

@@ -14,7 +14,7 @@
     {
       "name": "winter.data.rocketmq.template",
       "type": "java.util.Map<String, org.apache.rocketmq.spring.autoconfigure.RocketMQProperties>",
-      "sourceType": "org.winterframework.rocketmq.configuration.RocketMQConfig",
+      "sourceType": "org.winterframework.rocketmq.properties.RocketMQConfig",
       "description": "RocketMQ配置"
     }
   ],

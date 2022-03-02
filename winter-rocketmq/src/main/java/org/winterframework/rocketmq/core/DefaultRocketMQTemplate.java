@@ -1,4 +1,4 @@
-package org.winterframework.rocketmq.configuration;
+package org.winterframework.rocketmq.core;
 
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;

@@ -1,7 +1,7 @@
-package org.winterframework.data.redis;
+package org.winterframework.data.redis.core;
 
-import org.winterframework.data.redis.function.JedisMultiCallback;
-import org.winterframework.data.redis.function.JedisPipelineCallback;
+import org.winterframework.data.redis.commands.JedisMultiCallback;
+import org.winterframework.data.redis.commands.JedisPipelineCallback;
 import redis.clients.jedis.commands.*;
 
 import java.io.Closeable;
