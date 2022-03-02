@@ -22,12 +22,6 @@
             <artifactId>winter-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>4.0.1</version>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
 </project>
