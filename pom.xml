@@ -8,6 +8,7 @@
         <module>winter-data-redis</module>
         <module>winter-kafka</module>
         <module>winter-rocketmq</module>
+        <module>winter-mongodb</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -26,7 +27,7 @@
         <java-target.version>8</java-target.version>
         <hutool.version>5.7.20</hutool.version>
         <jedis.version>4.0.1</jedis.version>
-        <json-path.version>2.6.0</json-path.version>
+        <json-path.version>2.7.0</json-path.version>
         <rocketmq.version>2.2.1</rocketmq.version>
     </properties>
 
@@ -63,6 +64,15 @@
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <version>${rocketmq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
         </dependency>
     </dependencies>
 </project>

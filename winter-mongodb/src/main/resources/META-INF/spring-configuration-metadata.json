@@ -1,0 +1,16 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "winter.data.mongodb.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用mongodb"
+    },
+    {
+      "name": "winter.data.mongodb.template",
+      "type": "java.util.Map<String, org.springframework.boot.autoconfigure.mongo.MongoProperties>",
+      "sourceType": "org.winterframework.mongodb.properties.MongoConfig"
+    }
+  ],
+  "hints": []
+}
