@@ -18,7 +18,6 @@
         <dependency>
             <groupId>org.winterframework</groupId>
             <artifactId>winter-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

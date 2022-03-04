@@ -14,11 +14,6 @@ winter:
             group: test_producer_group
             access-key: xxx
             secret-key: xxx
-          consumer:
-            group: test_consumer_group
-            topic: test_topic
-            access-key: xxx
-            secret-key: xxx
 ```
 ## Consumer
 ```java

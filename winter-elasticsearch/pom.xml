@@ -16,4 +16,11 @@
         <maven.compiler.target>${java-target.version}</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.winterframework</groupId>
+            <artifactId>winter-core</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

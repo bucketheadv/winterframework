@@ -10,11 +10,6 @@ winter:
           host: localhost:27017
         second:
           host: localhost:27018
-
-spring:
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
 ```
 
 ```java
