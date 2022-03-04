@@ -1,1 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.mongodb.configuration.WinterMongodbAutoConfiguration
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=org.winterframework.mongodb.filter.SkipFilter

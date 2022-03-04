@@ -15,7 +15,7 @@ import org.winterframework.data.redis.properties.RedisConfig;
 @Slf4j
 @Configuration
 @ConditionalOnProperty(prefix = "winter.data.redis", value = "enabled", havingValue = "true")
-public class RedisAutoConfiguration {
+public class WinterRedisAutoConfiguration {
     @Bean
     public static RedisConfig redisConfig(Environment env) {
         RedisConfig redisConfig = null;

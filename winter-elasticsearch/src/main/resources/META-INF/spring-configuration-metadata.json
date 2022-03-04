@@ -1,0 +1,16 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "winter.data.elasticsearch.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用elasticsearch"
+    },
+    {
+      "name": "winter.data.elasticsearch.template",
+      "type": "java.util.Map<String, org.winterframework.elasticsearch.properties.ElasticsearchConfig.ElasticsearchProperties>",
+      "sourceType": "org.winterframework.elasticsearch.properties.ElasticsearchConfig"
+    }
+  ],
+  "hints": []
+}

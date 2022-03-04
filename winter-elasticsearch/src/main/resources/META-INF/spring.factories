@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.elasticsearch.configuration.WinterElasticsearchAutoConfiguration
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=org.winterframework.elasticsearch.filter.SkipFilter
