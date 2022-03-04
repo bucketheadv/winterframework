@@ -12,10 +12,10 @@
         <module>winter-elasticsearch</module>
     </modules>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0-M1</version>
-<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+        <groupId>com.github.bucketheadv</groupId>
+        <artifactId>winter-starter-parent</artifactId>
+        <version>0.1.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.winterframework</groupId>
     <artifactId>winter</artifactId>
@@ -23,20 +23,13 @@
     <name>winter</name>
     <description>winter</description>
     <properties>
-        <java.version>1.8</java.version>
-        <java-source.version>8</java-source.version>
-        <java-target.version>8</java-target.version>
-        <hutool.version>5.7.20</hutool.version>
-        <jedis.version>4.0.1</jedis.version>
-        <json-path.version>2.7.0</json-path.version>
-        <rocketmq.version>2.2.1</rocketmq.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -55,7 +48,6 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>${json-path.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
@@ -80,22 +72,11 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
         </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-core</artifactId>

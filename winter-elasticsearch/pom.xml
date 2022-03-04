@@ -12,8 +12,8 @@
     <artifactId>winter-elasticsearch</artifactId>
 
     <properties>
-        <maven.compiler.source>${java-source.version}</maven.compiler.source>
-        <maven.compiler.target>${java-target.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <dependencies>
