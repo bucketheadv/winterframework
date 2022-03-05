@@ -17,10 +17,10 @@
     <parent>
         <groupId>com.github.bucketheadv</groupId>
         <artifactId>winter-starter-parent</artifactId>
-        <version>0.6.0</version>
+        <version>0.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>yourApp</artifactId>
+    <artifactId>yourAppName</artifactId>
 
     <dependencies>
         <!-- if you need all components -->

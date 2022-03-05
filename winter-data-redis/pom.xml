@@ -21,6 +21,10 @@
             <groupId>org.winterframework</groupId>
             <artifactId>winter-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
