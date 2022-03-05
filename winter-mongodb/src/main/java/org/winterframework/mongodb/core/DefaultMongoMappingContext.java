@@ -18,7 +18,7 @@ public class DefaultMongoMappingContext extends MongoMappingContext {
     public DefaultMongoMappingContext(ApplicationContext applicationContext, MongoProperties properties, MongoCustomConversions conversions) throws ClassNotFoundException {
         PropertyMapper mapper = PropertyMapper.get().alwaysApplyingWhenNonNull();
         mapper.from(properties.isAutoIndexCreation()).to(this::setAutoIndexCreation);
-        this.setInitialEntitySet((new EntityScanner(applicationContext)).scan(new Class[]{Document.class}));
+        this.setInitialEntitySet((new EntityScanner(applicationContext)).scan(Document.class));
         Class<?> strategyClass = properties.getFieldNamingStrategy();
         if (strategyClass != null) {
             this.setFieldNamingStrategy((FieldNamingStrategy) BeanUtils.instantiateClass(strategyClass));

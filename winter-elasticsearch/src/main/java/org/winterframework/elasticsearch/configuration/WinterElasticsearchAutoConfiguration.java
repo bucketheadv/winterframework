@@ -42,7 +42,7 @@ public class WinterElasticsearchAutoConfiguration implements EnvironmentAware {
     @ConditionalOnMissingBean
     SimpleElasticsearchMappingContext mappingContext(ApplicationContext applicationContext, ElasticsearchCustomConversions elasticsearchCustomConversions) throws ClassNotFoundException {
         SimpleElasticsearchMappingContext mappingContext = new SimpleElasticsearchMappingContext();
-        mappingContext.setInitialEntitySet((new EntityScanner(applicationContext)).scan(new Class[]{Document.class}));
+        mappingContext.setInitialEntitySet((new EntityScanner(applicationContext)).scan(Document.class));
         mappingContext.setSimpleTypeHolder(elasticsearchCustomConversions.getSimpleTypeHolder());
         return mappingContext;
     }
