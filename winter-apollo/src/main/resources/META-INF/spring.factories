@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.ctrip.apollo.configuration.WinterCtripApolloAutoConfiguration

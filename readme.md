@@ -64,6 +64,18 @@
             <groupId>com.github.bucketheadv.winterframework</groupId>
             <artifactId>winter-rocketmq</artifactId>
         </dependency>
+
+        <!-- if you need apoll only -->
+        <dependency>
+            <groupId>com.github.bucketheadv.winterframework</groupId>
+            <artifactId>winter-apollo</artifactId>
+        </dependency>
+
+        <!-- if you need job only -->
+        <dependency>
+            <groupId>com.github.bucketheadv.winterframework</groupId>
+            <artifactId>winter-job</artifactId>
+        </dependency>
     </dependencies>
 </project>
 ```
