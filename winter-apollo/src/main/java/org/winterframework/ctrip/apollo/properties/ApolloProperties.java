@@ -9,4 +9,6 @@ import lombok.Data;
 @Data
 public class ApolloProperties {
     private String env;
+
+    private boolean enableDefaultListener = true;
 }

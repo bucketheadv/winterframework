@@ -12,7 +12,7 @@
       "description": "如DEV,FAT,UAT,PRO"
     },
     {
-      "name": "apollo.default-change-listener.enabled",
+      "name": "apollo.enable-default-listener",
       "type": "java.lang.Boolean",
       "description": "是否启用默认配置变更监听器, 启用后会自动更新@ConfigurationProperties注解的Bean"
     }
