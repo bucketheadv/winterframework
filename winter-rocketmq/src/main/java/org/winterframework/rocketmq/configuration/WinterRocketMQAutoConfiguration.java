@@ -1,6 +1,7 @@
 package org.winterframework.rocketmq.configuration;
 
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
@@ -30,6 +31,7 @@ public class WinterRocketMQAutoConfiguration implements EnvironmentAware {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public RocketMQBeanDefinition rocketMQBeanDefinition(RocketMQConfig rocketMQConfig, RocketMQMessageConverter messageConverter) {
         return new RocketMQBeanDefinition(rocketMQConfig, messageConverter);
     }

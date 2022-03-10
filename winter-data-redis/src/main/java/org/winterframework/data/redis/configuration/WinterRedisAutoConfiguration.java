@@ -1,6 +1,7 @@
 package org.winterframework.data.redis.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,7 @@ public class WinterRedisAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public static RedisDefinitionRegistry redisDefinitionRegistry(RedisConfig redisConfig) {
         return new RedisDefinitionRegistry(redisConfig);
     }
