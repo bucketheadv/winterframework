@@ -7,4 +7,5 @@ import cn.hutool.core.collection.CollectionUtil;
  * Created on 2022/3/1 10:38 下午
  */
 public final class CollectionTool extends CollectionUtil {
+	private CollectionTool() {}
 }

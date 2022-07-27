@@ -17,11 +17,11 @@ import java.util.Map;
  * Created on 2021/12/30 10:43 下午
  */
 @Slf4j
-@Component("JsonTool")
-public final class JsonTool implements ApplicationContextAware {
+@Component("JSONTool")
+public final class JSONTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
-    private JsonTool() {}
+    private JSONTool() {}
 
     public static String toJSONString(Object obj) {
         try {

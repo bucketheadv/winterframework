@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author sven
  * Created on 2022/1/28 2:52 下午
@@ -13,7 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ApiResponse<T> {
+public class ApiResponse<T> implements Serializable {
+    private static final long serialVersionUID = -8829798896960629148L;
+
     private int code;
 
     private String msg;
