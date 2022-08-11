@@ -24,7 +24,7 @@ public class ApiResponse<T> implements Serializable {
 
     private T data;
 
-    private long timestamp;
+    private long timestamp = System.currentTimeMillis();
 
     private Object extra;
 }
