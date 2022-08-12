@@ -1,13 +1,11 @@
 package org.winterframework.core.tool;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author sven
@@ -15,14 +13,12 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Slf4j
 public final class BeanTool {
-    private static final ConcurrentMap<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>();
-
     private BeanTool() {}
 
     public static <T> T copyAs(Object source, Class<T> clazz) {
         try {
             T obj = clazz.getDeclaredConstructor().newInstance();
-            getBeanCopier(source.getClass(), clazz).copy(source, obj, null);
+            BeanUtils.copyProperties(source, obj);
             return obj;
         } catch (Exception e) {
             log.error("BeanTool#copyAs异常: ", e);
@@ -39,15 +35,5 @@ public final class BeanTool {
             result.add(copyAs(o, clazz));
         }
         return result;
-    }
-
-    private static BeanCopier getBeanCopier(Class<?> sourceClass, Class<?> destClass) {
-        String key = sourceClass.getName() + destClass.getName();
-        BeanCopier beanCopier = beanCopierMap.get(key);
-        if (beanCopier == null) {
-            beanCopier = BeanCopier.create(sourceClass, destClass, false);
-            beanCopierMap.putIfAbsent(key, beanCopier);
-        }
-        return beanCopier;
     }
 }
