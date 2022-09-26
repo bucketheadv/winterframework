@@ -1,0 +1,11 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "winter.core.advice.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否启用winter配置redis"
+    }
+  ],
+  "hints": []
+}

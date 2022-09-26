@@ -1,7 +1,11 @@
 package org.winterframework.core.configure;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 /**
  * @author sven
@@ -10,4 +14,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "org.winterframework.core")
 public class WinterCoreAutoConfiguration {
+	@Autowired(required = false)
+	private MessageSource messageSource;
+
+	@PostConstruct
+	public void init() {
+		if (messageSource instanceof ResourceBundleMessageSource) {
+			ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
+			resourceBundleMessageSource.addBasenames("i18n/messages");
+			resourceBundleMessageSource.setDefaultEncoding("UTF-8");
+		}
+	}
 }
