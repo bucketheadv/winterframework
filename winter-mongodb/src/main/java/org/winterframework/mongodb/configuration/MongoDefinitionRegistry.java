@@ -39,8 +39,6 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
     private final MongoConfig mongoConfig;
 
-    private Environment environment;
-
     private ApplicationContext applicationContext;
 
     public MongoDefinitionRegistry(MongoConfig mongoConfig, MongoClientSettings mongoClientSettings, MongoCustomConversions mongoCustomConversions) {
@@ -55,7 +53,7 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
         for (String name : configMap.keySet()) {
             MongoProperties mongoProperties = configMap.get(name);
 
-            MongoPropertiesClientSettingsBuilderCustomizer builderCustomizer = new MongoPropertiesClientSettingsBuilderCustomizer(mongoProperties, environment);
+            MongoPropertiesClientSettingsBuilderCustomizer builderCustomizer = new MongoPropertiesClientSettingsBuilderCustomizer(mongoProperties);
             MongoClient mongoClient = new MongoClientFactory(Lists.newArrayList(builderCustomizer)).createMongoClient(mongoClientSettings);
 
             BeanDefinition mongoDatabaseFactorySupportBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(SimpleMongoClientDatabaseFactory.class)
@@ -97,7 +95,6 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
     @Override
     public void setEnvironment(@NonNull Environment environment) {
-        this.environment = environment;
     }
 
     @Override

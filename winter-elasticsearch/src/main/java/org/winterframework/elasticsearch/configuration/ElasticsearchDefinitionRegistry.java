@@ -1,25 +1,26 @@
 package org.winterframework.elasticsearch.configuration;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.elasticsearch.properties.ElasticsearchConfig;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +45,7 @@ public class ElasticsearchDefinitionRegistry implements BeanDefinitionRegistryPo
             ElasticsearchConfig.ElasticsearchProperties properties = configMap.get(name);
             List<HttpHost> hosts = properties.getUris().stream().map(HttpHost::create).collect(Collectors.toList());
             RestClientBuilder restClientBuilder = RestClient.builder(hosts.toArray(new HttpHost[]{}));
+            RestClientTransport restClientTransport = new RestClientTransport(restClientBuilder.build(), new JacksonJsonpMapper());
 
             if (StringTool.isBlank(primaryKey)) {
                 primaryKey = name;
@@ -51,21 +53,21 @@ public class ElasticsearchDefinitionRegistry implements BeanDefinitionRegistryPo
 
             boolean isPrimary = StringTool.equals(primaryKey, name);
 
-            BeanDefinition restHighLevelClientBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(RestHighLevelClient.class)
+            BeanDefinition elasticsearchClientBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(ElasticsearchClient.class)
                     .setPrimary(isPrimary)
-                    .addConstructorArgValue(restClientBuilder)
+                    .addConstructorArgValue(restClientTransport)
                     .getBeanDefinition();
-            String restHighLevelClientKey = name + "RestHighLevelClient";
-            beanDefinitionRegistry.registerBeanDefinition(restHighLevelClientKey, restHighLevelClientBeanDefinition);
+            String elasticsearchClientKey = name + "ElasticsearchClient";
+            beanDefinitionRegistry.registerBeanDefinition(elasticsearchClientKey, elasticsearchClientBeanDefinition);
 
-            BeanDefinition elasticsearchRestTemplateBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(ElasticsearchRestTemplate.class)
+            BeanDefinition elasticsearchTemplateBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(ElasticsearchTemplate.class)
                     .setPrimary(isPrimary)
-                    .addConstructorArgReference(restHighLevelClientKey)
+                    .addConstructorArgReference(elasticsearchClientKey)
                     .addConstructorArgValue(elasticsearchConverter)
                     .getBeanDefinition();
-            String elasticsearchRestTemplateKey = name + "ElasticsearchRestTemplate";
-            beanDefinitionRegistry.registerBeanDefinition(elasticsearchRestTemplateKey, elasticsearchRestTemplateBeanDefinition);
-            log.info("注册Elasticsearch数据源: [{}] 成功", elasticsearchRestTemplateKey);
+            String elasticsearchTemplateKey = name + "ElasticsearchTemplate";
+            beanDefinitionRegistry.registerBeanDefinition(elasticsearchTemplateKey, elasticsearchTemplateBeanDefinition);
+            log.info("注册Elasticsearch数据源: [{}] 成功", elasticsearchTemplateKey);
         }
         log.info("加载Elasticsearch数据源 {} 个, [{}] 被设置为 primary", configMap.size(), primaryKey);
     }

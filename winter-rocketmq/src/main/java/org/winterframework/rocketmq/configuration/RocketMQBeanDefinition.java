@@ -18,7 +18,6 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.rocketmq.core.DefaultRocketMQTemplate;
 import org.winterframework.rocketmq.properties.RocketMQConfig;
@@ -90,7 +89,7 @@ public class RocketMQBeanDefinition implements BeanDefinitionRegistryPostProcess
         String customizedTraceTopic = rocketMQProperties.getProducer().getCustomizedTraceTopic();
         DefaultMQProducer producer = RocketMQUtil.createDefaultMQProducer(groupName, ak, sk, isEnableMsgTrace, customizedTraceTopic);
         producer.setNamesrvAddr(nameServer);
-        if (!StringUtils.isEmpty(accessChannel)) {
+        if (StringTool.isNotBlank(accessChannel)) {
             producer.setAccessChannel(AccessChannel.valueOf(accessChannel));
         }
 

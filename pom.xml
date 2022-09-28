@@ -13,14 +13,14 @@
         <module>winter-apollo</module>
         <module>winter-job</module>
         <module>winter-jwt</module>
+        <module>winter-starter-parent</module>
     </modules>
     <parent>
-        <groupId>com.github.bucketheadv</groupId>
+        <groupId>org.winterframework</groupId>
         <artifactId>winter-starter-parent</artifactId>
-        <version>0.8.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.winterframework</groupId>
+<!--    <groupId>org.winterframework</groupId>-->
     <artifactId>winter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>winter</name>
@@ -34,6 +34,46 @@
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-core</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-apollo</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-data-redis</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-elasticsearch</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-job</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-jwt</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-kafka</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-mongodb</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-rocketmq</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
@@ -63,4 +103,17 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.1</version>-->
+<!--                <configuration>-->
+<!--                    <showDeprecation>true</showDeprecation>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>

@@ -3,8 +3,8 @@ package org.winterframework.jwt.support.helper;
 import cn.hutool.json.JSONObject;
 import com.google.common.collect.Maps;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.impl.Base64Codec;
 import io.jsonwebtoken.impl.DefaultClaims;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
@@ -137,7 +137,8 @@ public class JwtsHelper {
 
 		for (String s : ts) {
 			try {
-				JSONObject jsonObject = JSONTool.parseObject(Base64Codec.BASE64.decodeToString(s), JSONObject.class);
+				String decodedString = new String(Decoders.BASE64.decode(s), StandardCharsets.UTF_8);
+				JSONObject jsonObject = JSONTool.parseObject(decodedString, JSONObject.class);
 				assert jsonObject != null;
 				Long expTime = jsonObject.getLong("exp");
 				long current = System.currentTimeMillis() / 1000L;

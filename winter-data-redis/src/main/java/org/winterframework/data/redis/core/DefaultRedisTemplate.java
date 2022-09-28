@@ -14,7 +14,6 @@ import redis.clients.jedis.params.*;
 import redis.clients.jedis.resps.*;
 import redis.clients.jedis.util.Pool;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,7 +55,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         log.info("[{}] shutdown, bye.", name);
         masterPool.close();
         if (CollectionUtil.isNotEmpty(slavePools)) {
@@ -445,6 +444,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public List<String> clusterSlaves(String nodeId) {
         return tryGetResource(jedis -> jedis.clusterSlaves(nodeId));
     }
@@ -1820,6 +1820,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public List<Map<String, String>> sentinelSlaves(String masterName) {
         return tryGetResource(jedis -> jedis.sentinelSlaves(masterName));
     }
