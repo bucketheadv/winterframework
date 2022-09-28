@@ -67,6 +67,6 @@ public class WinterFrameworkWebControllerAdvice {
 	}
 
 	private <T> ApiResponse<T> buildResponse(Errorable errorable) {
-		return buildResponse(errorable.getCode(), errorable.getMessage());
+		return buildResponse(errorable.getCode(), I18n.get(errorable.getI18nCode()));
 	}
 }

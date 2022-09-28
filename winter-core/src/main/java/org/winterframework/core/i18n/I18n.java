@@ -44,11 +44,11 @@ public class I18n {
 
 	public static String get(String key, Object ...params) {
 		String msg = null;
+		Locale locale = LocaleContextHolder.getLocale();
 		try {
-			Locale locale = LocaleContextHolder.getLocale();
 			msg = messageSource.getMessage(key, params, locale);
 		} catch (NoSuchMessageException e) {
-			log.warn("Get I18n message failed, no such key: {}", key);
+			log.warn("Get I18n message failed, no such key: {}, locale: {}", key, locale);
 		}
 		return msg == null ? key : msg;
 	}

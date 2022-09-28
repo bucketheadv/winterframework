@@ -21,7 +21,7 @@ public class WinterCoreAutoConfiguration {
 	public void init() {
 		if (messageSource instanceof ResourceBundleMessageSource) {
 			ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
-			resourceBundleMessageSource.addBasenames("i18n/messages");
+			resourceBundleMessageSource.addBasenames("i18n/winter_core_messages");
 			resourceBundleMessageSource.setDefaultEncoding("UTF-8");
 		}
 	}

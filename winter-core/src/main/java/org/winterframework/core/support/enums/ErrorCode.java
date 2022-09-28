@@ -20,5 +20,5 @@ public enum ErrorCode implements Errorable {
 
 	private final int code;
 
-	private final String message;
+	private final String i18nCode;
 }

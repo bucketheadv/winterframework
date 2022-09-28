@@ -12,27 +12,37 @@ public class ServiceException extends RuntimeException implements Errorable {
 
 	private final int code;
 
+	private final String i18nCode;
+
 	public ServiceException(int errorCode) {
 		super("");
 		this.code = errorCode;
+		this.i18nCode = "";
 	}
 
-	public ServiceException(int errorCode, String message) {
-		super(message);
+	public ServiceException(int errorCode, String i18nCode) {
+		super(I18n.get(i18nCode));
 		this.code = errorCode;
+		this.i18nCode = i18nCode;
 	}
 
 	public ServiceException(Errorable errorable) {
-		this(errorable.getCode(), I18n.get(errorable.getMessage()));
+		this(errorable.getCode(), errorable.getI18nCode());
 	}
 
-	public ServiceException(int errorCode, String message, Throwable clauses) {
-		super(message, clauses);
+	public ServiceException(int errorCode, String i18nCode, Throwable clauses) {
+		super(I18n.get(i18nCode), clauses);
 		this.code = errorCode;
+		this.i18nCode = i18nCode;
 	}
 
 	@Override
 	public int getCode() {
 		return code;
+	}
+
+	@Override
+	public String getI18nCode() {
+		return i18nCode;
 	}
 }

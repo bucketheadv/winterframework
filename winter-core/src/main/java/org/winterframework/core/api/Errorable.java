@@ -10,5 +10,5 @@ public interface Errorable {
 	/**
 	 * return i18n code!!!!
 	 */
-	String getMessage();
+	String getI18nCode();
 }

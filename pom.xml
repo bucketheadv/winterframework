@@ -12,6 +12,7 @@
         <module>winter-elasticsearch</module>
         <module>winter-apollo</module>
         <module>winter-job</module>
+        <module>winter-jwt</module>
     </modules>
     <parent>
         <groupId>com.github.bucketheadv</groupId>
