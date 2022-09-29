@@ -1,4 +1,4 @@
-package org.winterframework.core.configure.message;
+package org.winterframework.core.configuration.message;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;

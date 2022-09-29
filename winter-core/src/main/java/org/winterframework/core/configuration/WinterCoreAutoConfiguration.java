@@ -1,4 +1,4 @@
-package org.winterframework.core.configure;
+package org.winterframework.core.configuration;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

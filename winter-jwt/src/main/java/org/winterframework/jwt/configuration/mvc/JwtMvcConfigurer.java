@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.winterframework.jwt.interceptor.BasedInterceptor;
+import org.winterframework.jwt.properties.WinterJwtProperties;
 
 /**
  * @author qinglinl
@@ -16,14 +17,16 @@ public class JwtMvcConfigurer implements WebMvcConfigurer {
 	private BasedInterceptor basedInterceptor;
 	@Autowired
 	private LocaleChangeInterceptor localeChangeInterceptor;
+	@Autowired
+	private WinterJwtProperties properties;
 	@Override
 	public void addInterceptors(@NonNull InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
 		registry.addInterceptor(localeChangeInterceptor);
 		if (basedInterceptor != null) {
 			registry.addInterceptor(basedInterceptor)
-					.addPathPatterns("/**")
-					.excludePathPatterns("/static", "/webjars", "/swagger", "/v2", "/doc.html");
+					.addPathPatterns(properties.getPathPatterns())
+					.excludePathPatterns(properties.getExcludePathPatterns());
 		}
 	}
 }

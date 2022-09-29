@@ -51,4 +51,14 @@ public class WinterJwtProperties {
 	 * 默认语言
 	 */
 	private Locale defaultLocale = Locale.ENGLISH;
+
+	/**
+	 * 需要执行BasedInterceptor的路径正则表达式，如 /**
+	 */
+	private List<String> pathPatterns = Lists.newArrayList();
+
+	/**
+	 * 不需要执行BasedInterceptor的路径正则表达式，如("/static", "/webjars", "/swagger", "/v2", "/doc.html")
+	 */
+	private List<String> excludePathPatterns = Lists.newArrayList();
 }
