@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,6 +43,12 @@ public class WinterFrameworkWebControllerAdvice {
 		return buildResponse(ErrorCode.PARAM_ERROR);
 	}
 
+	@ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+	public ApiResponse<?> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+		log.error("http method not supported: ", e);
+		return buildResponse(ErrorCode.METHOD_NOT_SUPPORT);
+	}
+
 	@ExceptionHandler({BindException.class})
 	public ApiResponse<?> onBindException(BindException e) {
 		String msg = e.getBindingResult().getFieldErrors().stream().map(i -> I18n.getOrDefault(i.getObjectName() + "." + i.getField(), i.getField()) + " " + i.getDefaultMessage()).collect(Collectors.joining(", "));
@@ -50,7 +57,7 @@ public class WinterFrameworkWebControllerAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public ApiResponse<?> onException(Exception e) {
-		log.error("onException: ", e);
+		log.error("", e);
 		if (e instanceof Errorable) {
 			Errorable err = (Errorable) e;
 			return buildResponse(err);
