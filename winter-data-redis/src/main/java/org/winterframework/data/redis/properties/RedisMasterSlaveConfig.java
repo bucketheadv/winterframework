@@ -10,7 +10,13 @@ import java.util.List;
  */
 @Data
 public class RedisMasterSlaveConfig {
+    /**
+     * 主库配置
+     */
     private RedisProperties master;
 
+    /**
+     * 从库配置
+     */
     private List<RedisProperties> slaves;
 }

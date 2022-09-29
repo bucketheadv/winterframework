@@ -1,4 +1,4 @@
-package org.winterframework.jwt.configuration.prop;
+package org.winterframework.jwt.properties;
 
 import com.google.common.collect.Lists;
 import lombok.Data;

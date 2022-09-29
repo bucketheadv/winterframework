@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.winterframework.core.tool.StringTool;
+import org.winterframework.job.constants.Const;
 import org.winterframework.job.properties.JobProperties;
 
 /**
@@ -18,7 +19,7 @@ import org.winterframework.job.properties.JobProperties;
  * Created on 2022/3/8 3:57 下午
  */
 @Configuration
-@ConditionalOnProperty(prefix = "winter.job", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterJobAutoConfiguration implements EnvironmentAware {
     private Environment environment;
     @Value("${spring.application.name:}")
@@ -26,7 +27,7 @@ public class WinterJobAutoConfiguration implements EnvironmentAware {
 
     @Bean
     public JobProperties jobProperties() {
-        return Binder.get(environment).bind("winter.job", JobProperties.class).get();
+        return Binder.get(environment).bind(Const.configPrefix, JobProperties.class).get();
     }
 
     @Bean

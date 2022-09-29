@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
+import org.winterframework.kafka.constants.Const;
 import org.winterframework.kafka.properties.KafkaConfig;
 
 /**
@@ -17,13 +18,13 @@ import org.winterframework.kafka.properties.KafkaConfig;
  */
 @Configuration
 @ComponentScan(basePackages = "org.winterframework.kafka")
-@ConditionalOnProperty(prefix = "winter.data.kafka", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterKafkaAutoConfiguration implements EnvironmentAware {
     private Environment environment;
 
     @Bean
     public KafkaConfig kafkaConfig() {
-        return Binder.get(environment).bind("winter.data.kafka", KafkaConfig.class).get();
+        return Binder.get(environment).bind(Const.configPrefix, KafkaConfig.class).get();
     }
 
     @Bean

@@ -18,7 +18,7 @@ import org.winterframework.core.support.enums.ErrorCode;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.core.tool.RegTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.jwt.configuration.prop.WinterJwtProperties;
+import org.winterframework.jwt.properties.WinterJwtProperties;
 import org.winterframework.jwt.env.Environment;
 import org.winterframework.jwt.support.enums.WebErrorCode;
 import org.winterframework.jwt.support.helper.JwtsHelper;

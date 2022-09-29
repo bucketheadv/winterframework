@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
+import org.winterframework.rocketmq.constants.Const;
 import org.winterframework.rocketmq.properties.RocketMQConfig;
 
 /**
@@ -16,7 +17,7 @@ import org.winterframework.rocketmq.properties.RocketMQConfig;
  * Created on 2022/3/2 12:53 下午
  */
 @Configuration
-@ConditionalOnProperty(prefix = "winter.data.rocketmq", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterRocketMQAutoConfiguration implements EnvironmentAware {
     private Environment environment;
 
@@ -27,7 +28,7 @@ public class WinterRocketMQAutoConfiguration implements EnvironmentAware {
 
     @Bean
     public RocketMQConfig rocketMQConfig() {
-        return Binder.get(environment).bind("winter.data.rocketmq", RocketMQConfig.class).get();
+        return Binder.get(environment).bind(Const.configPrefix, RocketMQConfig.class).get();
     }
 
     @Bean

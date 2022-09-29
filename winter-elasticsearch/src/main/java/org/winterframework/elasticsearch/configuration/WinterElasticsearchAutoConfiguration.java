@@ -15,6 +15,7 @@ import org.springframework.data.elasticsearch.core.convert.ElasticsearchCustomCo
 import org.springframework.data.elasticsearch.core.convert.MappingElasticsearchConverter;
 import org.springframework.data.elasticsearch.core.mapping.SimpleElasticsearchMappingContext;
 import org.springframework.lang.NonNull;
+import org.winterframework.elasticsearch.constants.Const;
 import org.winterframework.elasticsearch.properties.ElasticsearchConfig;
 
 import java.util.Collections;
@@ -24,12 +25,12 @@ import java.util.Collections;
  * Created on 2022/3/4 1:01 下午
  */
 @Configuration
-@ConditionalOnProperty(prefix = "winter.data.elasticsearch", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterElasticsearchAutoConfiguration implements EnvironmentAware {
     private Environment environment;
     @Bean
     public ElasticsearchConfig elasticsearchConfig() {
-        return Binder.get(environment).bind("winter.data.elasticsearch", ElasticsearchConfig.class).get();
+        return Binder.get(environment).bind(Const.configPrefix, ElasticsearchConfig.class).get();
     }
 
     @Bean

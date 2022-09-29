@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.lang.NonNull;
+import org.winterframework.mongodb.constants.Const;
 import org.winterframework.mongodb.properties.MongoConfig;
 
 /**
@@ -17,12 +18,12 @@ import org.winterframework.mongodb.properties.MongoConfig;
  * Created on 2022/3/2 10:56 下午
  */
 @Configuration
-@ConditionalOnProperty(prefix = "winter.data.mongodb", value = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterMongodbAutoConfiguration implements EnvironmentAware {
     private Environment environment;
     @Bean
     public MongoConfig mongoConfig() {
-        return Binder.get(environment).bind("winter.data.mongodb", MongoConfig.class).get();
+        return Binder.get(environment).bind(Const.configPrefix, MongoConfig.class).get();
     }
 
     @Override

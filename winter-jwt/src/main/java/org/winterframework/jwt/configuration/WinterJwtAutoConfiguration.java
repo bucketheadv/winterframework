@@ -13,7 +13,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.winterframework.jwt.configuration.mvc.JwtMvcConfigurer;
-import org.winterframework.jwt.configuration.prop.WinterJwtProperties;
+import org.winterframework.jwt.properties.WinterJwtProperties;
 import org.winterframework.jwt.interceptor.BasedInterceptor;
 import org.winterframework.jwt.interceptor.WinterLocaleChangeInterceptor;
 
