@@ -27,54 +27,73 @@
     <description>winter</description>
     <properties>
         <java.version>17</java.version>
+        <winter.version>0.0.1-SNAPSHOT</winter.version>
+        <rocketmq.version>2.2.2</rocketmq.version>
     </properties>
 
+    <!-- dependencyManagement定义的数据不能多重继承 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-core</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-apollo</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-data-redis</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-elasticsearch</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-job</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-jwt</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-kafka</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-mongodb</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-rocketmq</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

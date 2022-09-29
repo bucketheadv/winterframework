@@ -117,7 +117,7 @@ public class RocketMQBeanDefinition implements BeanDefinitionRegistryPostProcess
         String ak = consumerConfig.getAccessKey();
         String sk = consumerConfig.getSecretKey();
         int pullBatchSize = consumerConfig.getPullBatchSize();
-        DefaultLitePullConsumer litePullConsumer = RocketMQUtil.createDefaultLitePullConsumer(nameServer, accessChannel, groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize);
+        DefaultLitePullConsumer litePullConsumer = RocketMQUtil.createDefaultLitePullConsumer(nameServer, accessChannel, groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize, consumerConfig.isTlsEnable());
         litePullConsumer.setEnableMsgTrace(consumerConfig.isEnableMsgTrace());
         litePullConsumer.setCustomizedTraceTopic(consumerConfig.getCustomizedTraceTopic());
         return litePullConsumer;
