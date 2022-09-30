@@ -1,4 +1,4 @@
-package org.winterframework.core.configuration;
+package org.winterframework.rbac.configuration;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +8,17 @@ import org.springframework.context.annotation.Configuration;
 import org.winterframework.core.tool.MessageSourceTool;
 
 /**
- * @author sven
- * Created on 2021/12/30 10:56 下午
+ * @author qinglinl
+ * Created on 2022/9/30 10:05 AM
  */
 @Configuration
-@ComponentScan(basePackages = "org.winterframework.core")
-public class WinterCoreAutoConfiguration {
-	@Autowired(required = false)
+@ComponentScan(basePackages = "org.winterframework.rbac")
+public class WinterRbacAutoConfiguration {
+	@Autowired
 	private MessageSource messageSource;
 
 	@PostConstruct
 	public void init() {
-		MessageSourceTool.initMessageSource(messageSource, "i18n/winter_core_messages");
+		MessageSourceTool.initMessageSource(messageSource, "i18n/winter_rbac_messages");
 	}
 }

@@ -14,6 +14,7 @@
         <module>winter-job</module>
         <module>winter-jwt</module>
         <module>winter-starter-parent</module>
+        <module>winter-rbac</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -77,6 +78,11 @@
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-rocketmq</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-rbac</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>

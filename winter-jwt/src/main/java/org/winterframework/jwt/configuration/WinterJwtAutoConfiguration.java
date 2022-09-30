@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.winterframework.core.tool.MessageSourceTool;
 import org.winterframework.jwt.configuration.mvc.JwtMvcConfigurer;
 import org.winterframework.jwt.properties.WinterJwtProperties;
 import org.winterframework.jwt.interceptor.BasedInterceptor;
@@ -49,11 +49,7 @@ public class WinterJwtAutoConfiguration implements ApplicationListener<ContextRe
 
 	@PostConstruct
 	public void init() {
-		if (messageSource instanceof ResourceBundleMessageSource) {
-			ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
-			resourceBundleMessageSource.addBasenames("i18n/winter_jwt_messages");
-			resourceBundleMessageSource.setDefaultEncoding("UTF-8");
-		}
+		MessageSourceTool.initMessageSource(messageSource, "i18n/winter_jwt_messages");
 	}
 
 	@Override
