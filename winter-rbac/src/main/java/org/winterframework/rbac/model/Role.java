@@ -10,5 +10,12 @@ import java.util.List;
  */
 @Data
 public class Role {
+	/**
+	 * 是否是超级管理员
+	 */
+	private boolean isSuperAdmin;
+	/**
+	 * 权限列表
+	 */
 	private List<Permission> permissions;
 }

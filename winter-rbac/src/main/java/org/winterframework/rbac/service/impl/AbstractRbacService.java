@@ -35,7 +35,13 @@ public abstract class AbstractRbacService implements RbacService {
 
 	@Override
 	public boolean hasRolePermForUrl(Role role, String url) {
-		if (role == null || CollectionTool.isEmpty(role.getPermissions())) {
+		if (role == null) {
+			return false;
+		}
+		if (role.isSuperAdmin()) {
+			return true;
+		}
+		if (CollectionTool.isEmpty(role.getPermissions())) {
 			return false;
 		}
 		for (Permission permission : role.getPermissions()) {

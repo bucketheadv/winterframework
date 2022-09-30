@@ -2,6 +2,7 @@ package org.winterframework.rbac.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,5 +11,13 @@ import java.util.List;
  */
 @Data
 public class User {
+	/**
+	 * 用户id
+	 */
+	private Serializable id;
+
+	/**
+	 * 权限列表
+	 */
 	private List<Role> roles;
 }
