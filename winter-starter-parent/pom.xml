@@ -79,6 +79,11 @@
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.bucketheadv.winterframework</groupId>
+                <artifactId>winter-jwt</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq.version}</version>

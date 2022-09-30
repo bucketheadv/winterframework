@@ -26,7 +26,7 @@
     <name>winter</name>
     <description>winter</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>${java.version}</java.version>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
         <rocketmq.version>2.2.2</rocketmq.version>
     </properties>
