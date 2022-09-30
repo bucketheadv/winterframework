@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler({ServiceException.class})
 	public ApiResponse<?> onServiceException(ServiceException e) {
+		log.error("onServiceException, ", e);
 		return buildResponse(e);
 	}
 

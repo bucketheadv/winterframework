@@ -1,6 +1,7 @@
 package org.winterframework.rbac.configuration.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,6 +15,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.winterframework.core.exception.ServiceException;
 import org.winterframework.core.tool.StringTool;
+import org.winterframework.jwt.env.Environment;
+import org.winterframework.jwt.interceptor.EnvironmentHolder;
 import org.winterframework.jwt.session.UserTokenHolder;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
 import org.winterframework.rbac.enums.RbacErrorCode;
@@ -28,9 +31,9 @@ import java.lang.reflect.Method;
 @Slf4j
 @Aspect
 @Component
+@AllArgsConstructor
 @Order(0)
 public class RbacAspect {
-	@Autowired
 	private RbacService rbacService;
 	@Pointcut("@annotation(org.winterframework.rbac.configuration.aop.annotation.RbacPerm)")
 	public void pointcut() {}
@@ -49,7 +52,7 @@ public class RbacAspect {
 		String uri = request.getRequestURI();
 		perm = StringTool.defaultIfBlank(perm, uri);
 
-		Long userId = UserTokenHolder.getUserId();
+		Long userId = EnvironmentHolder.get().getUid();
 		boolean hasPerm = rbacService.hasUserPermForUrl(userId, perm);
 		if (!hasPerm) {
 			log.warn("用户 {} 尝试获取 {} 的权限失败!", userId, perm);
