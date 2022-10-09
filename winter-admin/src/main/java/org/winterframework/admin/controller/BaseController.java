@@ -13,7 +13,7 @@ public class BaseController {
 	public <T> ApiResponse<T> build(Errorable errorable, T data) {
 		ApiResponse<T> apiResponse = new ApiResponse<>();
 		apiResponse.setCode(errorable.getCode());
-		apiResponse.setMsg(I18n.get(errorable.getI18nCode()));
+		apiResponse.setMessage(I18n.get(errorable.getI18nCode()));
 		apiResponse.setTimestamp(System.currentTimeMillis());
 		apiResponse.setData(data);
 		return apiResponse;

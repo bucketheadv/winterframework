@@ -20,7 +20,7 @@ public class ApiResponse<T> implements Serializable {
 
     private int code;
 
-    private String msg;
+    private String message;
 
     private T data;
 

@@ -19,4 +19,14 @@ public class PermissionInfoDaoServiceImpl extends ServiceImpl<PermissionInfoMapp
 	public List<RolePermissionEntity> getPermissionsByRoleId(Long roleId) {
 		return baseMapper.getPermissionsByRoleId(roleId);
 	}
+
+	@Override
+	public void deleteRolePermission(Long roleId, List<Long> exceptPermissionIds) {
+		baseMapper.deleteRolePermission(roleId, exceptPermissionIds);
+	}
+
+	@Override
+	public void createRolePermissions(Long roleId, List<Long> permissionIds) {
+		baseMapper.createRolePermissions(roleId, permissionIds);
+	}
 }

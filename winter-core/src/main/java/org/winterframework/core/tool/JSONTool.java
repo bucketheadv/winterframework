@@ -2,6 +2,7 @@ package org.winterframework.core.tool;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +23,16 @@ public final class JSONTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
     private JSONTool() {}
+
+    static {
+        init(om);
+    }
+
+    private static void init(ObjectMapper om) {
+        if (om != null) {
+            om.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        }
+    }
 
     public static String toJSONString(Object obj) {
         try {
@@ -80,5 +91,6 @@ public final class JSONTool implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         om = applicationContext.getBean(ObjectMapper.class);
+        init(om);
     }
 }

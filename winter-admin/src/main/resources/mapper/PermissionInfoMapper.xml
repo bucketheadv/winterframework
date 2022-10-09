@@ -6,4 +6,32 @@
         from role_permission p1 join permission_info p2 on p1.permission_id = p2.id
         where p1.role_id = #{roleId}
     </select>
+
+    <select id="getPermissionsByRoleIds" resultType="org.winterframework.admin.dao.entity.RolePermissionEntity">
+        select p1.role_id roleId, p1.permission_id permissionId, p2.permission_name permissionName, p2.uri uri
+        from role_permission p1 join permission_info p2 on p1.permission_id = p2.id
+        where p1.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+
+    <delete id="deleteRolePermission">
+        delete from role_permission
+        where role_id = #{roleId}
+        <if test="exceptPermissionIds != null and exceptPermissionIds.size() > 0">
+            and permission_id not in
+            <foreach collection="exceptPermissionIds" separator="," open="(" close=")" item="permissionId">
+                #{permissionId}
+            </foreach>
+        </if>
+    </delete>
+
+    <insert id="createRolePermissions">
+        insert into role_permission (role_id, permission_id)
+        values
+        <foreach collection="permissionIds" item="permissionId" open="" close="" separator=",">
+            (#{roleId}, #{permissionId})
+        </foreach>
+    </insert>
 </mapper>

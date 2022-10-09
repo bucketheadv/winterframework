@@ -12,4 +12,18 @@ import java.util.List;
  */
 public interface PermissionInfoDaoService extends IService<PermissionInfoEntity> {
 	List<RolePermissionEntity> getPermissionsByRoleId(Long roleId);
+
+	/**
+	 * 删除角色权限
+	 * @param roleId 角色id
+	 * @param exceptPermissionIds 不删除的权限id
+	 */
+	void deleteRolePermission(Long roleId, List<Long> exceptPermissionIds);
+
+	/**
+	 * 创建角色权限
+	 * @param roleId 角色id
+	 * @param permissionIds 权限id
+	 */
+	void createRolePermissions(Long roleId, List<Long> permissionIds);
 }

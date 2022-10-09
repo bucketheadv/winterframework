@@ -90,7 +90,7 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 	private void writeResponse(Errorable errorable, HttpServletResponse response) {
 		ApiResponse<?> apiResponse = new ApiResponse<>();
 		apiResponse.setCode(errorable.getCode());
-		apiResponse.setMsg(I18n.get(errorable.getI18nCode()));
+		apiResponse.setMessage(I18n.get(errorable.getI18nCode()));
 		HttpServletHelper.writeResponse(response, JSONTool.toJSONString(apiResponse));
 	}
 

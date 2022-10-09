@@ -5,6 +5,9 @@ spring:
     password: 123456
   messages:
     basename: i18n/messages
+  mvc:
+    servlet:
+      path: /api
 winter:
   jwt:
     path-patterns:
@@ -13,6 +16,13 @@ winter:
       - /static
       - /auth/**
       - /user/**
+      - /routes/**
+      - /role/**
+      - /permission/**
+      - /api/test/**
+    token-white-uri-array:
+      - /api/test/test
+      - /api/error
 logging:
   level:
     org.winterframework.admin.dao.mapper: DEBUG

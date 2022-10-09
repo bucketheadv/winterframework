@@ -69,7 +69,7 @@ public class WinterFrameworkWebControllerAdvice {
 	private <T> ApiResponse<T> buildResponse(int code, String message) {
 		ApiResponse<T> apiResponse = new ApiResponse<>();
 		apiResponse.setCode(code);
-		apiResponse.setMsg(message);
+		apiResponse.setMessage(message);
 		apiResponse.setTimestamp(System.currentTimeMillis());
 		return apiResponse;
 	}

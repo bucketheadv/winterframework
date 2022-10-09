@@ -11,7 +11,7 @@ import org.winterframework.core.api.Errorable;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode implements Errorable {
-	OK(100000, "error.ok"),
+	OK(0, "error.ok"),
 	SYSTEM_ERROR(100001, "error.system_error"),
 	METHOD_NOT_SUPPORT(100002, "error.method_not_support"),
 	PARAM_ERROR(100003, "error.param_error"),

@@ -73,7 +73,7 @@ public class UserDefinedFilter implements Filter {
 			log.error("user defined filter doFilter failed, uri: {}, error msg: {}, env: {}", httpServletRequest.getRequestURI(), e.getMessage(), env, e);
 			HttpServletHelper.writeResponse(httpServletResponse, ApiResponse.builder()
 							.code(ErrorCode.SYSTEM_ERROR.getCode())
-							.msg(I18n.get(ErrorCode.SYSTEM_ERROR.getI18nCode()))
+							.message(I18n.get(ErrorCode.SYSTEM_ERROR.getI18nCode()))
 					.build());
 		} finally {
 			EnvironmentHolder.clear();
