@@ -21,7 +21,20 @@ Vue.config.productionTip = false
 Vue.use(Viser)
 Vue.use(Plugins)
 
-Vue.prototype.$serviceRequest = serviceRequest
+Vue.prototype.$serviceRequest = async function (path, method, params, config) {
+  config = config || {}
+  config.headers = config.headers || {}
+  config.headers['Token'] = store.getters['account/token']
+  const result = await serviceRequest(path, method, params, config)
+  const data = result.data
+  if (data.code === 200001) {
+    this.$message.error('请登录')
+    this.$router.push('/login')
+  } else if (data.code === 300001) {
+    this.$router.push('/403')
+  }
+  return result;
+}
 
 bootstrap({router, store, i18n, message: Vue.prototype.$message})
 

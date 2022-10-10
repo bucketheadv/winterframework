@@ -13,7 +13,6 @@
 
 <script>
 import DetailList from '../../components/tool/DetailList'
-import {serviceRequest} from "@/utils/service-request";
 import {formatDateTime} from "@/utils/dateUtil";
 
 const DetailListItem = DetailList.Item
@@ -30,7 +29,7 @@ export default {
   },
   methods: {
     getData() {
-      serviceRequest('/permission/detail', 'get', { id: this.$route.query.id }).then((res) => {
+      this.$serviceRequest('/permission/detail', 'get', { id: this.$route.query.id }).then((res) => {
         const data = res.data
         if (data.code === 0) {
           this.form = data.data

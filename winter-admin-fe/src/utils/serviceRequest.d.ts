@@ -1,7 +1,7 @@
-import { serviceRequest } from './service-request'
+import {AxiosResponse} from "axios";
 
 declare module 'vue/types/vue' {
     interface Vue {
-        $serviceRequest: serviceRequest;
+        $serviceRequest: (path: string, method: string, params?, config?) => Promise<AxiosResponse>;
     }
 }

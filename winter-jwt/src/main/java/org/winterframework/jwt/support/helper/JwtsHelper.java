@@ -10,7 +10,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.winterframework.core.api.Errorable;
+import org.winterframework.core.api.I18nEnumerable;
 import org.winterframework.core.exception.ServiceException;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.jwt.env.Environment;
@@ -35,8 +35,8 @@ public class JwtsHelper {
 
 	private JwtsHelper() {}
 
-	private static <T> T throwsServiceException(Errorable errorable) {
-		throw new ServiceException(errorable);
+	private static <T> T throwsServiceException(I18nEnumerable i18nEnum) {
+		throw new ServiceException(i18nEnum);
 	}
 
 	public static void check(Environment environment) throws ServiceException {

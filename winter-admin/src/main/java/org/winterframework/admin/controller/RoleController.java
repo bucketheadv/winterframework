@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.winterframework.admin.model.req.DeleteRoleReqDTO;
+import org.winterframework.admin.model.req.QueryRoleReqDTO;
 import org.winterframework.admin.model.req.UpdateRoleReqDTO;
 import org.winterframework.admin.service.RoleService;
 import org.winterframework.core.support.ApiResponse;
@@ -20,13 +21,13 @@ public class RoleController extends BaseController {
 	private RoleService roleService;
 
 	@GetMapping("/list")
-	public ApiResponse<?> list() {
-		return build(roleService.listAll());
+	public ApiResponse<?> list(@Valid QueryRoleReqDTO req) {
+		return build(roleService.selectByQuery(req));
 	}
 
 	@GetMapping("/detail")
 	public ApiResponse<?> detail(@RequestParam Long id) {
-		return build(roleService.getById(id));
+		return build(roleService.selectByPrimaryKey(id));
 	}
 
 	@PostMapping("/update")
@@ -37,7 +38,7 @@ public class RoleController extends BaseController {
 
 	@PostMapping("/delete")
 	public ApiResponse<?> delete(@RequestBody @Valid DeleteRoleReqDTO req) {
-		roleService.removeBatchByIds(req.getIds());
+		roleService.deleteByIds(req.getIds());
 		return build(ErrorCode.OK);
 	}
 }

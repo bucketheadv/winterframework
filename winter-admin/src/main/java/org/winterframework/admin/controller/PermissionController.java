@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.winterframework.admin.model.req.DeletePermissionReqDTO;
+import org.winterframework.admin.model.req.QueryPermissionReqDTO;
 import org.winterframework.admin.model.req.UpdatePermissionReqDTO;
 import org.winterframework.admin.model.res.ListRolePermissionResDTO;
 import org.winterframework.admin.service.PermissionService;
@@ -22,13 +23,13 @@ public class PermissionController extends BaseController {
 	@Resource
 	private PermissionService permissionService;
 	@GetMapping("/list")
-	public ApiResponse<?> list() {
-		return build(permissionService.listAll());
+	public ApiResponse<?> list(@Valid QueryPermissionReqDTO req) {
+		return build(permissionService.selectByQuery(req));
 	}
 
 	@GetMapping("/detail")
 	public ApiResponse<?> detail(@RequestParam Long id) {
-		return build(permissionService.getById(id));
+		return build(permissionService.selectByPrimaryKey(id));
 	}
 
 	@PostMapping("/update")
@@ -39,7 +40,7 @@ public class PermissionController extends BaseController {
 
 	@PostMapping("/delete")
 	public ApiResponse<?> delete(@RequestBody @Valid DeletePermissionReqDTO req) {
-		permissionService.removeBatchByIds(req.getIds());
+		permissionService.deleteByIds(req.getIds());
 		return build(ErrorCode.OK);
 	}
 

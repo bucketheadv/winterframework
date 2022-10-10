@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-mybatis</artifactId>
+            <artifactId>winter-tk-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

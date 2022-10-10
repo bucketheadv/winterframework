@@ -1,6 +1,6 @@
 package org.winterframework.admin.controller;
 
-import org.winterframework.core.api.Errorable;
+import org.winterframework.core.api.I18nEnumerable;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
 import org.winterframework.core.support.enums.ErrorCode;
@@ -10,17 +10,17 @@ import org.winterframework.core.support.enums.ErrorCode;
  * Created on 2022/9/30 1:49 PM
  */
 public class BaseController {
-	public <T> ApiResponse<T> build(Errorable errorable, T data) {
+	public <T> ApiResponse<T> build(I18nEnumerable i18nEnum, T data) {
 		ApiResponse<T> apiResponse = new ApiResponse<>();
-		apiResponse.setCode(errorable.getCode());
-		apiResponse.setMessage(I18n.get(errorable.getI18nCode()));
+		apiResponse.setCode(i18nEnum.getCode());
+		apiResponse.setMessage(I18n.get(i18nEnum.getI18nCode()));
 		apiResponse.setTimestamp(System.currentTimeMillis());
 		apiResponse.setData(data);
 		return apiResponse;
 	}
 
-	public <T> ApiResponse<T> build(Errorable errorable) {
-		return build(errorable, null);
+	public <T> ApiResponse<T> build(I18nEnumerable i18nEnum) {
+		return build(i18nEnum, null);
 	}
 
 	public <T> ApiResponse<T> build(T data) {

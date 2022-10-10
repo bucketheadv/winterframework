@@ -33,7 +33,6 @@
 
 <script>
 import StandardTable from "@/components/table/StandardTable";
-import {serviceRequest} from "@/utils/service-request";
 import paths from "@/utils/paths";
 import {formatDateTime} from "@/utils/dateUtil";
 
@@ -79,7 +78,7 @@ export default {
       dataSource: [],
       selectedRows: [],
       pagination: {
-        current: 1,
+        pageNum: 1,
         pageSize: 10,
         total: 0
       }
@@ -87,16 +86,24 @@ export default {
   },
   methods: {
     getData() {
-      serviceRequest("/permission/list", 'GET', {
-        current: this.pagination.current,
-        size: this.pagination.pageSize
+      this.$serviceRequest("/permission/list", 'GET', {
+        pageNum: this.pagination.pageNum,
+        pageSize: this.pagination.pageSize
       }).then(res => {
         const data = res.data.data;
-        data.forEach(d => d.key = d.id)
-        this.dataSource = data;
+        const dataList = data.list;
+        dataList.forEach(d => d.key = d.id)
+        this.dataSource = dataList;
+        this.pagination = {
+          pageNum: data.pageNum,
+          pageSize: data.pageSize,
+          total: data.total
+        }
       });
     },
-    onPageChange() {
+    onPageChange(page) {
+      this.pagination.pageNum = page
+      this.getData()
     },
     onSelectChange() {
     },
@@ -126,7 +133,7 @@ export default {
           okText: '确认',
           cancelText: '取消',
           onOk: () => {
-            serviceRequest('/permission/delete', 'post', { ids: ids }).then(res => {
+            this.$serviceRequest('/permission/delete', 'post', { ids: ids }).then(res => {
               const data = res.data
               if (data.code === 0) {
                 this.getData()

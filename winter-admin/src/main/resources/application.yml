@@ -26,3 +26,5 @@ winter:
 logging:
   level:
     org.winterframework.admin.dao.mapper: DEBUG
+mybatis:
+  mapper-locations: classpath*:/mapper/**/*.xml

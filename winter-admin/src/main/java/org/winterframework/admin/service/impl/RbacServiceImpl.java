@@ -43,7 +43,7 @@ public class RbacServiceImpl extends AbstractRbacService {
 	}
 
 	private User getUserById(Serializable id) {
-		UserInfoEntity userInfoEntity = userInfoDaoService.getById(id);
+		UserInfoEntity userInfoEntity = userInfoDaoService.selectByPrimaryKey((Long) id);
 		if (userInfoEntity == null) {
 			return null;
 		}

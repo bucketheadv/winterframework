@@ -1,8 +1,8 @@
 package org.winterframework.admin.dao.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
+import org.winterframework.tk.mybatis.service.TkService;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/9/30 3:13 PM
  */
-public interface PermissionInfoDaoService extends IService<PermissionInfoEntity> {
+public interface PermissionInfoDaoService extends TkService<PermissionInfoEntity, Long> {
 	List<RolePermissionEntity> getPermissionsByRoleId(Long roleId);
 
 	/**

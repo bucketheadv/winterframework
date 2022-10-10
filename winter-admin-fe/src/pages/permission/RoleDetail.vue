@@ -22,7 +22,6 @@
 
 <script>
 import DetailList from "@/components/tool/DetailList";
-import {serviceRequest} from "@/utils/service-request";
 import {formatDateTime} from "@/utils/dateUtil";
 const DetailListItem = DetailList.Item
 
@@ -42,7 +41,7 @@ export default {
   methods: {
     getData() {
       const id = this.$route.query.id
-      serviceRequest('/role/detail', 'get', { id: id }).then((res) => {
+      this.serviceRequest('/role/detail', 'get', { id: id }).then((res) => {
         const data = res.data;
         if (data.code === 0) {
           this.form = data.data;
@@ -50,7 +49,7 @@ export default {
           this.$message.error(data.message)
         }
       })
-      serviceRequest("/permission/listRolePermissions", 'get', { roleId: id }).then(res => {
+      this.serviceRequest("/permission/listRolePermissions", 'get', { roleId: id }).then(res => {
         this.permissions = res.data.data
         const permissionIds = []
         this.permissions.forEach(p => {

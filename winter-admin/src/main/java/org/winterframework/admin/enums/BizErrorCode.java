@@ -2,7 +2,7 @@ package org.winterframework.admin.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.winterframework.core.api.Errorable;
+import org.winterframework.core.api.I18nEnumerable;
 
 /**
  * @author qinglinl
@@ -10,7 +10,7 @@ import org.winterframework.core.api.Errorable;
  */
 @Getter
 @AllArgsConstructor
-public enum BizErrorCode implements Errorable {
+public enum BizErrorCode implements I18nEnumerable {
 	EMAIL_OR_PASSWORD_INVALID(300001, "error.email_or_password_invalid"),
 	;
 	private final int code;

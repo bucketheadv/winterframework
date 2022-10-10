@@ -25,7 +25,6 @@
 
 <script>
 import * as _ from "lodash";
-import {serviceRequest} from "@/utils/service-request";
 import paths from "@/utils/paths";
 
 export default {
@@ -44,7 +43,7 @@ export default {
     getData() {
       const id = this.$route.query.id
       if (id) {
-        serviceRequest('/permission/detail', 'get', { id: id }).then(res => {
+        this.$serviceRequest('/permission/detail', 'get', { id: id }).then(res => {
           this.originalForm = _.cloneDeep(res.data.data)
           this.form = res.data.data
         })
@@ -55,7 +54,7 @@ export default {
     },
     submit() {
       const params = this.form
-      serviceRequest('/permission/update', 'post', params).then(res => {
+      this.$serviceRequest('/permission/update', 'post', params).then(res => {
         const data = res.data;
         if (data.code === 0) {
           this.$router.push(paths.fe.permission.list);

@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -7,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * Created on 2022/7/27 3:49 下午
  */
 @Slf4j
-public final class ObjectTool {
+public final class ObjectTool extends ObjectUtil {
 	public static <T, R> R execute(T t, Callback<T, R> callback) {
 		if (t == null) {
 			return null;
@@ -15,7 +16,7 @@ public final class ObjectTool {
 		try {
 			return callback.get(t);
 		} catch (NullPointerException e) {
-			log.warn("TryTool#invoke error: {}", e.getMessage());
+			log.warn("error: {}", e.getMessage());
 			return null;
 		}
 	}

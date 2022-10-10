@@ -38,3 +38,4 @@ build/
 mvnw*
 
 winter-web
+node_modules/

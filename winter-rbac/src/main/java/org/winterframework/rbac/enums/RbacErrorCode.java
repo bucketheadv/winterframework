@@ -2,7 +2,7 @@ package org.winterframework.rbac.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.winterframework.core.api.Errorable;
+import org.winterframework.core.api.I18nEnumerable;
 
 /**
  * @author qinglinl
@@ -10,7 +10,7 @@ import org.winterframework.core.api.Errorable;
  */
 @Getter
 @AllArgsConstructor
-public enum RbacErrorCode implements Errorable {
+public enum RbacErrorCode implements I18nEnumerable {
 	PERMISSION_DENY(300001, "error.permission_deny"),
 	;
 

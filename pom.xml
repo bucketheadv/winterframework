@@ -16,7 +16,8 @@
         <module>winter-starter-parent</module>
         <module>winter-rbac</module>
         <module>winter-admin</module>
-        <module>winter-mybatis</module>
+        <module>winter-mybatis-plus</module>
+        <module>winter-tk-mybatis</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -32,6 +33,8 @@
         <java.version>${java.version}</java.version>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
         <rocketmq.version>2.2.2</rocketmq.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <tk-mybatis.version>4.2.1</tk-mybatis.version>
     </properties>
 
     <!-- dependencyManagement定义的数据不能多重继承 -->
@@ -89,7 +92,12 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-mybatis</artifactId>
+                <artifactId>winter-mybatis-plus</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-tk-mybatis</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
@@ -111,7 +119,17 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.5.2</version>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk-mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.14.0-rc1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

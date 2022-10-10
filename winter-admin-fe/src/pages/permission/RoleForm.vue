@@ -38,7 +38,6 @@
 
 <script>
 import * as _ from 'lodash'
-import {serviceRequest} from "@/utils/service-request";
 import paths from "@/utils/paths";
 export default {
   name: "RoleForm",
@@ -58,12 +57,12 @@ export default {
     async getData() {
       const id = this.$route.query.id
       if (id) {
-        await serviceRequest('/role/detail', 'get', { id: id }).then(res => {
+        await this.$serviceRequest('/role/detail', 'get', { id: id }).then(res => {
           this.originalForm = _.cloneDeep(res.data.data)
           this.form = res.data.data
         })
       }
-      await serviceRequest("/permission/listRolePermissions", 'get', { roleId: id }).then(res => {
+      await this.$serviceRequest("/permission/listRolePermissions", 'get', { roleId: id }).then(res => {
         this.permissions = res.data.data
         const permissionIds = []
         this.permissions.forEach(p => {
@@ -81,7 +80,7 @@ export default {
       e.preventDefault()
       const params = this.form
       params.permissionIds = this.permissionIds
-      serviceRequest('/role/update', 'post', params).then((res) => {
+      this.$serviceRequest('/role/update', 'post', params).then((res) => {
         if (res.data.code !== 0) {
           this.$error({content: res.data.message})
           return

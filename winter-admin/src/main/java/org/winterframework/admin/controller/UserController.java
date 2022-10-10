@@ -25,7 +25,7 @@ public class UserController extends BaseController {
 	@RbacPerm
 	@GetMapping("/detail")
 	public ApiResponse<?> detail(@RequestParam Long id) {
-		UserInfoEntity userInfoEntity = userInfoService.getById(id);
+		UserInfoEntity userInfoEntity = userInfoService.selectByPrimaryKey(id);
 		UserDetailResDTO res = BeanTool.copyAs(userInfoEntity, UserDetailResDTO.class);
 		return build(res);
 	}
