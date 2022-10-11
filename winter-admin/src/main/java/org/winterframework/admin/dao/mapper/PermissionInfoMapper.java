@@ -23,7 +23,7 @@ public interface PermissionInfoMapper extends BaseTkMapper<PermissionInfoEntity,
 
 	List<RolePermissionEntity> getPermissionsByRoleIds(@Param("roleIds") List<Long> roleIds);
 
-	void deleteRolePermission(@Param("roleId") Long roleId, @Param("exceptPermissionIds") List<Long> exceptPermissionIds);
+	void deleteRolePermission(@Param("roleId") Long roleId, @Param("toDelPermissionIds") List<Long> toDelPermissionIds);
 
 	void createRolePermissions(@Param("roleId") Long roleId, @Param("permissionIds") List<Long> permissionIds);
 }

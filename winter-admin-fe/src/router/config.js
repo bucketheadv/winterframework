@@ -39,6 +39,27 @@ const options = {
           component: PageView,
           children: [
             {
+              path: paths.fe.adminUser.list,
+              name: '管理员列表',
+              component: () => import('@/pages/permission/AdminUserList'),
+            },
+            {
+              path: paths.fe.adminUser.editor,
+              name: '编辑管理员',
+              component: () => import('@/pages/permission/AdminUserForm'),
+              meta: {
+                invisible: true,
+              }
+            },
+            {
+              path: paths.fe.adminUser.detail,
+              name: '管理员详情',
+              component: () => import('@/pages/permission/AdminUserDetail'),
+              meta: {
+                invisible: true,
+              }
+            },
+            {
               path: paths.fe.role.list,
               name: '角色列表',
               component: () => import('@/pages/permission/RoleList'),

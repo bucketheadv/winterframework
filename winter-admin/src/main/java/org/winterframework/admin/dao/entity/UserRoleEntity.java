@@ -12,7 +12,7 @@ public class UserRoleEntity {
 
 	private String roleName;
 
-	private Long userId;
+	private Long adminUserId;
 
 	private Boolean isSuperAdmin;
 }

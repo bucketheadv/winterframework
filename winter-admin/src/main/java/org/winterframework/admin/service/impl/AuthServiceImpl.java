@@ -2,7 +2,7 @@ package org.winterframework.admin.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.winterframework.admin.dao.entity.UserInfoEntity;
+import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.service.UserInfoDaoService;
 import org.winterframework.admin.enums.BizErrorCode;
 import org.winterframework.admin.service.AuthService;
@@ -20,14 +20,14 @@ public class AuthServiceImpl implements AuthService {
 	private final UserInfoDaoService userInfoDaoService;
 
 	@Override
-	public UserInfoEntity loginByEmail(String email, String password) {
-		UserInfoEntity userInfoEntity = userInfoDaoService.getByEmail(email);
-		if (userInfoEntity == null) {
+	public AdminUserEntity loginByEmail(String email, String password) {
+		AdminUserEntity adminUserEntity = userInfoDaoService.getByEmail(email);
+		if (adminUserEntity == null) {
 			throw new ServiceException(BizErrorCode.EMAIL_OR_PASSWORD_INVALID);
 		}
-		if (!Objects.equals(userInfoEntity.getPassword(), password)) {
+		if (!Objects.equals(adminUserEntity.getPassword(), password)) {
 			throw new ServiceException(BizErrorCode.EMAIL_OR_PASSWORD_INVALID);
 		}
-		return userInfoEntity;
+		return adminUserEntity;
 	}
 }

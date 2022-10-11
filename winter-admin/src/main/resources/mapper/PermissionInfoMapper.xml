@@ -19,9 +19,9 @@
     <delete id="deleteRolePermission">
         delete from role_permission
         where role_id = #{roleId}
-        <if test="exceptPermissionIds != null and exceptPermissionIds.size() > 0">
-            and permission_id not in
-            <foreach collection="exceptPermissionIds" separator="," open="(" close=")" item="permissionId">
+        <if test="toDelPermissionIds != null and toDelPermissionIds.size() > 0">
+            and permission_id in
+            <foreach collection="toDelPermissionIds" separator="," open="(" close=")" item="permissionId">
                 #{permissionId}
             </foreach>
         </if>

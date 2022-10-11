@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.req;
+package org.winterframework.admin.model.dto;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * Created on 2022/10/10 8:41 AM
  */
 @Data
-public class QueryRoleReqDTO {
+public class ListRoleDTO {
 	private String roleName;
 
 	private Boolean isSuperAdmin;

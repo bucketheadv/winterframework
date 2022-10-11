@@ -15,7 +15,7 @@ winter:
     exclude-path-patterns:
       - /static
       - /auth/**
-      - /user/**
+      - /admin_user/**
       - /routes/**
       - /role/**
       - /permission/**

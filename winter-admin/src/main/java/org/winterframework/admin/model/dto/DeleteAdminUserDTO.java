@@ -1,0 +1,16 @@
+package org.winterframework.admin.model.dto;
+
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * @author qinglinl
+ * Created on 2022/10/11 9:51 AM
+ */
+@Data
+public class DeleteAdminUserDTO {
+	@NotEmpty
+	private List<Long> ids;
+}

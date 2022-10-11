@@ -21,8 +21,8 @@ public class PermissionInfoDaoServiceImpl extends TkServiceImpl<PermissionInfoMa
 	}
 
 	@Override
-	public void deleteRolePermission(Long roleId, List<Long> exceptPermissionIds) {
-		baseMapper.deleteRolePermission(roleId, exceptPermissionIds);
+	public void deleteRolePermission(Long roleId, List<Long> toDelPermissionIds) {
+		baseMapper.deleteRolePermission(roleId, toDelPermissionIds);
 	}
 
 	@Override

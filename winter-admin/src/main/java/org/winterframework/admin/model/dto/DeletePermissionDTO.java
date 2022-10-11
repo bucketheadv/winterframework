@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.req;
+package org.winterframework.admin.model.dto;
 
 import lombok.Data;
 
@@ -9,6 +9,6 @@ import java.util.List;
  * Created on 2022/10/8 5:56 PM
  */
 @Data
-public class DeletePermissionReqDTO {
+public class DeletePermissionDTO {
 	private List<Long> ids;
 }

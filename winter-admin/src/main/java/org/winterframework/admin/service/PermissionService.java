@@ -2,9 +2,9 @@ package org.winterframework.admin.service;
 
 import com.github.pagehelper.PageInfo;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
-import org.winterframework.admin.model.req.QueryPermissionReqDTO;
-import org.winterframework.admin.model.req.UpdatePermissionReqDTO;
-import org.winterframework.admin.model.res.ListRolePermissionResDTO;
+import org.winterframework.admin.model.dto.ListPermissionDTO;
+import org.winterframework.admin.model.dto.UpdatePermissionDTO;
+import org.winterframework.admin.model.vo.ListRolePermissionVO;
 import org.winterframework.tk.mybatis.service.TkService;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public interface PermissionService extends TkService<PermissionInfoEntity, Long>
 	 * @param roleId 角色id
 	 * @return
 	 */
-	List<ListRolePermissionResDTO> listRolePermissions(Long roleId);
+	List<ListRolePermissionVO> listRolePermissions(Long roleId);
 
-	void updatePermission(UpdatePermissionReqDTO req);
+	void updatePermission(UpdatePermissionDTO req);
 
-	PageInfo<PermissionInfoEntity> selectByQuery(QueryPermissionReqDTO req);
+	PageInfo<PermissionInfoEntity> selectByQuery(ListPermissionDTO req);
 }

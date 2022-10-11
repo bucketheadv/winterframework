@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.res;
+package org.winterframework.admin.model.vo;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Created on 2022/10/8 12:04 PM
  */
 @Data
-public class ListRoutesResDTO {
+public class ListRoutesVO {
 	private String router;
 
 	private List<RouterChildren> children;

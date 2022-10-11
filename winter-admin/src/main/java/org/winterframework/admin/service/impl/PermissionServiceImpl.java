@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.admin.dao.mapper.PermissionInfoMapper;
-import org.winterframework.admin.model.req.QueryPermissionReqDTO;
-import org.winterframework.admin.model.req.UpdatePermissionReqDTO;
-import org.winterframework.admin.model.res.ListRolePermissionResDTO;
+import org.winterframework.admin.model.dto.ListPermissionDTO;
+import org.winterframework.admin.model.dto.UpdatePermissionDTO;
+import org.winterframework.admin.model.vo.ListRolePermissionVO;
 import org.winterframework.admin.service.PermissionService;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.StringTool;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Service
 public class PermissionServiceImpl extends TkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionService {
 	@Override
-	public List<ListRolePermissionResDTO> listRolePermissions(Long roleId) {
+	public List<ListRolePermissionVO> listRolePermissions(Long roleId) {
 		Map<Long, Boolean> permissionPermMap = Maps.newHashMap();
 		if (roleId != null) {
 			List<RolePermissionEntity> rolePermissions = baseMapper.getPermissionsByRoleId(roleId);
@@ -37,22 +37,21 @@ public class PermissionServiceImpl extends TkServiceImpl<PermissionInfoMapper, P
 			}
 		}
 		List<PermissionInfoEntity> allPermissions = baseMapper.selectAll();
-		List<ListRolePermissionResDTO> result = Lists.newArrayList();
+		List<ListRolePermissionVO> result = Lists.newArrayList();
 		for (PermissionInfoEntity permissionInfo : allPermissions) {
-			ListRolePermissionResDTO listRolePermissionResDTO = new ListRolePermissionResDTO();
-			listRolePermissionResDTO.setPermissionId(permissionInfo.getId());
-			listRolePermissionResDTO.setPermissionName(permissionInfo.getPermissionName());
-			listRolePermissionResDTO.setUri(permissionInfo.getUri());
-			listRolePermissionResDTO.setHasPerm(permissionPermMap.getOrDefault(permissionInfo.getId(), false));
-			result.add(listRolePermissionResDTO);
+			ListRolePermissionVO listRolePermissionVO = new ListRolePermissionVO();
+			listRolePermissionVO.setPermissionId(permissionInfo.getId());
+			listRolePermissionVO.setPermissionName(permissionInfo.getPermissionName());
+			listRolePermissionVO.setUri(permissionInfo.getUri());
+			listRolePermissionVO.setHasPerm(permissionPermMap.getOrDefault(permissionInfo.getId(), false));
+			result.add(listRolePermissionVO);
 		}
 		return result;
 	}
 
 	@Override
-	public void updatePermission(UpdatePermissionReqDTO req) {
+	public void updatePermission(UpdatePermissionDTO req) {
 		PermissionInfoEntity permissionInfo = BeanTool.copyAs(req, PermissionInfoEntity.class);
-		assert permissionInfo != null;
 		if (req.getId() != null) {
 			baseMapper.updateByPrimaryKeySelective(permissionInfo);
 		} else {
@@ -64,7 +63,7 @@ public class PermissionServiceImpl extends TkServiceImpl<PermissionInfoMapper, P
 	}
 
 	@Override
-	public PageInfo<PermissionInfoEntity> selectByQuery(QueryPermissionReqDTO req) {
+	public PageInfo<PermissionInfoEntity> selectByQuery(ListPermissionDTO req) {
 		Condition condition = new Condition(PermissionInfoEntity.class);
 		Example.Criteria criteria = condition.and();
 		if (StringTool.isNotBlank(req.getPermissionName())) {

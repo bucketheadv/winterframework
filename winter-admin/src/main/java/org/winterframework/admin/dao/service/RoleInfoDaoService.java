@@ -12,4 +12,8 @@ import java.util.List;
  */
 public interface RoleInfoDaoService extends TkService<RoleInfoEntity, Long> {
 	List<UserRoleEntity> getUserRoleByUserId(Long userId);
+
+	void deleteAdminUserRole(Long adminUserId, List<Long> toDelRoleIds);
+
+	void createAdminUserRole(Long adminUserId, List<Long> roleIds);
 }

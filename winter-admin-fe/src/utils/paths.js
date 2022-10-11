@@ -9,6 +9,11 @@ const paths = {
             detail: '/permission/roleDetail',
             editor: '/permission/roleEditor',
             list: '/permission/roleList',
+        },
+        adminUser: {
+            detail: '/permission/adminUserDetail',
+            editor: '/admin_user/adminUserEditor',
+            list: '/admin_user/list',
         }
     }
 }

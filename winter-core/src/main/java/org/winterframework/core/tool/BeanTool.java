@@ -22,8 +22,8 @@ public final class BeanTool {
             return obj;
         } catch (Exception e) {
             log.error("BeanTool#copyAs异常: ", e);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public static <T> List<T> copyList(Collection<?> c, Class<T> clazz) {

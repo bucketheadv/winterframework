@@ -2,8 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.winterframework.admin.dao.mapper.RoleInfoMapper">
     <select id="getUserRoleByUserId" resultType="org.winterframework.admin.dao.entity.UserRoleEntity">
-        select r1.role_id roleId, r1.user_id userId, r2.role_name roleName, r2.is_super_admin isSuperAdmin
+        select r1.role_id roleId, r1.admin_user_id adminUserId, r2.role_name roleName, r2.is_super_admin isSuperAdmin
         from user_role r1 join role_info r2 on r1.role_id = r2.id
-        where r1.user_id = #{userId}
+        where r1.admin_user_id = #{userId}
     </select>
+
+    <delete id="deleteAdminUserRole">
+        delete
+        from user_role
+        where admin_user_id = #{adminUserId}
+        <if test="toDelRoleIds != null and toDelRoleIds.size() > 0">
+            and role_id in
+            <foreach collection="toDelRoleIds" item="roleId" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </if>
+    </delete>
+
+    <insert id="createAdminUserRole">
+        insert into user_role (admin_user_id, role_id)
+        values
+        <foreach collection="roleIds" item="roleId" open="" separator="," close="">
+            (#{adminUserId}, #{roleId})
+        </foreach>
+    </insert>
 </mapper>

@@ -11,8 +11,8 @@ import java.util.Date;
  * Created on 2022/9/30 2:05 PM
  */
 @Data
-@Table(name = "user_info")
-public class UserInfoEntity {
+@Table(name = "admin_user")
+public class AdminUserEntity {
 	@Id
 	private Long id;
 

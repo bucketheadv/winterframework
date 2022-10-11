@@ -1,6 +1,6 @@
 package org.winterframework.admin.service;
 
-import org.winterframework.admin.dao.entity.UserInfoEntity;
+import org.winterframework.admin.dao.entity.AdminUserEntity;
 
 /**
  * @author qinglinl
@@ -13,5 +13,5 @@ public interface AuthService {
 	 * @param password 密码
 	 * @return UserInfoEntity
 	 */
-	UserInfoEntity loginByEmail(String email, String password);
+	AdminUserEntity loginByEmail(String email, String password);
 }

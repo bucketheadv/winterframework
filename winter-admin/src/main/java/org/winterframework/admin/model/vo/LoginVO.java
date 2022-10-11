@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.res;
+package org.winterframework.admin.model.vo;
 
 import lombok.Data;
 import org.winterframework.rbac.model.Permission;
@@ -13,7 +13,7 @@ import java.util.Map;
  * Created on 2022/10/8 11:33 AM
  */
 @Data
-public class LoginResDTO {
+public class LoginVO {
 	private User user;
 
 	private List<Role> roles;

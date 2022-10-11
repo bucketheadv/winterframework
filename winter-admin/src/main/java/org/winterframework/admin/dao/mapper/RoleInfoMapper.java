@@ -20,4 +20,8 @@ public interface RoleInfoMapper extends BaseTkMapper<RoleInfoEntity, Long> {
 	 * @return
 	 */
 	List<UserRoleEntity> getUserRoleByUserId(@Param("userId") Long userId);
+
+	void deleteAdminUserRole(@Param("adminUserId") Long adminUserId, @Param("toDelRoleIds") List<Long> toDelRoleIds);
+
+	void createAdminUserRole(@Param("adminUserId") Long adminUserId, @Param("roleIds") List<Long> roleIds);
 }

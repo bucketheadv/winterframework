@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.req;
+package org.winterframework.admin.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created on 2022/10/8 3:46 PM
  */
 @Data
-public class UpdateRoleReqDTO {
+public class UpdateRoleDTO {
 	private Long id;
 
 	@NotBlank

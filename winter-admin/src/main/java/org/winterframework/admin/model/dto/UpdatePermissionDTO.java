@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.req;
+package org.winterframework.admin.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
  * Created on 2022/10/8 5:27 PM
  */
 @Data
-public class UpdatePermissionReqDTO {
+public class UpdatePermissionDTO {
 	private Long id;
 
 	@NotBlank

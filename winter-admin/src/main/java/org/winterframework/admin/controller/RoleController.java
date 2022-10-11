@@ -1,14 +1,20 @@
 package org.winterframework.admin.controller;
 
+import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import org.winterframework.admin.model.req.DeleteRoleReqDTO;
-import org.winterframework.admin.model.req.QueryRoleReqDTO;
-import org.winterframework.admin.model.req.UpdateRoleReqDTO;
+import org.winterframework.admin.dao.entity.RoleInfoEntity;
+import org.winterframework.admin.model.dto.DeleteRoleDTO;
+import org.winterframework.admin.model.dto.ListRoleDTO;
+import org.winterframework.admin.model.dto.UpdateRoleDTO;
+import org.winterframework.admin.model.vo.ListAdminUserRoleVO;
 import org.winterframework.admin.service.RoleService;
 import org.winterframework.core.support.ApiResponse;
 import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
+
+import java.util.List;
 
 /**
  * @author qinglinl
@@ -20,25 +26,34 @@ public class RoleController extends BaseController {
 	@Resource
 	private RoleService roleService;
 
+	@RbacPerm
 	@GetMapping("/list")
-	public ApiResponse<?> list(@Valid QueryRoleReqDTO req) {
+	public ApiResponse<PageInfo<RoleInfoEntity>> list(@Valid ListRoleDTO req) {
 		return build(roleService.selectByQuery(req));
 	}
 
+	@RbacPerm
 	@GetMapping("/detail")
-	public ApiResponse<?> detail(@RequestParam Long id) {
+	public ApiResponse<RoleInfoEntity> detail(@RequestParam Long id) {
 		return build(roleService.selectByPrimaryKey(id));
 	}
 
+	@RbacPerm
 	@PostMapping("/update")
-	public ApiResponse<?> update(@RequestBody @Valid UpdateRoleReqDTO req) {
+	public ApiResponse<Void> update(@RequestBody @Valid UpdateRoleDTO req) {
 		roleService.updateRole(req);
 		return build(ErrorCode.OK);
 	}
 
+	@RbacPerm
 	@PostMapping("/delete")
-	public ApiResponse<?> delete(@RequestBody @Valid DeleteRoleReqDTO req) {
+	public ApiResponse<Void> delete(@RequestBody @Valid DeleteRoleDTO req) {
 		roleService.deleteByIds(req.getIds());
 		return build(ErrorCode.OK);
+	}
+
+	@GetMapping("/listAdminUserRoles")
+	public ApiResponse<List<ListAdminUserRoleVO>> listAdminUserRoles(@RequestParam(value = "adminUserId", required = false) Long adminUserId) {
+		return build(roleService.listAdminUserRoles(adminUserId));
 	}
 }

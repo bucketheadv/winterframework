@@ -2,9 +2,9 @@ package org.winterframework.admin.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.winterframework.admin.dao.entity.UserInfoEntity;
-import org.winterframework.admin.model.req.LoginReqDTO;
-import org.winterframework.admin.model.res.LoginResDTO;
+import org.winterframework.admin.dao.entity.AdminUserEntity;
+import org.winterframework.admin.model.dto.LoginDTO;
+import org.winterframework.admin.model.vo.LoginVO;
 import org.winterframework.admin.service.AuthService;
 import org.winterframework.core.support.ApiResponse;
 import org.winterframework.core.tool.DateTool;
@@ -23,18 +23,18 @@ public class AuthController extends BaseController {
 	private AuthService authService;
 
 	@PostMapping("/login")
-	public ApiResponse<LoginResDTO> login(@RequestBody LoginReqDTO loginReqDTO) {
-		UserInfoEntity userInfoEntity = authService.loginByEmail(loginReqDTO.getName(), loginReqDTO.getPassword());
-		String token = JwtsHelper.encrypt(userInfoEntity.getId());
-		LoginResDTO loginResDTO = new LoginResDTO();
-		LoginResDTO.User user = new LoginResDTO.User();
-		loginResDTO.setExpireAt(DateTool.offsetDay(new Date(), 1));
-		user.setName(userInfoEntity.getEmail());
+	public ApiResponse<LoginVO> login(@RequestBody LoginDTO loginDTO) {
+		AdminUserEntity adminUserEntity = authService.loginByEmail(loginDTO.getName(), loginDTO.getPassword());
+		String token = JwtsHelper.encrypt(adminUserEntity.getId());
+		LoginVO loginVO = new LoginVO();
+		LoginVO.User user = new LoginVO.User();
+		loginVO.setExpireAt(DateTool.offsetDay(new Date(), 1));
+		user.setName(adminUserEntity.getEmail());
 		user.setAddress("无锡市");
 		user.setAvatar("https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png");
-		loginResDTO.setUser(user);
-		loginResDTO.setToken(token);
-		ApiResponse<LoginResDTO> response = build(loginResDTO);
+		loginVO.setUser(user);
+		loginVO.setToken(token);
+		ApiResponse<LoginVO> response = build(loginVO);
 		response.setMessage("欢迎回来");
 		return response;
 	}

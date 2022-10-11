@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.res;
+package org.winterframework.admin.model.vo;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * Created on 2022/10/8 3:14 PM
  */
 @Data
-public class ListRolePermissionResDTO {
+public class ListRolePermissionVO {
 	private Long permissionId;
 
 	private String permissionName;

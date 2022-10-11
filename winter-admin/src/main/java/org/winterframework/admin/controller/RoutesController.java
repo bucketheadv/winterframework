@@ -3,7 +3,7 @@ package org.winterframework.admin.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.winterframework.admin.model.res.ListRoutesResDTO;
+import org.winterframework.admin.model.vo.ListRoutesVO;
 import org.winterframework.core.support.ApiResponse;
 
 /**
@@ -14,8 +14,8 @@ import org.winterframework.core.support.ApiResponse;
 @RequestMapping("/routes")
 public class RoutesController extends BaseController {
 	@GetMapping
-	public ApiResponse<ListRoutesResDTO> listRoutes() {
-		ListRoutesResDTO listRoutesResDTO = new ListRoutesResDTO();
-		return build(listRoutesResDTO);
+	public ApiResponse<ListRoutesVO> listRoutes() {
+		ListRoutesVO listRoutesVO = new ListRoutesVO();
+		return build(listRoutesVO);
 	}
 }

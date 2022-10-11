@@ -12,6 +12,7 @@ import org.winterframework.core.api.I18nEnumerable;
 @AllArgsConstructor
 public enum BizErrorCode implements I18nEnumerable {
 	EMAIL_OR_PASSWORD_INVALID(300001, "error.email_or_password_invalid"),
+	PASSWORD_CANNOT_BE_BLANK(300002, "error.password_cannot_be_blank"),
 	;
 	private final int code;
 

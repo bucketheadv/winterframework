@@ -16,9 +16,9 @@ public interface PermissionInfoDaoService extends TkService<PermissionInfoEntity
 	/**
 	 * 删除角色权限
 	 * @param roleId 角色id
-	 * @param exceptPermissionIds 不删除的权限id
+	 * @param toDelPermissionIds 需要删除的权限id
 	 */
-	void deleteRolePermission(Long roleId, List<Long> exceptPermissionIds);
+	void deleteRolePermission(Long roleId, List<Long> toDelPermissionIds);
 
 	/**
 	 * 创建角色权限

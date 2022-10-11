@@ -5,7 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
-import org.winterframework.admin.dao.entity.UserInfoEntity;
+import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
 import org.winterframework.admin.dao.service.PermissionInfoDaoService;
 import org.winterframework.admin.dao.service.RoleInfoDaoService;
@@ -43,11 +43,11 @@ public class RbacServiceImpl extends AbstractRbacService {
 	}
 
 	private User getUserById(Serializable id) {
-		UserInfoEntity userInfoEntity = userInfoDaoService.selectByPrimaryKey((Long) id);
-		if (userInfoEntity == null) {
+		AdminUserEntity adminUserEntity = userInfoDaoService.selectByPrimaryKey((Long) id);
+		if (adminUserEntity == null) {
 			return null;
 		}
-		List<UserRoleEntity> userRoles = roleInfoDaoService.getUserRoleByUserId(userInfoEntity.getId());
+		List<UserRoleEntity> userRoles = roleInfoDaoService.getUserRoleByUserId(adminUserEntity.getId());
 		List<Role> roles = new ArrayList<>();
 		for (UserRoleEntity userRole : userRoles) {
 			Role role = new Role();
@@ -66,7 +66,7 @@ public class RbacServiceImpl extends AbstractRbacService {
 		}
 
 		User user = new User();
-		user.setId(userInfoEntity.getId());
+		user.setId(adminUserEntity.getId());
 		user.setRoles(roles);
 		return user;
 	}

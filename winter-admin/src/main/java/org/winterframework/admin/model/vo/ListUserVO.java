@@ -1,4 +1,4 @@
-package org.winterframework.admin.model.res;
+package org.winterframework.admin.model.vo;
 
 import lombok.Data;
 
@@ -6,10 +6,10 @@ import java.util.Date;
 
 /**
  * @author qinglinl
- * Created on 2022/9/30 2:57 PM
+ * Created on 2022/10/11 9:17 AM
  */
 @Data
-public class UserDetailResDTO {
+public class ListUserVO {
 	private Long id;
 
 	private String email;

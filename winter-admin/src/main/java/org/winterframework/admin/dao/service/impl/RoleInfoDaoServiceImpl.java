@@ -19,4 +19,14 @@ public class RoleInfoDaoServiceImpl extends TkServiceImpl<RoleInfoMapper, RoleIn
 	public List<UserRoleEntity> getUserRoleByUserId(Long userId) {
 		return baseMapper.getUserRoleByUserId(userId);
 	}
+
+	@Override
+	public void deleteAdminUserRole(Long adminUserId, List<Long> toDelRoleIds) {
+		baseMapper.deleteAdminUserRole(adminUserId, toDelRoleIds);
+	}
+
+	@Override
+	public void createAdminUserRole(Long adminUserId, List<Long> roleIds) {
+		baseMapper.createAdminUserRole(adminUserId, roleIds);
+	}
 }
