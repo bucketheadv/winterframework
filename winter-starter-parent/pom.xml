@@ -23,7 +23,7 @@
         <spring-boot.version>3.0.0-M4</spring-boot.version>
         <spring-cloud.version>3.1.1</spring-cloud.version>
         <winter.version>0.8.0</winter.version>
-        <jedis.version>4.0.1</jedis.version>
+        <jedis.version>4.2.3</jedis.version>
         <rocketmq.version>2.2.2</rocketmq.version>
         <hutool.version>5.7.20</hutool.version>
         <guava.version>31.0.1-jre</guava.version>

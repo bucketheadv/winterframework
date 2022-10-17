@@ -3,6 +3,7 @@ package org.winterframework.core.tool;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.intellij.lang.annotations.Language;
 
 /**
  * @author qinglinl
@@ -20,12 +21,12 @@ public final class JsonPathTool {
      * @param <T> 默认值类型
      * @return T
      */
-    public static <T> T tryRead(Object data, String jsonPath, T defaultValue) {
+    public static <T> T tryRead(Object data, @Language("jsonpath") String jsonPath, T defaultValue) {
         try {
-            T result = JsonPath.read(data, "$." + jsonPath);
+            T result = JsonPath.read(data, jsonPath);
             return result == null ? defaultValue : result;
         } catch (PathNotFoundException ex) {
-            log.error("MapTool#tryDeepGet error, stacktrace: ", ex);
+            log.error("", ex);
             return defaultValue;
         }
     }

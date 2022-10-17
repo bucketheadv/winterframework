@@ -11,7 +11,7 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/2/11 10:00 上午
  */
-public interface RedisTemplate extends ServerCommands, DatabaseCommands, JedisCommands, JedisBinaryCommands, ControlCommands, ControlBinaryCommands, ClusterCommands, ModuleCommands, GenericControlCommands, SentinelCommands, Closeable {
+public interface JedisTemplate extends ServerCommands, DatabaseCommands, JedisCommands, JedisBinaryCommands, ControlCommands, ControlBinaryCommands, ClusterCommands, ModuleCommands, GenericControlCommands, SentinelCommands, Closeable {
     /**
      * multi操作
      * @param callback 回调方法

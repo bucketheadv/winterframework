@@ -21,7 +21,7 @@ public final class BeanTool {
             BeanUtils.copyProperties(source, obj);
             return obj;
         } catch (Exception e) {
-            log.error("BeanTool#copyAs异常: ", e);
+            log.error("copyAs异常: ", e);
             throw new RuntimeException(e);
         }
     }

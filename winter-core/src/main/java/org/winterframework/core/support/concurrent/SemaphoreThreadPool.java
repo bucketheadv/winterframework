@@ -46,13 +46,13 @@ public class SemaphoreThreadPool {
                 try {
                     command.run();
                 } catch (Exception e) {
-                    log.error("SemaphoreThreadPool#execute command run error, msg: ", e);
+                    log.error("execute command run error, msg: ", e);
                 } finally {
                     semaphore.release();
                 }
             });
         } catch (InterruptedException e) {
-            log.error("SemaphoreThreadPool#execute error, msg: ", e);
+            log.error("execute error, msg: ", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class SemaphoreThreadPool {
             pool.shutdown();
             releaseAll();
         } catch (Exception e) {
-            log.error("SemaphoreThreadPool#shutdown error, msg: ", e);
+            log.error("shutdown error, msg: ", e);
         }
     }
 
@@ -75,7 +75,7 @@ public class SemaphoreThreadPool {
         try {
             semaphore.acquire(threadCount);
         } catch (InterruptedException e) {
-            log.error("SemaphoreThreadPool#await error, msg: ", e);
+            log.error("await error, msg: ", e);
         }
     }
 

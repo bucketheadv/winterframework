@@ -23,14 +23,14 @@ import java.util.Set;
  * Created on 2022/1/14 11:04 下午
  */
 @Slf4j
-public class DefaultRedisTemplate implements RedisTemplate {
+public class DefaultJedisTemplate implements JedisTemplate {
     private final JedisPool masterPool;
 
     private final List<JedisPool> slavePools;
 
     private final String name;
 
-    public DefaultRedisTemplate(String name, JedisPool masterPool, List<JedisPool> slavePools) {
+    public DefaultJedisTemplate(String name, JedisPool masterPool, List<JedisPool> slavePools) {
         this.name = name;
         this.masterPool = masterPool;
         this.slavePools = slavePools;
@@ -49,7 +49,7 @@ public class DefaultRedisTemplate implements RedisTemplate {
         try (Jedis jedis = jedisPool.getResource()){
             return callback.apply(jedis);
         } catch (Exception e) {
-            log.error("RedisTemplate#tryGetResource error: ", e);
+            log.error("tryGetResource error: ", e);
             throw new RuntimeException(e);
         }
     }
