@@ -12,6 +12,7 @@ import redis.clients.jedis.args.*;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.jedis.params.*;
 import redis.clients.jedis.resps.*;
+import redis.clients.jedis.util.KeyValue;
 import redis.clients.jedis.util.Pool;
 
 import java.util.List;
@@ -234,6 +235,26 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String aclDryRun(String username, String command, String... args) {
+        return tryGetResource(jedis -> jedis.aclDryRun(username, command, args));
+    }
+
+    @Override
+    public String aclDryRun(String username, CommandArguments commandArgs) {
+        return tryGetResource(jedis -> jedis.aclDryRun(username, commandArgs));
+    }
+
+    @Override
+    public byte[] aclDryRunBinary(byte[] username, byte[] command, byte[]... args) {
+        return tryGetResource(jedis -> jedis.aclDryRunBinary(username, command, args));
+    }
+
+    @Override
+    public byte[] aclDryRunBinary(byte[] username, CommandArguments commandArgs) {
+        return tryGetResource(jedis -> jedis.aclDryRunBinary(username, commandArgs));
+    }
+
+    @Override
     public String clientKill(byte[] ipPort) {
         return tryGetResource(jedis -> jedis.clientKill(ipPort));
     }
@@ -339,6 +360,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String clientNoEvictOn() {
+        return tryGetResource(Jedis::clientNoEvictOn);
+    }
+
+    @Override
+    public String clientNoEvictOff() {
+        return tryGetResource(Jedis::clientNoEvictOff);
+    }
+
+    @Override
     public String asking() {
         return tryGetResource(Jedis::asking);
     }
@@ -359,7 +390,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public String clusterReplicas(String nodeId) {
+    public List<String> clusterReplicas(String nodeId) {
         return tryGetResource(jedis -> jedis.clusterReplicas(nodeId));
     }
 
@@ -429,6 +460,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long clusterCountFailureReports(String nodeId) {
+        return tryGetResource(jedis -> jedis.clusterCountFailureReports(nodeId));
+    }
+
+    @Override
     public long clusterCountKeysInSlot(int slot) {
         return tryGetResource(jedis -> jedis.clusterCountKeysInSlot(slot));
     }
@@ -436,6 +472,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String clusterSaveConfig() {
         return tryGetResource(Jedis::clusterSaveConfig);
+    }
+
+    @Override
+    public String clusterSetConfigEpoch(long configEpoch) {
+        return tryGetResource(jedis -> jedis.clusterSetConfigEpoch(configEpoch));
+    }
+
+    @Override
+    public String clusterBumpEpoch() {
+        return tryGetResource(Jedis::clusterBumpEpoch);
     }
 
     @Override
@@ -480,8 +526,28 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public List<Map<String, Object>> clusterLinks() {
+        return tryGetResource(Jedis::clusterLinks);
+    }
+
+    @Override
+    public String clusterAddSlotsRange(int... ranges) {
+        return tryGetResource(jedis -> jedis.clusterAddSlotsRange(ranges));
+    }
+
+    @Override
+    public String clusterDelSlotsRange(int... ranges) {
+        return tryGetResource(jedis -> jedis.clusterDelSlotsRange(ranges));
+    }
+
+    @Override
     public List<String> configGet(String pattern) {
         return tryGetResource(jedis -> jedis.configGet(pattern));
+    }
+
+    @Override
+    public List<String> configGet(String... patterns) {
+        return tryGetResource(jedis -> jedis.configGet(patterns));
     }
 
     @Override
@@ -490,13 +556,28 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public List<byte[]> configGet(byte[]... patterns) {
+        return tryGetResource(jedis -> jedis.configGet(patterns));
+    }
+
+    @Override
     public String configSet(String parameter, String value) {
         return tryGetResource(jedis -> jedis.configSet(parameter, value));
     }
 
     @Override
+    public String configSet(String... parameterValues) {
+        return tryGetResource(jedis -> jedis.configSet(parameterValues));
+    }
+
+    @Override
     public String configSet(byte[] parameter, byte[] value) {
         return tryGetResource(jedis -> jedis.configSet(parameter, value));
+    }
+
+    @Override
+    public String configSet(byte[]... parameterValues) {
+        return tryGetResource(jedis -> jedis.configSet(parameterValues));
     }
 
     @Override
@@ -685,6 +766,61 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public List<GeoRadiusResponse> geosearch(byte[] key, byte[] member, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, member, radius, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(byte[] key, GeoCoordinate coord, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, coord, radius, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(byte[] key, byte[] member, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, member, width, height, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(byte[] key, GeoCoordinate coord, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, coord, width, height, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(byte[] key, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearch(key, params));
+    }
+
+    @Override
+    public long geosearchStore(byte[] dest, byte[] src, byte[] member, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, member, radius, unit));
+    }
+
+    @Override
+    public long geosearchStore(byte[] dest, byte[] src, GeoCoordinate coord, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, coord, radius, unit));
+    }
+
+    @Override
+    public long geosearchStore(byte[] dest, byte[] src, byte[] member, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, member, width, height, unit));
+    }
+
+    @Override
+    public long geosearchStore(byte[] dest, byte[] src, GeoCoordinate coord, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, coord, width, height, unit));
+    }
+
+    @Override
+    public long geosearchStore(byte[] dest, byte[] src, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, params));
+    }
+
+    @Override
+    public long geosearchStoreStoreDist(byte[] dest, byte[] src, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearchStoreStoreDist(dest, src, params));
+    }
+
+    @Override
     public long geoadd(String key, double longitude, double latitude, String member) {
         return tryGetResource(jedis -> jedis.geoadd(key, longitude, latitude, member));
     }
@@ -767,6 +903,61 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long georadiusByMemberStore(String key, String member, double radius, GeoUnit unit, GeoRadiusParam param, GeoRadiusStoreParam storeParam) {
         return tryGetResource(jedis -> jedis.georadiusByMemberStore(key, member, radius, unit, param, storeParam));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(String key, String member, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, member, radius, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(String key, GeoCoordinate coord, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, coord, radius, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(String key, String member, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, member, width, height, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(String key, GeoCoordinate coord, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearch(key, coord, width, height, unit));
+    }
+
+    @Override
+    public List<GeoRadiusResponse> geosearch(String key, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearch(key, params));
+    }
+
+    @Override
+    public long geosearchStore(String dest, String src, String member, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, member, radius, unit));
+    }
+
+    @Override
+    public long geosearchStore(String dest, String src, GeoCoordinate coord, double radius, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, coord, radius, unit));
+    }
+
+    @Override
+    public long geosearchStore(String dest, String src, String member, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, member, width, height, unit));
+    }
+
+    @Override
+    public long geosearchStore(String dest, String src, GeoCoordinate coord, double width, double height, GeoUnit unit) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, coord, width, height, unit));
+    }
+
+    @Override
+    public long geosearchStore(String dest, String src, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearchStore(dest, src, params));
+    }
+
+    @Override
+    public long geosearchStoreStoreDist(String dest, String src, GeoSearchParam params) {
+        return tryGetResource(jedis -> jedis.geosearchStoreStoreDist(dest, src, params));
     }
 
     @Override
@@ -1040,8 +1231,28 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long expire(byte[] key, long seconds, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.expire(key, seconds, expiryOption));
+    }
+
+    @Override
     public long pexpire(byte[] key, long milliseconds) {
         return tryGetResource(jedis -> jedis.pexpire(key, milliseconds));
+    }
+
+    @Override
+    public long pexpire(byte[] key, long milliseconds, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.pexpire(key, milliseconds, expiryOption));
+    }
+
+    @Override
+    public long expireTime(byte[] key) {
+        return tryGetResource(jedis -> jedis.expireTime(key));
+    }
+
+    @Override
+    public long pexpireTime(byte[] key) {
+        return tryGetResource(jedis -> jedis.pexpireTime(key));
     }
 
     @Override
@@ -1050,8 +1261,18 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long expireAt(byte[] key, long unixTime, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.expireAt(key, unixTime, expiryOption));
+    }
+
+    @Override
     public long pexpireAt(byte[] key, long millisecondsTimestamp) {
         return tryGetResource(jedis -> jedis.pexpireAt(key, millisecondsTimestamp));
+    }
+
+    @Override
+    public long pexpireAt(byte[] key, long millisecondsTimestamp, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.pexpireAt(key, millisecondsTimestamp, expiryOption));
     }
 
     @Override
@@ -1127,6 +1348,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long sort(byte[] key, byte[] dstkey) {
         return tryGetResource(jedis -> jedis.sort(key, dstkey));
+    }
+
+    @Override
+    public List<byte[]> sortReadonly(byte[] key, SortingParams sortingParams) {
+        return tryGetResource(jedis -> jedis.sortReadonly(key, sortingParams));
     }
 
     @Override
@@ -1235,8 +1461,28 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long expire(String key, long seconds, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.expire(key, seconds, expiryOption));
+    }
+
+    @Override
     public long pexpire(String key, long milliseconds) {
         return tryGetResource(jedis -> jedis.pexpire(key, milliseconds));
+    }
+
+    @Override
+    public long pexpire(String key, long milliseconds, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.pexpire(key, milliseconds, expiryOption));
+    }
+
+    @Override
+    public long expireTime(String key) {
+        return tryGetResource(jedis -> jedis.expireTime(key));
+    }
+
+    @Override
+    public long pexpireTime(String key) {
+        return tryGetResource(jedis -> jedis.pexpireTime(key));
     }
 
     @Override
@@ -1245,8 +1491,18 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long expireAt(String key, long unixTime, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.expireAt(key, unixTime, expiryOption));
+    }
+
+    @Override
     public long pexpireAt(String key, long millisecondsTimestamp) {
         return tryGetResource(jedis -> jedis.pexpireAt(key, millisecondsTimestamp));
+    }
+
+    @Override
+    public long pexpireAt(String key, long millisecondsTimestamp, ExpiryOption expiryOption) {
+        return tryGetResource(jedis -> jedis.pexpireAt(key, millisecondsTimestamp, expiryOption));
     }
 
     @Override
@@ -1287,6 +1543,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long sort(String key, SortingParams sortingParams, String dstkey) {
         return tryGetResource(jedis -> jedis.sort(key, sortingParams, dstkey));
+    }
+
+    @Override
+    public List<String> sortReadonly(String key, SortingParams sortingParams) {
+        return tryGetResource(jedis -> jedis.sortReadonly(key, sortingParams));
     }
 
     @Override
@@ -1332,6 +1593,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public Long memoryUsage(String key, int samples) {
         return tryGetResource(jedis -> jedis.memoryUsage(key, samples));
+    }
+
+    @Override
+    public String memoryPurge() {
+        return tryGetResource(Jedis::memoryPurge);
+    }
+
+    @Override
+    public Map<String, Object> memoryStats() {
+        return tryGetResource(Jedis::memoryStats);
     }
 
     @Override
@@ -1520,6 +1791,26 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public KeyValue<byte[], List<byte[]>> lmpop(ListDirection direction, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.lmpop(direction, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<byte[]>> lmpop(ListDirection direction, int count, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.lmpop(direction, count, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<byte[]>> blmpop(long timeout, ListDirection direction, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.blmpop(timeout, direction, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<byte[]>> blmpop(long timeout, ListDirection direction, int count, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.blmpop(timeout, direction, count, keys));
+    }
+
+    @Override
     public long rpush(String key, String... strings) {
         return tryGetResource(jedis -> jedis.rpush(key, strings));
     }
@@ -1670,8 +1961,33 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public KeyValue<String, List<String>> lmpop(ListDirection direction, String... keys) {
+        return tryGetResource(jedis -> jedis.lmpop(direction, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<String>> lmpop(ListDirection direction, int count, String... keys) {
+        return tryGetResource(jedis -> jedis.lmpop(direction, count, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<String>> blmpop(long timeout, ListDirection direction, String... keys) {
+        return tryGetResource(jedis -> jedis.blmpop(timeout, direction, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<String>> blmpop(long timeout, ListDirection direction, int count, String... keys) {
+        return tryGetResource(jedis -> jedis.blmpop(timeout, direction, count, keys));
+    }
+
+    @Override
     public String moduleLoad(String path) {
         return tryGetResource(jedis -> jedis.moduleLoad(path));
+    }
+
+    @Override
+    public String moduleLoad(String path, String... args) {
+        return tryGetResource(jedis -> jedis.moduleLoad(path, args));
     }
 
     @Override
@@ -1745,6 +2061,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public Object evalReadonly(byte[] script, List<byte[]> keys, List<byte[]> args) {
+        return tryGetResource(jedis -> jedis.evalReadonly(script, keys, args));
+    }
+
+    @Override
     public Object evalsha(byte[] sha1) {
         return tryGetResource(jedis -> jedis.evalsha(sha1));
     }
@@ -1757,6 +2078,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public Object evalsha(byte[] sha1, List<byte[]> keys, List<byte[]> args) {
         return tryGetResource(jedis -> jedis.evalsha(sha1, keys, args));
+    }
+
+    @Override
+    public Object evalshaReadonly(byte[] sha1, List<byte[]> keys, List<byte[]> args) {
+        return tryGetResource(jedis -> jedis.evalshaReadonly(sha1, keys, args));
     }
 
     @Override
@@ -1775,6 +2101,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public Object evalReadonly(String script, List<String> keys, List<String> args) {
+        return tryGetResource(jedis -> jedis.evalReadonly(script, keys, args));
+    }
+
+    @Override
     public Object evalsha(String sha1) {
         return tryGetResource(jedis -> jedis.evalsha(sha1));
     }
@@ -1787,6 +2118,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public Object evalsha(String sha1, List<String> keys, List<String> args) {
         return tryGetResource(jedis -> jedis.evalsha(sha1, keys, args));
+    }
+
+    @Override
+    public Object evalshaReadonly(String sha1, List<String> keys, List<String> args) {
+        return tryGetResource(jedis -> jedis.evalshaReadonly(sha1, keys, args));
     }
 
     @Override
@@ -1911,6 +2247,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String bgsaveSchedule() {
+        return tryGetResource(Jedis::bgsaveSchedule);
+    }
+
+    @Override
     public String bgrewriteaof() {
         return tryGetResource(Jedis::bgrewriteaof);
     }
@@ -1937,6 +2278,19 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public void shutdown(ShutdownParams shutdownParams) throws JedisException {
+        tryGetResource(jedis -> {
+            jedis.shutdown(shutdownParams);
+            return null;
+        });
+    }
+
+    @Override
+    public String shutdownAbort() {
+        return tryGetResource(Jedis::shutdownAbort);
+    }
+
+    @Override
     public String info() {
         return tryGetResource(Jedis::info);
     }
@@ -1957,8 +2311,28 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String replicaof(String host, int port) {
+        return tryGetResource(jedis -> jedis.replicaof(host, port));
+    }
+
+    @Override
+    public String replicaofNoOne() {
+        return tryGetResource(Jedis::replicaofNoOne);
+    }
+
+    @Override
     public long waitReplicas(int replicas, long timeout) {
         return tryGetResource(jedis -> jedis.waitReplicas(replicas, timeout));
+    }
+
+    @Override
+    public String lolwut() {
+        return tryGetResource(Jedis::lolwut);
+    }
+
+    @Override
+    public String lolwut(LolwutParams lolwutParams) {
+        return tryGetResource(jedis -> jedis.lolwut(lolwutParams));
     }
 
     @Override
@@ -2034,6 +2408,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long sinterstore(byte[] dstkey, byte[]... keys) {
         return tryGetResource(jedis -> jedis.sinterstore(dstkey, keys));
+    }
+
+    @Override
+    public long sintercard(byte[]... keys) {
+        return tryGetResource(jedis -> jedis.sintercard(keys));
+    }
+
+    @Override
+    public long sintercard(int limit, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.sintercard(limit, keys));
     }
 
     @Override
@@ -2124,6 +2508,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long sinterstore(String dstkey, String... keys) {
         return tryGetResource(jedis -> jedis.sinterstore(dstkey, keys));
+    }
+
+    @Override
+    public long sintercard(String... keys) {
+        return tryGetResource(jedis -> jedis.sintercard(keys));
+    }
+
+    @Override
+    public long sintercard(int limit, String... keys) {
+        return tryGetResource(jedis -> jedis.sintercard(limit, keys));
     }
 
     @Override
@@ -2239,6 +2633,21 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public List<Tuple> zrevrangeWithScores(byte[] key, long start, long stop) {
         return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop), true);
+    }
+
+    @Override
+    public List<byte[]> zrange(byte[] key, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrange(key, zRangeParams), true);
+    }
+
+    @Override
+    public List<Tuple> zrangeWithScores(byte[] key, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrangeWithScores(key, zRangeParams), true);
+    }
+
+    @Override
+    public long zrangestore(byte[] dest, byte[] src, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrangestore(dest, src, zRangeParams));
     }
 
     @Override
@@ -2477,6 +2886,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long zintercard(byte[]... keys) {
+        return tryGetResource(jedis -> jedis.zintercard(keys));
+    }
+
+    @Override
+    public long zintercard(long limit, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.zintercard(limit, keys));
+    }
+
+    @Override
     public Set<byte[]> zunion(ZParams zParams, byte[]... keys) {
         return tryGetResource(jedis -> jedis.zunion(zParams, keys));
     }
@@ -2494,6 +2913,26 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long zunionstore(byte[] dstkey, ZParams zParams, byte[]... sets) {
         return tryGetResource(jedis -> jedis.zunionstore(dstkey, zParams, sets));
+    }
+
+    @Override
+    public KeyValue<byte[], List<Tuple>> zmpop(SortedSetOption option, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.zmpop(option, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<Tuple>> zmpop(SortedSetOption option, int count, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.zmpop(option, count, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<Tuple>> bzmpop(long timeout, SortedSetOption option, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.bzmpop(timeout, option, keys));
+    }
+
+    @Override
+    public KeyValue<byte[], List<Tuple>> bzmpop(long timeout, SortedSetOption option, int count, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.bzmpop(timeout, option, count, keys));
     }
 
     @Override
@@ -2564,6 +3003,21 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public List<Tuple> zrevrangeWithScores(String key, long start, long stop) {
         return tryGetResource(jedis -> jedis.zrevrangeWithScores(key, start, stop), true);
+    }
+
+    @Override
+    public List<String> zrange(String key, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrange(key, zRangeParams), true);
+    }
+
+    @Override
+    public List<Tuple> zrangeWithScores(String key, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrangeWithScores(key, zRangeParams), true);
+    }
+
+    @Override
+    public long zrangestore(String dest, String src, ZRangeParams zRangeParams) {
+        return tryGetResource(jedis -> jedis.zrangestore(dest, src, zRangeParams));
     }
 
     @Override
@@ -2792,6 +3246,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long zintercard(String... keys) {
+        return tryGetResource(jedis -> jedis.zintercard(keys));
+    }
+
+    @Override
+    public long zintercard(long limit, String... keys) {
+        return tryGetResource(jedis -> jedis.zintercard(limit, keys));
+    }
+
+    @Override
     public Set<String> zinter(ZParams zParams, String... keys) {
         return tryGetResource(jedis -> jedis.zinter(zParams, keys));
     }
@@ -2819,6 +3283,26 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long zunionstore(String dstkey, ZParams zParams, String... sets) {
         return tryGetResource(jedis -> jedis.zunionstore(dstkey, zParams, sets));
+    }
+
+    @Override
+    public KeyValue<String, List<Tuple>> zmpop(SortedSetOption option, String... keys) {
+        return tryGetResource(jedis -> jedis.zmpop(option, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<Tuple>> zmpop(SortedSetOption option, int count, String... keys) {
+        return tryGetResource(jedis -> jedis.zmpop(option, count, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<Tuple>> bzmpop(long timeout, SortedSetOption option, String... keys) {
+        return tryGetResource(jedis -> jedis.bzmpop(timeout, option, keys));
+    }
+
+    @Override
+    public KeyValue<String, List<Tuple>> bzmpop(long timeout, SortedSetOption option, int count, String... keys) {
+        return tryGetResource(jedis -> jedis.bzmpop(timeout, option, count, keys));
     }
 
     @Override
@@ -2869,6 +3353,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long xgroupDestroy(byte[] key, byte[] consumer) {
         return tryGetResource(jedis -> jedis.xgroupDestroy(key, consumer));
+    }
+
+    @Override
+    public boolean xgroupCreateConsumer(byte[] key, byte[] groupName, byte[] consumerName) {
+        return tryGetResource(jedis -> jedis.xgroupCreateConsumer(key, groupName, consumerName));
     }
 
     @Override
@@ -2932,8 +3421,23 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public Object xinfoStreamFull(byte[] key) {
+        return tryGetResource(jedis -> jedis.xinfoStreamFull(key));
+    }
+
+    @Override
+    public Object xinfoStreamFull(byte[] key, int count) {
+        return tryGetResource(jedis -> jedis.xinfoStreamFull(key, count));
+    }
+
+    @Override
     public List<Object> xinfoGroup(byte[] key) {
         return tryGetResource(jedis -> jedis.xinfoGroup(key));
+    }
+
+    @Override
+    public List<Object> xinfoGroups(byte[] key) {
+        return tryGetResource(jedis -> jedis.xinfoGroups(key));
     }
 
     @Override
@@ -3029,6 +3533,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public boolean xgroupCreateConsumer(String key, String groupName, String consumerName) {
+        return tryGetResource(jedis -> jedis.xgroupCreateConsumer(key, groupName, consumerName));
+    }
+
+    @Override
     public long xgroupDelConsumer(String key, String groupname, String consumerName) {
         return tryGetResource(jedis -> jedis.xgroupDelConsumer(key, groupname, consumerName));
     }
@@ -3089,8 +3598,23 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public StreamFullInfo xinfoStreamFull(String key) {
+        return tryGetResource(jedis -> jedis.xinfoStreamFull(key));
+    }
+
+    @Override
+    public StreamFullInfo xinfoStreamFull(String key, int count) {
+        return tryGetResource(jedis -> jedis.xinfoStreamFull(key, count));
+    }
+
+    @Override
     public List<StreamGroupInfo> xinfoGroup(String key) {
         return tryGetResource(jedis -> jedis.xinfoGroup(key));
+    }
+
+    @Override
+    public List<StreamGroupInfo> xinfoGroups(String key) {
+        return tryGetResource(jedis -> jedis.xinfoGroups(key));
     }
 
     @Override
@@ -3239,6 +3763,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long bitcount(byte[] key, long start, long end, BitCountOption option) {
+        return tryGetResource(jedis -> jedis.bitcount(key, start, end, option));
+    }
+
+    @Override
     public long bitpos(byte[] key, boolean value) {
         return tryGetResource(jedis -> jedis.bitpos(key, value));
     }
@@ -3266,6 +3795,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public LCSMatchResult strAlgoLCSKeys(byte[] keyA, byte[] keyB, StrAlgoLCSParams params) {
         return tryGetResource(jedis -> jedis.strAlgoLCSKeys(keyA, keyB, params));
+    }
+
+    @Override
+    public LCSMatchResult lcs(byte[] keyA, byte[] keyB, LCSParams params) {
+        return tryGetResource(jedis -> jedis.lcs(keyA, keyB, params));
     }
 
     @Override
@@ -3399,6 +3933,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public long bitcount(String key, long start, long end, BitCountOption option) {
+        return tryGetResource(jedis -> jedis.bitcount(key, start, end, option));
+    }
+
+    @Override
     public long bitpos(String key, boolean value) {
         return tryGetResource(jedis -> jedis.bitpos(key, value));
     }
@@ -3429,6 +3968,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public LCSMatchResult lcs(String keyA, String keyB, LCSParams params) {
+        return tryGetResource(jedis -> jedis.lcs(keyA, keyB, params));
+    }
+
+    @Override
     public List<Object> multi(JedisMultiCallback callback) {
         return tryGetResource(jedis -> {
             Transaction transaction = jedis.multi();
@@ -3453,5 +3997,135 @@ public class DefaultJedisTemplate implements JedisTemplate {
             callback.apply(pipeline);
             return pipeline.syncAndReturnAll();
         }, true);
+    }
+
+    @Override
+    public Object fcall(byte[] name, List<byte[]> keys, List<byte[]> args) {
+        return tryGetResource(jedis -> jedis.fcall(name, keys, args));
+    }
+
+    @Override
+    public Object fcallReadonly(byte[] name, List<byte[]> keys, List<byte[]> args) {
+        return tryGetResource(jedis -> jedis.fcallReadonly(name, keys, args));
+    }
+
+    @Override
+    public String functionDelete(byte[] libraryName) {
+        return tryGetResource(jedis -> jedis.functionDelete(libraryName));
+    }
+
+    @Override
+    public List<Object> functionListBinary() {
+        return tryGetResource(Jedis::functionListBinary);
+    }
+
+    @Override
+    public List<Object> functionList(byte[] libraryNamePattern) {
+        return tryGetResource(jedis -> jedis.functionList(libraryNamePattern));
+    }
+
+    @Override
+    public List<Object> functionListWithCodeBinary() {
+        return tryGetResource(Jedis::functionListWithCodeBinary);
+    }
+
+    @Override
+    public List<Object> functionListWithCode(byte[] libraryNamePattern) {
+        return tryGetResource(jedis -> jedis.functionListWithCode(libraryNamePattern));
+    }
+
+    @Override
+    public String functionLoad(byte[] functionCode) {
+        return tryGetResource(jedis -> jedis.functionLoad(functionCode));
+    }
+
+    @Override
+    public String functionLoadReplace(byte[] functionCode) {
+        return tryGetResource(jedis -> jedis.functionLoadReplace(functionCode));
+    }
+
+    @Override
+    public Object functionStatsBinary() {
+        return tryGetResource(Jedis::functionStatsBinary);
+    }
+
+    @Override
+    public Object fcall(String name, List<String> keys, List<String> args) {
+        return tryGetResource(jedis -> jedis.fcall(name, keys, args));
+    }
+
+    @Override
+    public Object fcallReadonly(String name, List<String> keys, List<String> args) {
+        return tryGetResource(jedis -> jedis.fcallReadonly(name, keys, args));
+    }
+
+    @Override
+    public String functionDelete(String libraryName) {
+        return tryGetResource(jedis -> jedis.functionDelete(libraryName));
+    }
+
+    @Override
+    public byte[] functionDump() {
+        return tryGetResource(Jedis::functionDump);
+    }
+
+    @Override
+    public String functionFlush() {
+        return tryGetResource(Jedis::functionFlush);
+    }
+
+    @Override
+    public String functionFlush(FlushMode mode) {
+        return tryGetResource(jedis -> jedis.functionFlush(mode));
+    }
+
+    @Override
+    public String functionKill() {
+        return tryGetResource(Jedis::functionKill);
+    }
+
+    @Override
+    public List<LibraryInfo> functionList() {
+        return tryGetResource(Jedis::functionList);
+    }
+
+    @Override
+    public List<LibraryInfo> functionList(String libraryNamePattern) {
+        return tryGetResource(jedis -> jedis.functionList(libraryNamePattern));
+    }
+
+    @Override
+    public List<LibraryInfo> functionListWithCode() {
+        return tryGetResource(Jedis::functionListWithCode);
+    }
+
+    @Override
+    public List<LibraryInfo> functionListWithCode(String libraryNamePattern) {
+        return tryGetResource(jedis -> jedis.functionListWithCode(libraryNamePattern));
+    }
+
+    @Override
+    public String functionLoad(String functionCode) {
+        return tryGetResource(jedis -> jedis.functionLoad(functionCode));
+    }
+
+    @Override
+    public String functionLoadReplace(String functionCode) {
+        return tryGetResource(jedis -> jedis.functionLoadReplace(functionCode));
+    }
+
+    @Override
+    public String functionRestore(byte[] serializedValue) {
+        return tryGetResource(jedis -> jedis.functionRestore(serializedValue));
+    }
+
+    @Override
+    public String functionRestore(byte[] serializedValue, FunctionRestorePolicy policy) {
+        return tryGetResource(jedis -> jedis.functionRestore(serializedValue, policy));
+    }
+
+    @Override
+    public FunctionStats functionStats() {
+        return tryGetResource(Jedis::functionStats);
     }
 }
