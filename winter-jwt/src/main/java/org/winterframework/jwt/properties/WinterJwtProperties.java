@@ -1,7 +1,8 @@
 package org.winterframework.jwt.properties;
 
 import com.google.common.collect.Lists;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +14,9 @@ import java.util.Locale;
  * @author qinglinl
  * Created on 2022/9/27 5:54 PM
  */
-@Data
 @Configuration
+@Getter
+@Setter
 @ConfigurationProperties(prefix = "winter.jwt")
 public class WinterJwtProperties {
 	/**

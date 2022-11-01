@@ -1,12 +1,14 @@
 package org.winterframework.data.redis.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author sven
  * Created on 2022/1/14 10:28 下午
  */
-@Data
+@Getter
+@Setter
 public class RedisProperties {
     /**
      * host

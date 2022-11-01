@@ -1,6 +1,7 @@
 package org.winterframework.rbac.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -8,7 +9,8 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/9/30 10:07 AM
  */
-@Data
+@Getter
+@Setter
 public class Role {
 	/**
 	 * 是否是超级管理员

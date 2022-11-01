@@ -3,8 +3,9 @@ package org.winterframework.jwt.interceptor;
 import com.google.common.collect.Maps;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ import java.util.*;
  * @author qinglinl
  * Created on 2022/9/27 3:06 PM
  */
-@Data
+@Getter
+@Setter
 @Slf4j
 @NoArgsConstructor
 public class BasedInterceptor implements AsyncHandlerInterceptor {

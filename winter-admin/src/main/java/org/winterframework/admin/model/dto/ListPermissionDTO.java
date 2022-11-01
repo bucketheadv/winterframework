@@ -1,12 +1,14 @@
 package org.winterframework.admin.model.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/10/10 9:09 AM
  */
-@Data
+@Getter
+@Setter
 public class ListPermissionDTO {
 	private String permissionName;
 

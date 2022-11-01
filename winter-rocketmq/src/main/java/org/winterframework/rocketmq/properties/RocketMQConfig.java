@@ -1,6 +1,7 @@
 package org.winterframework.rocketmq.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.winterframework.rocketmq.constants.Const;
@@ -11,7 +12,8 @@ import java.util.Map;
  * @author qinglinl
  * Created on 2022/3/2 12:56 下午
  */
-@Data
+@Getter
+@Setter
 @ConfigurationProperties(prefix = Const.configPrefix)
 public class RocketMQConfig {
     /**

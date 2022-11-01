@@ -1,12 +1,14 @@
 package org.winterframework.admin.model.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/10/8 3:14 PM
  */
-@Data
+@Getter
+@Setter
 public class ListRolePermissionVO {
 	private Long permissionId;
 

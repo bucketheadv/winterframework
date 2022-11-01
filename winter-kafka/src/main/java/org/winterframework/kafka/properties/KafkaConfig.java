@@ -1,6 +1,7 @@
 package org.winterframework.kafka.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.winterframework.kafka.constants.Const;
 
@@ -10,7 +11,8 @@ import java.util.Map;
  * @author sven
  * Created on 2022/2/25 10:23 下午
  */
-@Data
+@Getter
+@Setter
 @ConfigurationProperties(prefix = Const.configPrefix)
 public class KafkaConfig {
     /**

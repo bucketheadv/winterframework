@@ -48,8 +48,11 @@ public class RoleController extends BaseController {
 	@RbacPerm
 	@PostMapping("/delete")
 	public ApiResponse<Void> delete(@RequestBody @Valid DeleteRoleDTO req) {
-		roleService.deleteByIds(req.getIds());
-		return build(ErrorCode.OK);
+		int num = roleService.deleteByIds(req.getIds());
+		if (num > 0) {
+			return build(ErrorCode.OK);
+		}
+		return build(ErrorCode.PARAM_ERROR);
 	}
 
 	@GetMapping("/listAdminUserRoles")

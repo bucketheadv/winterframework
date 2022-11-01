@@ -1,6 +1,7 @@
 package org.winterframework.kafka.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,8 @@ import java.util.Map;
  * @author sven
  * Created on 2022/2/25 10:36 下午
  */
-@Data
+@Getter
+@Setter
 public class KafkaConsumerProperties {
     private String bootstrapServers = "localhost:9092";
 

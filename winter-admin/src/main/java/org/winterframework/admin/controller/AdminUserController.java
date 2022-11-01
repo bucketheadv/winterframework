@@ -53,7 +53,10 @@ public class AdminUserController extends BaseController {
 	@RbacPerm
 	@PostMapping("/delete")
 	ApiResponse<Void> delete(@RequestBody @Valid DeleteAdminUserDTO req) {
-		adminUserService.deleteByIds(req.getIds());
-		return build(ErrorCode.OK);
+		int num = adminUserService.deleteByIds(req.getIds());
+		if (num > 0) {
+			return build(ErrorCode.OK);
+		}
+		return build(ErrorCode.PARAM_ERROR);
 	}
 }

@@ -1,7 +1,8 @@
 package org.winterframework.admin.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -9,7 +10,8 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/10/8 3:46 PM
  */
-@Data
+@Getter
+@Setter
 public class UpdateRoleDTO {
 	private Long id;
 

@@ -1,6 +1,7 @@
 package org.winterframework.job.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.winterframework.job.constants.Const;
 
@@ -8,7 +9,8 @@ import org.winterframework.job.constants.Const;
  * @author qinglinl
  * Created on 2022/3/8 4:00 下午
  */
-@Data
+@Getter
+@Setter
 @ConfigurationProperties(Const.configPrefix)
 public class JobProperties {
     /**

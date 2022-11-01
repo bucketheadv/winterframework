@@ -1,13 +1,19 @@
 package org.winterframework.core.support;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * @author sven
  * Created on 2022/1/11 8:45 下午
  */
-@Data
-public final class BooleanPair<T> {
+@Getter
+@Setter
+public final class BooleanPair<T> implements Serializable {
+    private static final long serialVersionUID = -1193747389324827610L;
+
     private boolean success;
 
     private String msg;

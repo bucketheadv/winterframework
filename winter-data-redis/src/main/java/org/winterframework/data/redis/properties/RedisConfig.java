@@ -1,6 +1,7 @@
 package org.winterframework.data.redis.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.winterframework.data.redis.constants.Const;
 
@@ -10,7 +11,9 @@ import java.util.Map;
  * @author sven
  * Created on 2022/1/14 10:35 下午
  */
-@Data
+
+@Getter
+@Setter
 @ConfigurationProperties(prefix = Const.configPrefix)
 public class RedisConfig {
     /**

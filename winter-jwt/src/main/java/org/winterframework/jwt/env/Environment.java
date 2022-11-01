@@ -1,6 +1,7 @@
 package org.winterframework.jwt.env;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -8,7 +9,8 @@ import java.io.Serializable;
  * @author qinglinl
  * Created on 2022/9/27 2:02 PM
  */
-@Data
+@Getter
+@Setter
 public class Environment implements Serializable {
 	private static final long serialVersionUID = -3793693911012753958L;
 

@@ -47,8 +47,11 @@ public class PermissionController extends BaseController {
 	@RbacPerm
 	@PostMapping("/delete")
 	public ApiResponse<Void> delete(@RequestBody @Valid DeletePermissionDTO req) {
-		permissionService.deleteByIds(req.getIds());
-		return build(ErrorCode.OK);
+		int num = permissionService.deleteByIds(req.getIds());
+		if (num > 0) {
+			return build(ErrorCode.OK);
+		}
+		return build(ErrorCode.PARAM_ERROR);
 	}
 
 	@GetMapping("/listRolePermissions")

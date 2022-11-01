@@ -1,13 +1,15 @@
 package org.winterframework.admin.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/10/8 5:27 PM
  */
-@Data
+@Getter
+@Setter
 public class UpdatePermissionDTO {
 	private Long id;
 

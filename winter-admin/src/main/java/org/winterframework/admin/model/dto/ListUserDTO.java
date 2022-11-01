@@ -1,12 +1,14 @@
 package org.winterframework.admin.model.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/10/11 9:12 AM
  */
-@Data
+@Getter
+@Setter
 public class ListUserDTO {
 	private Integer pageNum = 1;
 

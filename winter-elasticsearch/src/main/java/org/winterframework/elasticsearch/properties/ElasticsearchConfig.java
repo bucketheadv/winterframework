@@ -1,6 +1,7 @@
 package org.winterframework.elasticsearch.properties;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.winterframework.elasticsearch.constants.Const;
 
@@ -11,7 +12,8 @@ import java.util.Map;
  * @author qinglinl
  * Created on 2022/3/4 1:19 下午
  */
-@Data
+@Getter
+@Setter
 @ConfigurationProperties(prefix = Const.configPrefix)
 public class ElasticsearchConfig {
     /**
@@ -24,7 +26,8 @@ public class ElasticsearchConfig {
      */
     private Map<String, ElasticsearchProperties> template;
 
-    @Data
+    @Getter
+    @Setter
     public static class ElasticsearchProperties {
         /**
          * url地址

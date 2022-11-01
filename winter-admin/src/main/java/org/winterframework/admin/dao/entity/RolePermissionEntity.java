@@ -1,12 +1,14 @@
 package org.winterframework.admin.dao.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/9/30 3:27 PM
  */
-@Data
+@Getter
+@Setter
 public class RolePermissionEntity {
 	private Long roleId;
 

@@ -57,6 +57,10 @@ public final class StringTool extends StringUtils {
 		return convert2Short(o, (short) 0);
 	}
 
+	public static String toStringOrNull(Object obj) {
+		return null == obj ? null : obj.toString();
+	}
+
 	@SuppressWarnings("unchecked")
 	private static <T extends Number> T convertNumber(Object o, T defaultVal, ConvertCallback<T> convertCallback) {
 		if (o == null) {

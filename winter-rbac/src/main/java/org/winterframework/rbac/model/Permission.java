@@ -1,12 +1,14 @@
 package org.winterframework.rbac.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author qinglinl
  * Created on 2022/9/30 10:08 AM
  */
-@Data
+@Getter
+@Setter
 public class Permission {
 	private String name;
 
