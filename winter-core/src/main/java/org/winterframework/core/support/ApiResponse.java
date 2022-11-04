@@ -2,6 +2,7 @@ package org.winterframework.core.support;
 
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -14,7 +15,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class ApiResponse<T> implements Serializable {
-    private static final long serialVersionUID = -8829798896960629148L;
+    @Serial
+    private static final long serialVersionUID = 1714714325730785477L;
 
     private int code;
 
@@ -22,6 +24,7 @@ public class ApiResponse<T> implements Serializable {
 
     private T data;
 
+    @Builder.Default
     private long timestamp = System.currentTimeMillis();
 
     private Object extra;

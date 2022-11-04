@@ -59,8 +59,7 @@ public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public ApiResponse<?> onException(Exception e) {
 		log.error("", e);
-		if (e instanceof I18nEnumerable) {
-			I18nEnumerable err = (I18nEnumerable) e;
+		if (e instanceof I18nEnumerable err) {
 			return buildResponse(err);
 		}
 		return buildResponse(ErrorCode.SYSTEM_ERROR);
