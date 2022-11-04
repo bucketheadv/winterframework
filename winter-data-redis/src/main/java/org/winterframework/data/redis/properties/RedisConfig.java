@@ -16,6 +16,7 @@ import java.util.Map;
 @Setter
 @ConfigurationProperties(prefix = Const.configPrefix)
 public class RedisConfig {
+    private boolean enabled = false;
     /**
      * 主redis实例名称
      */

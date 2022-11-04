@@ -41,21 +41,21 @@ public class RedisProperties {
     private int minIdle = 0;
 
     /**
-     * 是否在创建时判断该连接是否还可用
+     * 是否在创建时测试该连接是否还可用
      */
-    private boolean testOnCreate;
+    private boolean testOnCreate = true;
     /**
-     * 是否在借出线程时判断该连接是否还可用
+     * 是否在借出线程时测试该连接是否还可用
      */
-    private boolean testOnBorrow;
+    private boolean testOnBorrow = true;
     /**
-     * 是否在线程池回收线程时判断该连接是否还可用
+     * 是否在线程池回收线程时测试该连接是否还可用
      */
-    private boolean testOnReturn;
+    private boolean testOnReturn = false;
     /**
-     * 是否在闲置时判断该连接是否还可用
+     * 是否在闲置时测试该连接是否还可用
      */
-    private boolean testWhileIdle;
+    private boolean testWhileIdle = true;
 
     /**
      * 是否启用jmx

@@ -18,6 +18,7 @@
         <module>winter-admin</module>
         <module>winter-mybatis-plus</module>
         <module>winter-tk-mybatis</module>
+        <module>winter-cache</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -99,6 +100,11 @@
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-tk-mybatis</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-cache</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
