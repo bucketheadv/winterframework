@@ -1,6 +1,7 @@
 package org.winterframework.core.tool;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,10 @@ public final class JSONTool implements ApplicationContextAware {
 
     private static void init(ObjectMapper om) {
         if (om != null) {
+            // 时间序列化为时间戳
             om.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            // 未知属性时，不拋出异常
+            om.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
         }
     }
 

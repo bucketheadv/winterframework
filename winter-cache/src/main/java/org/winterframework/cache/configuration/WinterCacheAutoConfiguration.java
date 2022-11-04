@@ -1,5 +1,6 @@
 package org.winterframework.cache.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.lang.NonNull;
@@ -81,11 +83,13 @@ public class WinterCacheAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public RedisCacheManager redisCacheManager(RedisTemplate<String, String> redisTemplate) {
+	public RedisCacheManager redisCacheManager(RedisTemplate<String, String> redisTemplate,
+											   ObjectMapper objectMapper) {
+		RedisSerializer<?> redisSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
 		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.entryTtl(Duration.ofSeconds(300))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json()));
+				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 		return new DefaultRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
 	}
 
