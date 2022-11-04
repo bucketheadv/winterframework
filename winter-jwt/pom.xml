@@ -12,7 +12,6 @@
     <artifactId>winter-jwt</artifactId>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jwt.version>0.11.5</jwt.version>
     </properties>
 

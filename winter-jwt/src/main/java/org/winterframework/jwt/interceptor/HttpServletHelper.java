@@ -118,8 +118,7 @@ public class HttpServletHelper {
 	public static String getRequestParam(HttpServletRequest request, Object handler) {
 		if (request.getParameterMap().size() > 0) {
 			return getRequestForm(request, true);
-		} else if (handler instanceof HandlerMethod) {
-			HandlerMethod method = (HandlerMethod) handler;
+		} else if (handler instanceof HandlerMethod method) {
 			if (!isRequestBody(method)) {
 				log.error("get request param failed, current request is not request body, uri: {}", request.getRequestURI());
 				return "";

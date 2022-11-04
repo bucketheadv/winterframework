@@ -31,6 +31,7 @@
     <name>winter</name>
     <description>winter</description>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
         <rocketmq.version>2.2.2</rocketmq.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>

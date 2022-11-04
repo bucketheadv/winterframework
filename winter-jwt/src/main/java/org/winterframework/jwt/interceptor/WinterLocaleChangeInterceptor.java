@@ -1,6 +1,5 @@
 package org.winterframework.jwt.interceptor;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -11,8 +11,7 @@ public class MessageSourceTool {
 	private MessageSourceTool() {}
 
 	public static void initMessageSource(MessageSource messageSource, String ...baseNames) {
-		if (messageSource instanceof ResourceBundleMessageSource) {
-			ResourceBundleMessageSource resourceBundleMessageSource = (ResourceBundleMessageSource) messageSource;
+		if (messageSource instanceof ResourceBundleMessageSource resourceBundleMessageSource) {
 			resourceBundleMessageSource.addBasenames(baseNames);
 			resourceBundleMessageSource.setDefaultEncoding("UTF-8");
 		}

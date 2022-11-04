@@ -12,11 +12,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.winterframework.core.exception.ServiceException;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.jwt.interceptor.EnvironmentHolder;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
-import org.winterframework.rbac.enums.RbacErrorCode;
+import org.winterframework.rbac.exception.RbacPermDeniedException;
 import org.winterframework.rbac.service.RbacService;
 
 import java.lang.reflect.Method;
@@ -53,7 +52,8 @@ public class RbacAspect {
 		boolean hasPerm = rbacService.hasUserPermForUrl(userId, perm);
 		if (!hasPerm) {
 			log.warn("用户 {} 尝试获取 {} 的权限失败!", userId, perm);
-			throw new ServiceException(RbacErrorCode.PERMISSION_DENY);
+			String msg = String.format("user %s has no perm %s", userId, perm);
+			throw new RbacPermDeniedException(msg);
 		}
 		return joinPoint.proceed(joinPoint.getArgs());
 	}
