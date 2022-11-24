@@ -3648,6 +3648,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public byte[] setGet(byte[] key, byte[] value, SetParams params) {
+        return tryGetResource(jedis -> jedis.setGet(key, value, params));
+    }
+
+    @Override
     public byte[] getDel(byte[] key) {
         return tryGetResource(jedis -> jedis.getDel(key));
     }
@@ -3815,6 +3820,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String get(String key) {
         return tryGetResource(jedis -> jedis.get(key), true);
+    }
+
+    @Override
+    public String setGet(String key, String value, SetParams params) {
+        return tryGetResource(jedis -> jedis.setGet(key, value, params));
     }
 
     @Override

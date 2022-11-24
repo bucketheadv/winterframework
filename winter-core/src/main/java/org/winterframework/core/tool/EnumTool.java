@@ -29,7 +29,7 @@ public class EnumTool {
 				}
 			}
 		} catch (Exception e) {
-			log.error("", e);
+			throw new RuntimeException(e);
 		}
 		return null;
 	}

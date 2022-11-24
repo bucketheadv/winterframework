@@ -36,7 +36,7 @@
         <rocketmq.version>2.2.2</rocketmq.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <tk-mybatis.version>4.2.1</tk-mybatis.version>
-        <jedis.version>4.2.3</jedis.version>
+        <jedis.version>4.3.1</jedis.version>
     </properties>
 
     <!-- dependencyManagement定义的数据不能多重继承 -->
