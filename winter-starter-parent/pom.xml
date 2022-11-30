@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0-RC2</version>
+        <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -20,7 +20,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spring-boot.version>3.0.0-RC2</spring-boot.version>
+        <spring-boot.version>3.0.0</spring-boot.version>
         <spring-cloud.version>3.1.1</spring-cloud.version>
         <winter.version>0.8.0</winter.version>
         <jedis.version>4.3.1</jedis.version>
