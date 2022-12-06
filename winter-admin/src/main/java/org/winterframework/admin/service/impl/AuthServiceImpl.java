@@ -1,6 +1,6 @@
 package org.winterframework.admin.service.impl;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.service.UserInfoDaoService;
@@ -14,8 +14,8 @@ import java.util.Objects;
  * @author qinglinl
  * Created on 2022/9/30 2:25 PM
  */
-@Setter
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 	private UserInfoDaoService userInfoDaoService;
 

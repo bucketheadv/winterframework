@@ -2,7 +2,7 @@ package org.winterframework.admin.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
  * @author qinglinl
  * Created on 2022/9/30 2:21 PM
  */
-@Setter
 @Service
+@AllArgsConstructor
 public class RbacServiceImpl extends AbstractRbacService {
 	private UserInfoDaoService userInfoDaoService;
 

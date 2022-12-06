@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.StdTypeResolverBuilder;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.EnableCaching;
@@ -43,12 +43,11 @@ import java.util.Objects;
  */
 @Configuration
 @EnableCaching
+@AllArgsConstructor
 @ComponentScan(basePackages = "org.winterframework.cache")
 @ConditionalOnProperty(prefix = "spring.cache", value = "type", havingValue = "redis")
 public class WinterCacheAutoConfiguration {
-
-	@Autowired
-	private RedisConfig redisConfig;
+	private final RedisConfig redisConfig;
 
 	@Bean
 	@ConditionalOnMissingBean

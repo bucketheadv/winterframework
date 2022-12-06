@@ -1,6 +1,6 @@
 package org.winterframework.admin.controller;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ import java.util.Date;
  * @author qinglinl
  * Created on 2022/9/30 1:48 PM
  */
-@Setter
 @RestController
+@AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController extends BaseController {
 	private AuthService authService;
