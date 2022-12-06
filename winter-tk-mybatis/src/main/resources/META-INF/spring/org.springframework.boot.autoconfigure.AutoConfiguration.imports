@@ -1,0 +1,2 @@
+org.winterframework.tk.mybatis.configuration.TkMybatisAutoConfiguration
+tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration
