@@ -24,12 +24,16 @@ winter:
 ```
 
 ```java
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.winterframework.data.redis.core.JedisTemplate;
+
 @Service
 class YourService {
-    @Resource("userJedisTemplate")
-    private JedisTemplate userJedisTemplate;
+	@Resource("userJedisTemplate")
+	private JedisTemplate userJedisTemplate;
 
-    @Resource("riskJedisTemplate")
-    private JedisTemplate riskJedisTemplate;
+	@Resource("riskJedisTemplate")
+	private JedisTemplate riskJedisTemplate;
 }
 ```
