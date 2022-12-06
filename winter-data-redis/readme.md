@@ -26,10 +26,10 @@ winter:
 ```java
 @Service
 class YourService {
-    @Resource("userRedisTemplate")
-    private RedisTemplate userRedisTemplate;
+    @Resource("userJedisTemplate")
+    private JedisTemplate userJedisTemplate;
 
-    @Resource("riskRedisTemplate")
-    private RedisTemplate riskRedisTemplate;
+    @Resource("riskJedisTemplate")
+    private JedisTemplate riskJedisTemplate;
 }
 ```

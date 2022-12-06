@@ -11,6 +11,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.lang.NonNull;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.data.redis.core.DefaultJedisTemplate;
+import org.winterframework.data.redis.core.JedisTemplate;
 import org.winterframework.data.redis.properties.RedisConfig;
 import org.winterframework.data.redis.properties.RedisMasterSlaveConfig;
 import org.winterframework.data.redis.properties.RedisProperties;
@@ -75,7 +76,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
             }
 
             boolean primary = k.equals(primaryKey);
-            String key = k + "RedisTemplate";
+            String key = k + JedisTemplate.class.getSimpleName();
             BeanDefinition beanDefinition = BeanDefinitionBuilder.rootBeanDefinition(DefaultJedisTemplate.class)
                     .addConstructorArgValue(key)
                     .addConstructorArgValue(masterPool)
