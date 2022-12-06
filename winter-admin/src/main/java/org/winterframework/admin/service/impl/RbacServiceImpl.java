@@ -2,10 +2,10 @@ package org.winterframework.admin.service.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
-import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
+import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
 import org.winterframework.admin.dao.service.PermissionInfoDaoService;
 import org.winterframework.admin.dao.service.RoleInfoDaoService;
@@ -24,14 +24,14 @@ import java.util.concurrent.TimeUnit;
  * @author qinglinl
  * Created on 2022/9/30 2:21 PM
  */
+@Setter
 @Service
-@RequiredArgsConstructor
 public class RbacServiceImpl extends AbstractRbacService {
-	private final UserInfoDaoService userInfoDaoService;
+	private UserInfoDaoService userInfoDaoService;
 
-	private final RoleInfoDaoService roleInfoDaoService;
+	private RoleInfoDaoService roleInfoDaoService;
 
-	private final PermissionInfoDaoService permissionInfoDaoService;
+	private PermissionInfoDaoService permissionInfoDaoService;
 
 	private final Cache<Serializable, User> caffeineCache = Caffeine.newBuilder()
 			.expireAfterWrite(10, TimeUnit.MINUTES)

@@ -2,7 +2,7 @@ package org.winterframework.admin.controller;
 
 import com.github.pagehelper.PageInfo;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.model.dto.DeleteAdminUserDTO;
@@ -21,8 +21,8 @@ import org.winterframework.tk.mybatis.tool.PageTool;
  * @author qinglinl
  * Created on 2022/9/30 2:46 PM
  */
+@Setter
 @RestController
-@AllArgsConstructor
 @RequestMapping("/admin_user")
 public class AdminUserController extends BaseController {
 	private AdminUserService adminUserService;
