@@ -33,10 +33,8 @@ public class WinterJobAutoConfiguration implements EnvironmentAware {
     @Bean
     @ConditionalOnMissingBean
     public XxlJobSpringExecutor xxlJobSpringExecutor(JobProperties jobProperties) {
-        String appName = jobProperties.getAppname();
-        if (StringTool.isBlank(appName) && StringTool.isNotBlank(applicationName)) {
-            appName = applicationName;
-        }
+        String appName = jobProperties.getAppName();
+        appName = StringTool.defaultIfBlank(appName, applicationName);
         XxlJobSpringExecutor executor = new XxlJobSpringExecutor();
         executor.setAppname(appName);
         executor.setAdminAddresses(jobProperties.getAdminAddresses());

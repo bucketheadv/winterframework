@@ -1,7 +1,7 @@
 package org.winterframework.jwt.configuration;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
@@ -13,21 +13,20 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.winterframework.core.tool.MessageSourceTool;
 import org.winterframework.jwt.configuration.mvc.JwtMvcConfigurer;
-import org.winterframework.jwt.properties.WinterJwtProperties;
 import org.winterframework.jwt.interceptor.BasedInterceptor;
 import org.winterframework.jwt.interceptor.WinterLocaleChangeInterceptor;
+import org.winterframework.jwt.properties.WinterJwtProperties;
 
 /**
  * @author qinglinl
  * Created on 2022/9/27 1:55 PM
  */
 @Configuration
+@AllArgsConstructor
 @ComponentScan(basePackages = "org.winterframework.jwt")
 public class WinterJwtAutoConfiguration implements ApplicationListener<ContextRefreshedEvent> {
-	@Autowired(required = false)
-	private MessageSource messageSource;
-	@Autowired
-	private WinterJwtProperties properties;
+	private final MessageSource messageSource;
+	private final WinterJwtProperties properties;
 
 	@Bean
 	@ConditionalOnMissingBean

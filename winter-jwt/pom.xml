@@ -40,16 +40,4 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.factories</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
 </project>

@@ -28,7 +28,7 @@ public class JobProperties {
     /**
      * app名称
      */
-    private String appname;
+    private String appName;
     /**
      * 地址
      */

@@ -1,6 +1,7 @@
 package org.winterframework.core.configuration;
 
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,10 +13,10 @@ import org.winterframework.core.tool.MessageSourceTool;
  * Created on 2021/12/30 10:56 下午
  */
 @Configuration
+@AllArgsConstructor(onConstructor_ = {@Autowired(required = false)})
 @ComponentScan(basePackages = "org.winterframework.core")
 public class WinterCoreAutoConfiguration {
-	@Autowired(required = false)
-	private MessageSource messageSource;
+	private final MessageSource messageSource;
 
 	@PostConstruct
 	public void init() {
