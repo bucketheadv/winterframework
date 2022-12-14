@@ -9,7 +9,7 @@ import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
 import org.winterframework.admin.dao.service.PermissionInfoDaoService;
 import org.winterframework.admin.dao.service.RoleInfoDaoService;
-import org.winterframework.admin.dao.service.UserInfoDaoService;
+import org.winterframework.admin.dao.service.AdminUserInfoDaoService;
 import org.winterframework.rbac.model.Permission;
 import org.winterframework.rbac.model.Role;
 import org.winterframework.rbac.model.User;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @AllArgsConstructor
 public class RbacServiceImpl extends AbstractRbacService {
-	private UserInfoDaoService userInfoDaoService;
+	private AdminUserInfoDaoService adminUserInfoDaoService;
 
 	private RoleInfoDaoService roleInfoDaoService;
 
@@ -43,7 +43,7 @@ public class RbacServiceImpl extends AbstractRbacService {
 	}
 
 	private User getUserById(Serializable id) {
-		AdminUserEntity adminUserEntity = userInfoDaoService.selectByPrimaryKey((Long) id);
+		AdminUserEntity adminUserEntity = adminUserInfoDaoService.selectByPrimaryKey((Long) id);
 		if (adminUserEntity == null) {
 			return null;
 		}

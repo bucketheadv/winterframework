@@ -2,12 +2,12 @@ package org.winterframework.admin.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
-import org.winterframework.admin.dao.mapper.AdminUserMapper;
+import org.winterframework.admin.dao.service.AdminUserInfoDaoService;
 import org.winterframework.admin.dao.service.RoleInfoDaoService;
 import org.winterframework.admin.enums.BizErrorCode;
 import org.winterframework.admin.model.dto.ListUserDTO;
@@ -17,7 +17,6 @@ import org.winterframework.core.exception.ServiceException;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 import tk.mybatis.mapper.entity.Condition;
 
 import java.util.Date;
@@ -29,14 +28,16 @@ import java.util.stream.Collectors;
  * Created on 2022/9/30 2:48 PM
  */
 @Service
-public class AdminUserServiceImpl extends BaseTkServiceImpl<AdminUserMapper, AdminUserEntity, Long> implements AdminUserService {
-	@Autowired
+public class AdminUserServiceImpl implements AdminUserService {
+	@Resource
 	private RoleInfoDaoService roleInfoDaoService;
+	@Resource
+	private AdminUserInfoDaoService adminUserInfoDaoService;
 	@Override
 	public PageInfo<AdminUserEntity> selectByQuery(ListUserDTO req) {
 		Condition condition = new Condition(AdminUserEntity.class);
 		condition.orderBy("id").desc();
-		return selectByPage(condition, req.getPageNum(), req.getPageSize());
+		return adminUserInfoDaoService.selectByPage(condition, req.getPageNum(), req.getPageSize());
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class AdminUserServiceImpl extends BaseTkServiceImpl<AdminUserMapper, Adm
 			}
 			entity.setCreateTime(now);
 			entity.setUpdateTime(now);
-			baseMapper.insertSelective(entity);
+			adminUserInfoDaoService.insertSelective(entity);
 		} else {
 			if (StringTool.isBlank(entity.getPassword())) {
 				entity.setPassword(null);
@@ -77,5 +78,15 @@ public class AdminUserServiceImpl extends BaseTkServiceImpl<AdminUserMapper, Adm
 				}
 			}
 		}
+	}
+
+	@Override
+	public AdminUserEntity getById(Long id) {
+		return adminUserInfoDaoService.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int deleteByIds(List<Long> ids) {
+		return adminUserInfoDaoService.deleteByIds(ids);
 	}
 }

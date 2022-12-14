@@ -30,7 +30,7 @@ public class AdminUserController extends BaseController {
 	@RbacPerm
 	@GetMapping("/detail")
 	public ApiResponse<UserDetailVO> detail(@RequestParam Long id) {
-		AdminUserEntity adminUserEntity = adminUserService.selectByPrimaryKey(id);
+		AdminUserEntity adminUserEntity = adminUserService.getById(id);
 		UserDetailVO res = BeanTool.copyAs(adminUserEntity, UserDetailVO.class);
 		return build(res);
 	}

@@ -3,17 +3,17 @@ package org.winterframework.admin.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
-import org.winterframework.admin.dao.mapper.PermissionInfoMapper;
+import org.winterframework.admin.dao.service.PermissionInfoDaoService;
 import org.winterframework.admin.model.dto.ListPermissionDTO;
 import org.winterframework.admin.model.dto.UpdatePermissionDTO;
 import org.winterframework.admin.model.vo.ListRolePermissionVO;
 import org.winterframework.admin.service.PermissionService;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
@@ -26,17 +26,19 @@ import java.util.Map;
  * Created on 2022/10/8 2:02 PM
  */
 @Service
-public class PermissionServiceImpl extends BaseTkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionService {
+public class PermissionServiceImpl implements PermissionService {
+	@Resource
+	private PermissionInfoDaoService permissionInfoDaoService;
 	@Override
 	public List<ListRolePermissionVO> listRolePermissions(Long roleId) {
 		Map<Long, Boolean> permissionPermMap = Maps.newHashMap();
 		if (roleId != null) {
-			List<RolePermissionEntity> rolePermissions = baseMapper.getPermissionsByRoleId(roleId);
+			List<RolePermissionEntity> rolePermissions = permissionInfoDaoService.getPermissionsByRoleId(roleId);
 			for (RolePermissionEntity rolePermission : rolePermissions) {
 				permissionPermMap.put(rolePermission.getPermissionId(), true);
 			}
 		}
-		List<PermissionInfoEntity> allPermissions = baseMapper.selectAll();
+		List<PermissionInfoEntity> allPermissions = permissionInfoDaoService.selectAll();
 		List<ListRolePermissionVO> result = Lists.newArrayList();
 		for (PermissionInfoEntity permissionInfo : allPermissions) {
 			ListRolePermissionVO listRolePermissionVO = new ListRolePermissionVO();
@@ -53,12 +55,12 @@ public class PermissionServiceImpl extends BaseTkServiceImpl<PermissionInfoMappe
 	public void updatePermission(UpdatePermissionDTO req) {
 		PermissionInfoEntity permissionInfo = BeanTool.copyAs(req, PermissionInfoEntity.class);
 		if (req.getId() != null) {
-			baseMapper.updateByPrimaryKeySelective(permissionInfo);
+			permissionInfoDaoService.updateByPrimaryKeySelective(permissionInfo);
 		} else {
 			Date now = new Date();
 			permissionInfo.setCreateTime(now);
 			permissionInfo.setUpdateTime(now);
-			baseMapper.insertSelective(permissionInfo);
+			permissionInfoDaoService.insertSelective(permissionInfo);
 		}
 	}
 
@@ -73,6 +75,16 @@ public class PermissionServiceImpl extends BaseTkServiceImpl<PermissionInfoMappe
 			criteria.andLike("uri", req.getUri());
 		}
 		condition.orderBy("id").desc();
-		return selectByPage(condition, req.getPageNum(), req.getPageSize());
+		return permissionInfoDaoService.selectByPage(condition, req.getPageNum(), req.getPageSize());
+	}
+
+	@Override
+	public PermissionInfoEntity getById(Long id) {
+		return permissionInfoDaoService.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int deleteByIds(List<Long> ids) {
+		return permissionInfoDaoService.deleteByIds(ids);
 	}
 }

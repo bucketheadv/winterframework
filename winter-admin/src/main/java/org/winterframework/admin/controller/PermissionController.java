@@ -34,7 +34,7 @@ public class PermissionController extends BaseController {
 	@RbacPerm
 	@GetMapping("/detail")
 	public ApiResponse<PermissionInfoEntity> detail(@RequestParam Long id) {
-		return build(permissionService.selectByPrimaryKey(id));
+		return build(permissionService.getById(id));
 	}
 
 	@RbacPerm

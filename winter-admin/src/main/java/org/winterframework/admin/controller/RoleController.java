@@ -35,7 +35,7 @@ public class RoleController extends BaseController {
 	@RbacPerm
 	@GetMapping("/detail")
 	public ApiResponse<RoleInfoEntity> detail(@RequestParam Long id) {
-		return build(roleService.selectByPrimaryKey(id));
+		return build(roleService.getById(id));
 	}
 
 	@RbacPerm

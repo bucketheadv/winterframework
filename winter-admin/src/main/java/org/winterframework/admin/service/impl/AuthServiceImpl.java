@@ -3,7 +3,7 @@ package org.winterframework.admin.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
-import org.winterframework.admin.dao.service.UserInfoDaoService;
+import org.winterframework.admin.dao.service.AdminUserInfoDaoService;
 import org.winterframework.admin.enums.BizErrorCode;
 import org.winterframework.admin.service.AuthService;
 import org.winterframework.core.exception.ServiceException;
@@ -17,11 +17,11 @@ import java.util.Objects;
 @Service
 @AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
-	private UserInfoDaoService userInfoDaoService;
+	private AdminUserInfoDaoService adminUserInfoDaoService;
 
 	@Override
 	public AdminUserEntity loginByEmail(String email, String password) {
-		AdminUserEntity adminUserEntity = userInfoDaoService.getByEmail(email);
+		AdminUserEntity adminUserEntity = adminUserInfoDaoService.getByEmail(email);
 		if (adminUserEntity == null) {
 			throw new ServiceException(BizErrorCode.EMAIL_OR_PASSWORD_INVALID);
 		}

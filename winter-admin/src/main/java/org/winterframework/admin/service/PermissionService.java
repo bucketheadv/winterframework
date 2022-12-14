@@ -5,7 +5,6 @@ import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.model.dto.ListPermissionDTO;
 import org.winterframework.admin.model.dto.UpdatePermissionDTO;
 import org.winterframework.admin.model.vo.ListRolePermissionVO;
-import org.winterframework.tk.mybatis.service.base.BaseTkService;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/10/8 2:01 PM
  */
-public interface PermissionService extends BaseTkService<PermissionInfoEntity, Long> {
+public interface PermissionService {
 	/**
 	 * 获取角色拥有的权限列表
 	 * @param roleId 角色id
@@ -24,4 +23,8 @@ public interface PermissionService extends BaseTkService<PermissionInfoEntity, L
 	void updatePermission(UpdatePermissionDTO req);
 
 	PageInfo<PermissionInfoEntity> selectByQuery(ListPermissionDTO req);
+
+	PermissionInfoEntity getById(Long id);
+
+	int deleteByIds(List<Long> ids);
 }
