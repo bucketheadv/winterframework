@@ -57,7 +57,7 @@ public class ElasticsearchDefinitionRegistry implements BeanDefinitionRegistryPo
                     .setPrimary(isPrimary)
                     .addConstructorArgValue(restClientTransport)
                     .getBeanDefinition();
-            String elasticsearchClientKey = name + "ElasticsearchClient";
+            String elasticsearchClientKey = name + ElasticsearchClient.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(elasticsearchClientKey, elasticsearchClientBeanDefinition);
 
             BeanDefinition elasticsearchTemplateBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(ElasticsearchTemplate.class)
@@ -65,7 +65,7 @@ public class ElasticsearchDefinitionRegistry implements BeanDefinitionRegistryPo
                     .addConstructorArgReference(elasticsearchClientKey)
                     .addConstructorArgValue(elasticsearchConverter)
                     .getBeanDefinition();
-            String elasticsearchTemplateKey = name + "ElasticsearchTemplate";
+            String elasticsearchTemplateKey = name + ElasticsearchTemplate.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(elasticsearchTemplateKey, elasticsearchTemplateBeanDefinition);
             log.info("注册Elasticsearch数据源: [{}] 成功", elasticsearchTemplateKey);
         }

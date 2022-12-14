@@ -17,9 +17,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.data.mongodb.core.MongoDatabaseFactorySupport;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.lang.NonNull;
 import org.winterframework.mongodb.core.DefaultMappingMongoConverter;
 import org.winterframework.mongodb.core.DefaultMongoMappingContext;
@@ -60,7 +63,7 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .addConstructorArgValue(mongoClient)
                     .addConstructorArgValue(mongoProperties.getMongoClientDatabase())
                     .getBeanDefinition();
-            String mongoDatabaseFactorySupportKey = name + "MongoDatabaseFactorySupport";
+            String mongoDatabaseFactorySupportKey = name + MongoDatabaseFactorySupport.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(mongoDatabaseFactorySupportKey, mongoDatabaseFactorySupportBeanDefinition);
 
             BeanDefinition mongoMappingContextBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(DefaultMongoMappingContext.class)
@@ -68,7 +71,7 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .addConstructorArgValue(mongoProperties)
                     .addConstructorArgValue(mongoCustomConversions)
                     .getBeanDefinition();
-            String mongoMappingContextKey = name + "MongoMappingContext";
+            String mongoMappingContextKey = name + MongoMappingContext.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(mongoMappingContextKey, mongoMappingContextBeanDefinition);
 
             BeanDefinition mongoConverterBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(DefaultMappingMongoConverter.class)
@@ -76,14 +79,14 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .addConstructorArgReference(mongoMappingContextKey)
                     .addConstructorArgValue(mongoCustomConversions)
                     .getBeanDefinition();
-            String mongoConverterKey = name + "MongoConverter";
+            String mongoConverterKey = name + MongoConverter.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(mongoConverterKey, mongoConverterBeanDefinition);
 
             BeanDefinition mongoTemplateBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(MongoTemplate.class)
                     .addConstructorArgReference(mongoDatabaseFactorySupportKey)
                     .addConstructorArgReference(mongoConverterKey)
                     .getBeanDefinition();
-            String mongoTemplateKey = name + "MongoTemplate";
+            String mongoTemplateKey = name + MongoTemplate.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(mongoTemplateKey, mongoTemplateBeanDefinition);
             log.info("注册MongoTemplate: [{}] 成功.", mongoTemplateKey);
         }
