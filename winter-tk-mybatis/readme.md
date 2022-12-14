@@ -37,7 +37,7 @@ public class UserEntity {
 
 ```java
 import org.apache.ibatis.annotations.Mapper;
-import org.winterframework.tk.mybatis.mapper.BaseTkMapper;
+import org.winterframework.tk.mybatis.mapper.base.BaseTkMapper;
 
 @Mapper
 public interface UserMapper extends BaseTkMapper<UserEntity, Long> {
@@ -45,9 +45,9 @@ public interface UserMapper extends BaseTkMapper<UserEntity, Long> {
 ```
 
 ```java
-import org.winterframework.tk.mybatis.service.TkService;
+import org.winterframework.tk.mybatis.service.base.BaseTkService;
 
-public interface UserService extends TkService<UserEntity, Long> {
+public interface UserService extends BaseTkService<UserEntity, Long> {
 	UserEntity getByEmail(String email);
 }
 ```

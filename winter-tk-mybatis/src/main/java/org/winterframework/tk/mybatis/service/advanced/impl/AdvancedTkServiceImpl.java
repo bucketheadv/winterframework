@@ -1,23 +1,20 @@
-package org.winterframework.tk.mybatis.service.impl;
+package org.winterframework.tk.mybatis.service.advanced.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.winterframework.tk.mybatis.mapper.BaseTkMapper;
-import org.winterframework.tk.mybatis.service.TkService;
-import tk.mybatis.mapper.MapperException;
+import org.winterframework.tk.mybatis.mapper.advanced.AdvancedTkMapper;
+import org.winterframework.tk.mybatis.service.advanced.AdvancedTkService;
+import org.winterframework.tk.mybatis.tool.ReflectTool;
 import tk.mybatis.mapper.entity.Condition;
-import tk.mybatis.mapper.entity.EntityColumn;
-import tk.mybatis.mapper.mapperhelper.EntityHelper;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author qinglinl
- * Created on 2022/10/9 9:49 PM
+ * Created on 2022/12/13 3:29 PM
  */
-public abstract class TkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>, Entity, ID> implements TkService<Entity, ID> {
+public abstract class AdvancedTkServiceImpl<Mapper extends AdvancedTkMapper<Entity, ID>, Entity, ID> implements AdvancedTkService<Entity, ID> {
 	@Autowired
 	protected Mapper baseMapper;
 
@@ -29,11 +26,6 @@ public abstract class TkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>, Ent
 	@Override
 	public int deleteByIds(List<ID> ids) {
 		return baseMapper.deleteByIdList(ids);
-	}
-
-	@Override
-	public int updateByPrimaryKey(Entity entity) {
-		return baseMapper.updateByPrimaryKey(entity);
 	}
 
 	@Override
@@ -49,7 +41,7 @@ public abstract class TkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>, Ent
 	@Override
 	public List<Entity> selectAllByPrimaryKeyDesc() {
 		Class<?> entityClass = getEntityClass();
-		String idCol = getIdColumn(entityClass);
+		String idCol = ReflectTool.getIdColumn(entityClass);
 		Condition condition = new Condition(entityClass);
 		condition.orderBy(idCol).desc();
 		return selectList(condition);
@@ -91,11 +83,6 @@ public abstract class TkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>, Ent
 	}
 
 	@Override
-	public int insert(Entity entity) {
-		return baseMapper.insert(entity);
-	}
-
-	@Override
 	public int insertSelective(Entity entity) {
 		return baseMapper.insertSelective(entity);
 	}
@@ -106,18 +93,28 @@ public abstract class TkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>, Ent
 		return (Class<?>) parameterizedType.getActualTypeArguments()[1];
 	}
 
-	private String getIdColumn(Class<?> entityClass) {
-		Set<EntityColumn> columnList = EntityHelper.getPKColumns(entityClass);
-		if (columnList.size() == 1) {
-			EntityColumn column = columnList.iterator().next();
-			return column.getColumn();
-		} else {
-			throw new MapperException("继承 selectList 方法的实体类[" + entityClass.getCanonicalName() + "]中必须只有一个带有 @Id 注解的字段");
-		}
-	}
-
 	@Override
 	public List<Entity> selectByCondition(Condition o) {
 		return baseMapper.selectByCondition(o);
+	}
+
+	@Override
+	public int insertList(List<? extends Entity> recordList) {
+		return baseMapper.insertList(recordList);
+	}
+
+	@Override
+	public int insertUseGeneratedKeys(Entity record) {
+		return baseMapper.insertUseGeneratedKeys(record);
+	}
+
+	@Override
+	public int insert(Entity record) {
+		return baseMapper.insert(record);
+	}
+
+	@Override
+	public int updateByPrimaryKey(Entity record) {
+		return baseMapper.updateByPrimaryKey(record);
 	}
 }

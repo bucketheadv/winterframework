@@ -17,7 +17,7 @@ import org.winterframework.core.exception.ServiceException;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.tk.mybatis.service.impl.TkServiceImpl;
+import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 import tk.mybatis.mapper.entity.Condition;
 
 import java.util.Date;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * Created on 2022/9/30 2:48 PM
  */
 @Service
-public class AdminUserServiceImpl extends TkServiceImpl<AdminUserMapper, AdminUserEntity, Long> implements AdminUserService {
+public class AdminUserServiceImpl extends BaseTkServiceImpl<AdminUserMapper, AdminUserEntity, Long> implements AdminUserService {
 	@Autowired
 	private RoleInfoDaoService roleInfoDaoService;
 	@Override
@@ -55,7 +55,6 @@ public class AdminUserServiceImpl extends TkServiceImpl<AdminUserMapper, AdminUs
 			if (StringTool.isBlank(entity.getPassword())) {
 				entity.setPassword(null);
 			}
-			baseMapper.updateByPrimaryKeySelective(entity);
 
 			// 已经拥有的角色
 			List<UserRoleEntity> userRoles = roleInfoDaoService.getUserRoleByUserId(req.getId());
@@ -63,15 +62,19 @@ public class AdminUserServiceImpl extends TkServiceImpl<AdminUserMapper, AdminUs
 
 			// 需要删除的角色
 			List<Long> toDelRoleIds = Lists.newArrayList(userRoleIds);
-			toDelRoleIds.removeAll(req.getRoleIds());
+			if (CollectionTool.isNotEmpty(req.getRoleIds())) {
+				toDelRoleIds.removeAll(req.getRoleIds());
+			}
 			if (CollectionTool.isNotEmpty(toDelRoleIds)) {
 				roleInfoDaoService.deleteAdminUserRole(entity.getId(), toDelRoleIds);
 			}
 			// 需要新增的角色
-			List<Long> toAddRoleIds = Lists.newArrayList(req.getRoleIds());
-			toAddRoleIds.removeAll(userRoleIds);
-			if (CollectionTool.isNotEmpty(toAddRoleIds)) {
-				roleInfoDaoService.createAdminUserRole(entity.getId(), toAddRoleIds);
+			if (CollectionTool.isNotEmpty(req.getRoleIds())) {
+				List<Long> toAddRoleIds = Lists.newArrayList(req.getRoleIds());
+				toAddRoleIds.removeAll(userRoleIds);
+				if (CollectionTool.isNotEmpty(toAddRoleIds)) {
+					roleInfoDaoService.createAdminUserRole(entity.getId(), toAddRoleIds);
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package org.winterframework.tk.mybatis.mapper.condition;
+package org.winterframework.tk.mybatis.mapper.advanced.condition;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.UpdateProvider;
@@ -8,13 +8,13 @@ import tk.mybatis.mapper.provider.ConditionProvider;
 
 /**
  * @author qinglinl
- * Created on 2022/10/10 9:26 AM
+ * Created on 2022/12/13 3:42 PM
  */
 @RegisterMapper
-public interface TkUpdateByConditionSelectiveMapper<T> {
+public interface AdvancedUpdateByConditionMapper<T> {
 	@UpdateProvider(
 			type = ConditionProvider.class,
 			method = "dynamicSQL"
 	)
-	int updateByConditionSelective(@Param("record") T record, @Param("example")Condition condition);
+	int updateByCondition(@Param("record") T record, @Param("example") Condition condition);
 }

@@ -1,4 +1,4 @@
-package org.winterframework.tk.mybatis.mapper.crud;
+package org.winterframework.tk.mybatis.mapper.base.crud;
 
 import org.apache.ibatis.annotations.SelectProvider;
 import tk.mybatis.mapper.annotation.RegisterMapper;
@@ -10,7 +10,7 @@ import tk.mybatis.mapper.provider.base.BaseSelectProvider;
  * Created on 2022/10/9 11:51 PM
  */
 @RegisterMapper
-public interface TkBaseSelectMapper<Entity, ID> extends SelectOneMapper<Entity>,
+public interface BaseTkSelectMapper<Entity, ID> extends SelectOneMapper<Entity>,
 		SelectMapper<Entity>, SelectAllMapper<Entity>,
 		SelectCountMapper<Entity> {
 	@SelectProvider(

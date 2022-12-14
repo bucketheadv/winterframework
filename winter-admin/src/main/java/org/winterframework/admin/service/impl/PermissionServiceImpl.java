@@ -13,7 +13,7 @@ import org.winterframework.admin.model.vo.ListRolePermissionVO;
 import org.winterframework.admin.service.PermissionService;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.tk.mybatis.service.impl.TkServiceImpl;
+import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
@@ -26,7 +26,7 @@ import java.util.Map;
  * Created on 2022/10/8 2:02 PM
  */
 @Service
-public class PermissionServiceImpl extends TkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionService {
+public class PermissionServiceImpl extends BaseTkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionService {
 	@Override
 	public List<ListRolePermissionVO> listRolePermissions(Long roleId) {
 		Map<Long, Boolean> permissionPermMap = Maps.newHashMap();
@@ -58,7 +58,7 @@ public class PermissionServiceImpl extends TkServiceImpl<PermissionInfoMapper, P
 			Date now = new Date();
 			permissionInfo.setCreateTime(now);
 			permissionInfo.setUpdateTime(now);
-			baseMapper.insert(permissionInfo);
+			baseMapper.insertSelective(permissionInfo);
 		}
 	}
 

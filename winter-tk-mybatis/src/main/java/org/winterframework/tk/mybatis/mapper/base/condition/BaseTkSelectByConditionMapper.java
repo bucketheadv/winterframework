@@ -1,19 +1,21 @@
-package org.winterframework.tk.mybatis.mapper.condition;
+package org.winterframework.tk.mybatis.mapper.base.condition;
 
 import org.apache.ibatis.annotations.SelectProvider;
 import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.provider.ConditionProvider;
 
+import java.util.List;
+
 /**
  * @author qinglinl
- * Created on 2022/10/10 9:23 AM
+ * Created on 2022/10/10 9:22 AM
  */
 @RegisterMapper
-public interface TkSelectCountByConditionMapper<T> {
+public interface BaseTkSelectByConditionMapper<T> {
 	@SelectProvider(
 			type = ConditionProvider.class,
 			method = "dynamicSQL"
 	)
-	int selectCountByCondition(Condition condition);
+	List<T> selectByCondition(Condition condition);
 }

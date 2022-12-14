@@ -49,6 +49,9 @@ public class RbacAspect {
 		perm = StringTool.defaultIfBlank(perm, uri);
 
 		Long userId = EnvironmentHolder.get().getUid();
+		if (userId == null) {
+			throw new RbacPermDeniedException("require login");
+		}
 		boolean hasPerm = rbacService.hasUserPermForUrl(userId, perm);
 		if (!hasPerm) {
 			log.warn("用户 {} 尝试获取 {} 的权限失败!", userId, perm);

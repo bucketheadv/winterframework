@@ -1,4 +1,4 @@
-package org.winterframework.tk.mybatis.mapper.crud;
+package org.winterframework.tk.mybatis.mapper.base.crud;
 
 import org.apache.ibatis.annotations.DeleteProvider;
 import tk.mybatis.mapper.annotation.RegisterMapper;
@@ -10,7 +10,7 @@ import tk.mybatis.mapper.provider.base.BaseDeleteProvider;
  * Created on 2022/10/9 11:56 PM
  */
 @RegisterMapper
-public interface TkBaseDeleteMapper<Entity, ID> extends DeleteMapper<Entity> {
+public interface BaseTkDeleteMapper<Entity, ID> extends DeleteMapper<Entity> {
 	@DeleteProvider(
 			type = BaseDeleteProvider.class,
 			method = "dynamicSQL"

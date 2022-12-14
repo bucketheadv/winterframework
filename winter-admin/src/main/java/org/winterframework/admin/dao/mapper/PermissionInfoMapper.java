@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
-import org.winterframework.tk.mybatis.mapper.BaseTkMapper;
+import org.winterframework.tk.mybatis.mapper.base.BaseTkMapper;
 
 import java.util.List;
 

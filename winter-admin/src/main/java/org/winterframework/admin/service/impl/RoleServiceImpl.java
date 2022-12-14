@@ -18,7 +18,7 @@ import org.winterframework.admin.service.RoleService;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.tk.mybatis.service.impl.TkServiceImpl;
+import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * Created on 2022/10/8 1:01 PM
  */
 @Service
-public class RoleServiceImpl extends TkServiceImpl<RoleInfoMapper, RoleInfoEntity, Long> implements RoleService {
+public class RoleServiceImpl extends BaseTkServiceImpl<RoleInfoMapper, RoleInfoEntity, Long> implements RoleService {
 	@Resource
 	private PermissionInfoDaoService permissionInfoDaoService;
 
@@ -44,7 +44,7 @@ public class RoleServiceImpl extends TkServiceImpl<RoleInfoMapper, RoleInfoEntit
 			Date now = new Date();
 			roleInfoEntity.setCreateTime(now);
 			roleInfoEntity.setUpdateTime(now);
-			baseMapper.insert(roleInfoEntity);
+			baseMapper.insertSelective(roleInfoEntity);
 			if (CollectionTool.isNotEmpty(req.getPermissionIds())) {
 				permissionInfoDaoService.createRolePermissions(roleInfoEntity.getId(), req.getPermissionIds());
 			}

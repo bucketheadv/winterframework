@@ -5,7 +5,7 @@ import org.winterframework.admin.dao.entity.RoleInfoEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
 import org.winterframework.admin.dao.mapper.RoleInfoMapper;
 import org.winterframework.admin.dao.service.RoleInfoDaoService;
-import org.winterframework.tk.mybatis.service.impl.TkServiceImpl;
+import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Created on 2022/9/30 3:13 PM
  */
 @Service
-public class RoleInfoDaoServiceImpl extends TkServiceImpl<RoleInfoMapper, RoleInfoEntity, Long> implements RoleInfoDaoService {
+public class RoleInfoDaoServiceImpl extends BaseTkServiceImpl<RoleInfoMapper, RoleInfoEntity, Long> implements RoleInfoDaoService {
 	@Override
 	public List<UserRoleEntity> getUserRoleByUserId(Long userId) {
 		return baseMapper.getUserRoleByUserId(userId);

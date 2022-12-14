@@ -2,7 +2,7 @@ package org.winterframework.admin.dao.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
-import org.winterframework.tk.mybatis.mapper.BaseTkMapper;
+import org.winterframework.tk.mybatis.mapper.base.BaseTkMapper;
 
 /**
  * @author qinglinl

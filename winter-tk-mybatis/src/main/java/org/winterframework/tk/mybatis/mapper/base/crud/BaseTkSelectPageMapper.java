@@ -1,10 +1,10 @@
-package org.winterframework.tk.mybatis.mapper.crud;
+package org.winterframework.tk.mybatis.mapper.base.crud;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.RowBounds;
-import org.winterframework.tk.mybatis.mapper.condition.TkSelectByConditionMapper;
+import org.winterframework.tk.mybatis.mapper.base.condition.BaseTkSelectByConditionMapper;
 import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.entity.Condition;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * Created on 2022/10/10 8:26 AM
  */
 @RegisterMapper
-public interface TkSelectPageMapper<Entity> extends TkSelectByConditionMapper<Entity> {
+public interface BaseTkSelectPageMapper<Entity> extends BaseTkSelectByConditionMapper<Entity> {
 	default PageInfo<Entity> selectByPage(Condition condition, RowBounds rowBounds) {
 		try (Page<?> ignored = PageHelper.offsetPage(rowBounds.getOffset(), rowBounds.getLimit())) {
 			List<Entity> result = selectByCondition(condition);

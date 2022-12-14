@@ -5,7 +5,7 @@ import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.admin.dao.mapper.PermissionInfoMapper;
 import org.winterframework.admin.dao.service.PermissionInfoDaoService;
-import org.winterframework.tk.mybatis.service.impl.TkServiceImpl;
+import org.winterframework.tk.mybatis.service.base.impl.BaseTkServiceImpl;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Created on 2022/9/30 3:14 PM
  */
 @Service
-public class PermissionInfoDaoServiceImpl extends TkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionInfoDaoService {
+public class PermissionInfoDaoServiceImpl extends BaseTkServiceImpl<PermissionInfoMapper, PermissionInfoEntity, Long> implements PermissionInfoDaoService {
 	@Override
 	public List<RolePermissionEntity> getPermissionsByRoleId(Long roleId) {
 		return baseMapper.getPermissionsByRoleId(roleId);

@@ -5,7 +5,7 @@ import org.winterframework.admin.dao.entity.RoleInfoEntity;
 import org.winterframework.admin.model.dto.ListRoleDTO;
 import org.winterframework.admin.model.dto.UpdateRoleDTO;
 import org.winterframework.admin.model.vo.ListAdminUserRoleVO;
-import org.winterframework.tk.mybatis.service.TkService;
+import org.winterframework.tk.mybatis.service.base.BaseTkService;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author qinglinl
  * Created on 2022/10/8 1:00 PM
  */
-public interface RoleService extends TkService<RoleInfoEntity, Long> {
+public interface RoleService extends BaseTkService<RoleInfoEntity, Long> {
 	void updateRole(UpdateRoleDTO req);
 
 	PageInfo<RoleInfoEntity> selectByQuery(ListRoleDTO req);

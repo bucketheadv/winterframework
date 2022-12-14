@@ -11,18 +11,18 @@ spring:
 winter:
   jwt:
     path-patterns:
-      - /**
+      - /.*
     exclude-path-patterns:
-      - /static
-      - /auth/**
-      - /admin_user/**
-      - /routes/**
-      - /role/**
-      - /permission/**
-      - /api/test/**
+      - ^/static
+      - ^/api/auth/.*
+      - ^/api/admin_user/.*
+      - ^/api/routes/.*
+      - ^/api/role/.*
+      - ^/api/permission/.*
+      - ^/api/test/.*
     token-white-uri-array:
-      - /api/test/test
-      - /api/error
+      - ^/api/error
+      - ^/api/test/.*
 logging:
   level:
     org.winterframework.admin.dao.mapper: DEBUG
