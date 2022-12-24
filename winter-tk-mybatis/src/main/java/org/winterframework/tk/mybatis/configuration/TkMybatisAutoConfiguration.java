@@ -1,5 +1,8 @@
 package org.winterframework.tk.mybatis.configuration;
 
+import com.github.pagehelper.PageInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,4 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "org.winterframework.tk.mybatis")
 public class TkMybatisAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public PageInterceptor pageInterceptor() {
+        return new PageInterceptor();
+    }
 }
