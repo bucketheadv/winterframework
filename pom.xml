@@ -19,7 +19,7 @@
         <module>winter-mybatis-plus</module>
         <module>winter-tk-mybatis</module>
         <module>winter-cache</module>
-        <module>winter-crypto</module>
+        <module>winter-sensitive</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -36,7 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
         <rocketmq.version>2.2.2</rocketmq.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <tk-mybatis.version>4.2.2</tk-mybatis.version>
     </properties>
 

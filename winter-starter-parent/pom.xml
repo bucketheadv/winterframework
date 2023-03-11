@@ -25,7 +25,7 @@
         <winter.version>0.8.0</winter.version>
         <jedis.version>4.3.1</jedis.version>
         <rocketmq.version>2.2.2</rocketmq.version>
-        <hutool.version>5.7.20</hutool.version>
+        <hutool.version>5.8.15</hutool.version>
         <guava.version>31.0.1-jre</guava.version>
         <json-path.version>2.7.0</json-path.version>
         <apollo.version>1.9.2</apollo.version>
@@ -41,6 +41,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
                 <version>${spring-boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>2.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.bucketheadv</groupId>
