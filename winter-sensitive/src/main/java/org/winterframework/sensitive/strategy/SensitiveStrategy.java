@@ -1,4 +1,4 @@
-package org.winterframework.crypto.strategy;
+package org.winterframework.sensitive.strategy;
 
 import java.util.function.Function;
 

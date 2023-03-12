@@ -1,5 +1,8 @@
 package org.winterframework.tk.mybatis.mapper.base.crud;
 
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Options;
+import org.winterframework.tk.mybatis.provider.NewBaseInsertProvider;
 import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.common.base.insert.InsertSelectiveMapper;
 
@@ -9,4 +12,12 @@ import tk.mybatis.mapper.common.base.insert.InsertSelectiveMapper;
  */
 @RegisterMapper
 public interface BaseTkInsertMapper<Entity> extends InsertSelectiveMapper<Entity> {
+    @Options(
+            useGeneratedKeys = true
+    )
+    @InsertProvider(
+            type = NewBaseInsertProvider.class,
+            method = "dynamicSQL"
+    )
+    int insertSelectiveUseGeneratedKeys(Entity entity);
 }

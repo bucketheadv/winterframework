@@ -107,4 +107,9 @@ public abstract class BaseTkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>,
 	public int insertUseGeneratedKeys(Entity record) {
 		return baseMapper.insertUseGeneratedKeys(record);
 	}
+
+	@Override
+	public int insertSelectiveUseGeneratedKeys(Entity entity) {
+		return baseMapper.insertSelectiveUseGeneratedKeys(entity);
+	}
 }

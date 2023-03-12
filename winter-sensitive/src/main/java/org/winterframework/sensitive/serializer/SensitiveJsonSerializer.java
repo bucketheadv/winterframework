@@ -1,4 +1,4 @@
-package org.winterframework.crypto.serializer;
+package org.winterframework.sensitive.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import org.winterframework.crypto.annotation.Sensitive;
-import org.winterframework.crypto.strategy.SensitiveStrategy;
+import org.winterframework.sensitive.annotation.Sensitive;
+import org.winterframework.sensitive.strategy.SensitiveStrategy;
 
 import java.io.IOException;
 import java.util.Objects;

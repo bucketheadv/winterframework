@@ -20,6 +20,7 @@
         <module>winter-tk-mybatis</module>
         <module>winter-cache</module>
         <module>winter-sensitive</module>
+        <module>winter-crypto</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -38,6 +39,7 @@
         <rocketmq.version>2.2.2</rocketmq.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <tk-mybatis.version>4.2.2</tk-mybatis.version>
+        <mybatis.version>3.5.9</mybatis.version>
     </properties>
 
     <!-- dependencyManagement定义的数据不能多重继承 -->
