@@ -11,7 +11,7 @@ import org.winterframework.admin.model.dto.UpdatePermissionDTO;
 import org.winterframework.admin.model.vo.ListRolePermissionVO;
 import org.winterframework.admin.service.PermissionService;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
 
 import java.util.List;

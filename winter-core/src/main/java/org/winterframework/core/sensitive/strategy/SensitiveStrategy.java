@@ -1,4 +1,4 @@
-package org.winterframework.sensitive.strategy;
+package org.winterframework.core.sensitive.strategy;
 
 import java.util.function.Function;
 

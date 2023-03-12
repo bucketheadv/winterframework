@@ -10,8 +10,8 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.winterframework.core.api.I18nEnumerable;
-import org.winterframework.core.exception.ServiceException;
+import org.winterframework.core.i18n.api.I18nErrorCode;
+import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.jwt.env.Environment;
 import org.winterframework.jwt.support.enums.WebErrorCode;
@@ -35,7 +35,7 @@ public class JwtsHelper {
 
 	private JwtsHelper() {}
 
-	private static <T> T throwsServiceException(I18nEnumerable i18nEnum) {
+	private static <T> T throwsServiceException(I18nErrorCode i18nEnum) {
 		throw new ServiceException(i18nEnum);
 	}
 

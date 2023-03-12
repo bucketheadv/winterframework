@@ -1,9 +1,9 @@
-package org.winterframework.sensitive.annotation;
+package org.winterframework.core.sensitive.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.winterframework.sensitive.serializer.SensitiveJsonSerializer;
-import org.winterframework.sensitive.strategy.SensitiveStrategy;
+import org.winterframework.core.sensitive.serializer.SensitiveJsonSerializer;
+import org.winterframework.core.sensitive.strategy.SensitiveStrategy;
 
 import java.lang.annotation.*;
 

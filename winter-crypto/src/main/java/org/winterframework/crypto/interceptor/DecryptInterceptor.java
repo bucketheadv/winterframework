@@ -8,7 +8,8 @@ import org.apache.ibatis.plugin.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.winterframework.crypto.service.DecryptService;
+import org.winterframework.crypto.properties.WinterCryptoProperties;
+import org.winterframework.crypto.utils.CryptoUtils;
 
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.Objects;
 })
 public class DecryptInterceptor implements Interceptor {
     @Autowired
-    private DecryptService decryptService;
+    private WinterCryptoProperties winterCryptoProperties;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -35,12 +36,12 @@ public class DecryptInterceptor implements Interceptor {
         if (resultObject instanceof ArrayList<?> resultList) {
             if (!CollectionUtils.isEmpty(resultList) && CacheUtils.needToDecrypt(resultList.get(0))) {
                 for (Object o : resultList) {
-                    decryptService.decrypt(o);
+                    CryptoUtils.decrypt(o, winterCryptoProperties.getSecretKey());
                 }
             }
         } else {
             if (CacheUtils.needToDecrypt(resultObject)) {
-                decryptService.decrypt(resultObject);
+                CryptoUtils.decrypt(resultObject, winterCryptoProperties.getSecretKey());
             }
         }
         return resultObject;

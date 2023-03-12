@@ -6,7 +6,7 @@ import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.dao.service.AdminUserInfoDaoService;
 import org.winterframework.admin.enums.BizErrorCode;
 import org.winterframework.admin.service.AuthService;
-import org.winterframework.core.exception.ServiceException;
+import org.winterframework.core.i18n.exception.ServiceException;
 
 import java.util.Objects;
 

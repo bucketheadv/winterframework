@@ -7,8 +7,8 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.winterframework.crypto.service.DecryptService;
-import org.winterframework.crypto.service.EncryptService;
+import org.winterframework.crypto.properties.WinterCryptoProperties;
+import org.winterframework.crypto.utils.CryptoUtils;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
@@ -24,9 +24,7 @@ import java.util.Properties;
 })
 public class EncryptInterceptor implements Interceptor {
     @Autowired
-    private EncryptService encryptService;
-    @Autowired
-    private DecryptService decryptService;
+    private WinterCryptoProperties winterCryptoProperties;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -36,10 +34,10 @@ public class EncryptInterceptor implements Interceptor {
 
         Object parameterObject = parameterField.get(parameterHandler);
         if (parameterObject != null) {
-            encryptService.encrypt(parameterObject);
+            CryptoUtils.encrypt(parameterObject, winterCryptoProperties.getSecretKey());
             Object result = invocation.proceed();
             // 加密后保存完成后再解密回去
-            decryptService.decrypt(parameterObject);
+            CryptoUtils.decrypt(parameterObject, winterCryptoProperties.getSecretKey());
             return result;
         }
         return invocation.proceed();

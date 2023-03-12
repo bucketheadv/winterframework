@@ -1,8 +1,8 @@
-package org.winterframework.core.support.enums;
+package org.winterframework.core.i18n.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.winterframework.core.api.I18nEnumerable;
+import org.winterframework.core.i18n.api.I18nErrorCode;
 
 /**
  * @author qinglinl
@@ -10,7 +10,7 @@ import org.winterframework.core.api.I18nEnumerable;
  */
 @Getter
 @AllArgsConstructor
-public enum ErrorCode implements I18nEnumerable {
+public enum ErrorCode implements I18nErrorCode {
 	OK(0, "error.ok"),
 	SYSTEM_ERROR(100001, "error.system_error"),
 	METHOD_NOT_SUPPORT(100002, "error.method_not_support"),

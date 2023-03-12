@@ -10,11 +10,11 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.winterframework.core.api.I18nEnumerable;
-import org.winterframework.core.exception.ServiceException;
+import org.winterframework.core.i18n.api.I18nErrorCode;
+import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.enums.ErrorCode;
 
 import java.util.stream.Collectors;
 
@@ -59,7 +59,7 @@ public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public ApiResponse<?> onException(Exception e) {
 		log.error("", e);
-		if (e instanceof I18nEnumerable err) {
+		if (e instanceof I18nErrorCode err) {
 			return buildResponse(err);
 		}
 		return buildResponse(ErrorCode.SYSTEM_ERROR);
@@ -73,7 +73,7 @@ public class WinterFrameworkWebControllerAdvice {
 		return apiResponse;
 	}
 
-	private <T> ApiResponse<T> buildResponse(I18nEnumerable i18nEnum) {
+	private <T> ApiResponse<T> buildResponse(I18nErrorCode i18nEnum) {
 		return buildResponse(i18nEnum.getCode(), I18n.get(i18nEnum.getI18nCode()));
 	}
 }

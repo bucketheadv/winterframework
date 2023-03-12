@@ -1,10 +1,10 @@
-package org.winterframework.core.api;
+package org.winterframework.core.i18n.api;
 
 /**
  * @author qinglinl
  * Created on 2022/9/26 3:26 PM
  */
-public interface I18nEnumerable {
+public interface I18nErrorCode {
 	int getCode();
 
 	/**

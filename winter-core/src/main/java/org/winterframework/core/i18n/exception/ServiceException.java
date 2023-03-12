@@ -1,13 +1,16 @@
-package org.winterframework.core.exception;
+package org.winterframework.core.i18n.exception;
 
-import org.winterframework.core.api.I18nEnumerable;
+import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.I18n;
+
+import java.io.Serial;
 
 /**
  * @author qinglinl
  * Created on 2022/9/26 3:27 PM
  */
-public class ServiceException extends RuntimeException implements I18nEnumerable {
+public class ServiceException extends RuntimeException implements I18nErrorCode {
+	@Serial
 	private static final long serialVersionUID = 6426831533728128447L;
 
 	private final int code;
@@ -26,7 +29,7 @@ public class ServiceException extends RuntimeException implements I18nEnumerable
 		this.i18nCode = i18nCode;
 	}
 
-	public ServiceException(I18nEnumerable i18nEnum) {
+	public ServiceException(I18nErrorCode i18nEnum) {
 		this(i18nEnum.getCode(), i18nEnum.getI18nCode());
 	}
 

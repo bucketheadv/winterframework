@@ -2,7 +2,7 @@ package org.winterframework.jwt.support.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.winterframework.core.api.I18nEnumerable;
+import org.winterframework.core.i18n.api.I18nErrorCode;
 
 /**
  * @author qinglinl
@@ -10,7 +10,7 @@ import org.winterframework.core.api.I18nEnumerable;
  */
 @Getter
 @AllArgsConstructor
-public enum WebErrorCode implements I18nEnumerable {
+public enum WebErrorCode implements I18nErrorCode {
 	TOKEN_INVALID(200001, "error.token_invalid"),
 
 	TOKEN_ENV_INCONSISTENT(200002, "error.token_env_inconsistent"),

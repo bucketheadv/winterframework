@@ -12,7 +12,7 @@ import org.winterframework.admin.model.vo.ListUserVO;
 import org.winterframework.admin.model.vo.UserDetailVO;
 import org.winterframework.admin.service.AdminUserService;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
 import org.winterframework.tk.mybatis.tool.PageTool;

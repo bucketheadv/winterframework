@@ -1,8 +1,8 @@
 package org.winterframework.core.tool;
 
 import okhttp3.*;
-import org.winterframework.core.exception.ServiceException;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.exception.ServiceException;
+import org.winterframework.core.i18n.enums.ErrorCode;
 
 import java.io.IOException;
 import java.time.Duration;

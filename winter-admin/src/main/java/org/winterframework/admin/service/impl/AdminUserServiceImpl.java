@@ -13,7 +13,7 @@ import org.winterframework.admin.enums.BizErrorCode;
 import org.winterframework.admin.model.dto.ListUserDTO;
 import org.winterframework.admin.model.dto.UpdateAdminUserDTO;
 import org.winterframework.admin.service.AdminUserService;
-import org.winterframework.core.exception.ServiceException;
+import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;

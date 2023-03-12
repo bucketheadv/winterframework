@@ -11,7 +11,7 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.jwt.env.Environment;

@@ -11,11 +11,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
-import org.winterframework.core.api.I18nEnumerable;
-import org.winterframework.core.exception.ServiceException;
+import org.winterframework.core.i18n.api.I18nErrorCode;
+import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.support.enums.ErrorCode;
+import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.core.tool.RegTool;
 import org.winterframework.core.tool.StringTool;
@@ -51,7 +51,7 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 		params.put("green", "*plgkalceuv6kj&v");
 	}
 
-	public static void throwsServiceException(I18nEnumerable i18nEnum) {
+	public static void throwsServiceException(I18nErrorCode i18nEnum) {
 		throw new ServiceException(i18nEnum);
 	}
 
@@ -89,7 +89,7 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 		return this.pre(environment, request, response, handler);
 	}
 
-	private void writeResponse(I18nEnumerable i18nEnum, HttpServletResponse response) {
+	private void writeResponse(I18nErrorCode i18nEnum, HttpServletResponse response) {
 		ApiResponse<?> apiResponse = new ApiResponse<>();
 		apiResponse.setCode(i18nEnum.getCode());
 		apiResponse.setMessage(I18n.get(i18nEnum.getI18nCode()));
