@@ -45,7 +45,7 @@ public class AdminUserController extends BaseController {
 	@RbacPerm
 	@GetMapping("/list")
 	ApiResponse<PageInfo<ListUserVO>> list(@Valid ListUserDTO req) {
-		PageInfo<AdminUserEntity> pageInfo = adminUserService.selectByQuery(req);
+		PageInfo<AdminUserEntity> pageInfo = adminUserService.selectList(req);
 		PageInfo<ListUserVO> result = PageTool.convert(pageInfo, ListUserVO.class);
 		return build(result);
 	}

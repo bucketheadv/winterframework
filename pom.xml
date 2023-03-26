@@ -20,6 +20,7 @@
         <module>winter-tk-mybatis</module>
         <module>winter-cache</module>
         <module>winter-crypto</module>
+        <module>winter-trace</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>

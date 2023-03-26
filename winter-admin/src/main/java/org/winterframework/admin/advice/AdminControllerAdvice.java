@@ -18,7 +18,7 @@ import org.winterframework.rbac.exception.RbacPermDeniedException;
 public class AdminControllerAdvice {
 	@ExceptionHandler(RbacPermDeniedException.class)
 	public ApiResponse<?> onRbacPermDeniedException(RbacPermDeniedException e) {
-		log.error("", e);
+		log.error("Permission Denied", e);
 		return buildResponse(BizErrorCode.USER_HAS_NO_RBAC_PERM);
 	}
 

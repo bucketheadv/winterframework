@@ -1,5 +1,6 @@
 package org.winterframework.admin.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.winterframework.core.i18n.I18n;
  * @author qinglinl
  * Created on 2022/10/9 11:30 AM
  */
+@Slf4j
 @RestController
 @RequestMapping("/test")
 public class TestController {
@@ -21,7 +23,8 @@ public class TestController {
 
 	@GetMapping("/test")
 	public Object test() {
-		return I18n.get("error.hello", 123, "456");
+		log.info("Hello");
+		return I18n.get("error.email_or_password_invalid", 123, "456");
 	}
 
 	@GetMapping("/haha")
@@ -29,6 +32,6 @@ public class TestController {
 		ListUserDTO listUserDTO = new ListUserDTO();
 		listUserDTO.setPageNum(page);
 		listUserDTO.setPageSize(pageSize);
-		return adminUserService.selectByQuery(listUserDTO);
+		return adminUserService.selectList(listUserDTO);
 	}
 }

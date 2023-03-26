@@ -1,7 +1,7 @@
 package org.winterframework.cache.tool;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -18,7 +18,8 @@ public class SpELTool {
 	public static SpELContext parse(Method method, ProceedingJoinPoint proceedingJoinPoint) {
 		EvaluationContext context = new StandardEvaluationContext();
 		ExpressionParser parser = new SpelExpressionParser();
-		LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
+//		LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
+		StandardReflectionParameterNameDiscoverer discoverer = new StandardReflectionParameterNameDiscoverer();
 		String[] params = discoverer.getParameterNames(method);
 		assert params != null;
 		Object[] args = proceedingJoinPoint.getArgs();

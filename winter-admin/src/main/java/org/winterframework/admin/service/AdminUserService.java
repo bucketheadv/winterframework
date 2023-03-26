@@ -12,7 +12,7 @@ import java.util.List;
  * Created on 2022/9/30 2:47 PM
  */
 public interface AdminUserService {
-	PageInfo<AdminUserEntity> selectByQuery(ListUserDTO req);
+	PageInfo<AdminUserEntity> selectList(ListUserDTO req);
 
 	void updateAdminUser(UpdateAdminUserDTO req);
 

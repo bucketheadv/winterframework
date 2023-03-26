@@ -34,7 +34,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Resource
 	private AdminUserInfoDaoService adminUserInfoDaoService;
 	@Override
-	public PageInfo<AdminUserEntity> selectByQuery(ListUserDTO req) {
+	public PageInfo<AdminUserEntity> selectList(ListUserDTO req) {
 		Condition condition = new Condition(AdminUserEntity.class);
 		condition.orderBy("id").desc();
 		return adminUserInfoDaoService.selectByPage(condition, req.getPageNum(), req.getPageSize());

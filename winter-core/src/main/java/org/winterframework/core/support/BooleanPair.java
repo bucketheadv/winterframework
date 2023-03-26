@@ -3,6 +3,7 @@ package org.winterframework.core.support;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public final class BooleanPair<T> implements Serializable {
+    @Serial
     private static final long serialVersionUID = -1193747389324827610L;
 
     private boolean success;
