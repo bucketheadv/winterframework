@@ -21,6 +21,7 @@
         <module>winter-cache</module>
         <module>winter-crypto</module>
         <module>winter-trace</module>
+        <module>winter-dubbo-starter</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -40,6 +41,8 @@
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <tk-mybatis.version>4.2.2</tk-mybatis.version>
         <mybatis.version>3.5.9</mybatis.version>
+        <dubbo.version>3.2.0-beta.6</dubbo.version>
+        <curator.version>5.4.0</curator.version>
     </properties>
 
     <!-- dependencyManagement定义的数据不能多重继承 -->
@@ -107,6 +110,26 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
+                <artifactId>winter-trace</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-dubbo-starter</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-dubbo-facade</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-dubbo-provider</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
                 <artifactId>winter-cache</artifactId>
                 <version>${winter.version}</version>
             </dependency>
@@ -135,6 +158,26 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
             </dependency>
             <dependency>
                 <groupId>tk.mybatis</groupId>

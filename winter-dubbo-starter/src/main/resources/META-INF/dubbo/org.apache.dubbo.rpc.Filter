@@ -1,0 +1,2 @@
+providerTraceFilter=org.winterframework.dubbo.filter.WinterDubboProviderTraceFilter
+consumerTraceFilter=org.winterframework.dubbo.filter.WinterDubboConsumerTraceFilter

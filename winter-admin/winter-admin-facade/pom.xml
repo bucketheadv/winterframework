@@ -8,12 +8,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>winter-admin</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>winter-admin-facade</module>
-        <module>winter-admin-provider</module>
-        <module>winter-admin-web</module>
-    </modules>
+
+    <artifactId>winter-dubbo-facade</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>

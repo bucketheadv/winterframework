@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.winterframework.core.tool.StringTool;
-import org.winterframework.trace.properties.WinterTracerProperties;
+import org.winterframework.trace.constant.TraceConstants;
 import org.winterframework.trace.tool.MDCTool;
 
 /**
@@ -20,12 +20,11 @@ import org.winterframework.trace.tool.MDCTool;
 @Configuration
 @AllArgsConstructor
 public class WinterTracerInterceptor implements HandlerInterceptor {
-    private WinterTracerProperties winterTracerProperties;
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request,
                              @NonNull HttpServletResponse response,
                              @NonNull Object handler) throws Exception {
-        String traceIdKey = winterTracerProperties.getTraceId();
+        String traceIdKey = TraceConstants.TRACE_KEY;
         String traceId = MDC.get(traceIdKey);
         if (StringTool.isBlank(traceId)) {
             traceId = request.getHeader(traceIdKey);

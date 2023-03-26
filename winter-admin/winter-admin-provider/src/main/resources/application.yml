@@ -1,0 +1,16 @@
+dubbo:
+  application:
+    name: winter-dubbo-provider
+    id: winter-dubbo-provider
+
+  protocol:
+    name: dubbo
+    port: 20881
+
+  registry:
+    address: zookeeper://localhost:2181
+  scan:
+    base-packages: org.winterframework.dubbo.provider
+spring:
+  main:
+    web-application-type: none
