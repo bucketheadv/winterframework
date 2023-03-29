@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>winter-dubbo-provider</artifactId>
+    <artifactId>winter-admin-provider</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-dubbo-facade</artifactId>
+            <artifactId>winter-admin-facade</artifactId>
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>

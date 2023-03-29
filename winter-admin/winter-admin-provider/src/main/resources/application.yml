@@ -1,7 +1,7 @@
 dubbo:
   application:
-    name: winter-dubbo-provider
-    id: winter-dubbo-provider
+    name: winter-admin-provider
+    id: winter-admin-provider
 
   protocol:
     name: dubbo

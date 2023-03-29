@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-dubbo-facade</artifactId>
+            <artifactId>winter-admin-facade</artifactId>
         </dependency>
     </dependencies>
 
