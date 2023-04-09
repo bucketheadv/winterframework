@@ -7,17 +7,16 @@
         <groupId>org.winterframework</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>winter-cache</artifactId>
+    <artifactId>winter-starter-cache</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>winter-cache</name>
-    <description>winter-cache</description>
+    <name>winter-starter-cache</name>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-data-redis</artifactId>
+            <artifactId>winter-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

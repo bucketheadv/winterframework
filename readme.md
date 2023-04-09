@@ -38,43 +38,43 @@
         <!-- if you need redis only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-data-redis</artifactId>
+            <artifactId>winter-starter-data-redis</artifactId>
         </dependency>
 
         <!-- if you need elasticsearch only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-elasticsearch</artifactId>
+            <artifactId>winter-starter-elasticsearch</artifactId>
         </dependency>
 
         <!-- if you need kafka only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-kafka</artifactId>
+            <artifactId>winter-starter-kafka</artifactId>
         </dependency>
 
         <!-- if you need mongodb only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-mongodb</artifactId>
+            <artifactId>winter-starter-mongodb</artifactId>
         </dependency>
 
         <!-- if you need rocketmq only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-rocketmq</artifactId>
+            <artifactId>winter-starter-rocketmq</artifactId>
         </dependency>
 
         <!-- if you need apoll only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-apollo</artifactId>
+            <artifactId>winter-starter-apollo</artifactId>
         </dependency>
 
         <!-- if you need job only -->
         <dependency>
             <groupId>com.github.bucketheadv.winterframework</groupId>
-            <artifactId>winter-job</artifactId>
+            <artifactId>winter-starter-job</artifactId>
         </dependency>
     </dependencies>
 </project>

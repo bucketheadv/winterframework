@@ -14,11 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-rbac</artifactId>
+            <artifactId>winter-starter-rbac</artifactId>
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-tk-mybatis</artifactId>
+            <artifactId>winter-starter-tk-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
@@ -26,11 +26,11 @@
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-trace</artifactId>
+            <artifactId>winter-starter-trace</artifactId>
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-dubbo-starter</artifactId>
+            <artifactId>winter-starter-dubbo</artifactId>
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>

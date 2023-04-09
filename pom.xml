@@ -5,23 +5,23 @@
     <packaging>pom</packaging>
     <modules>
         <module>winter-core</module>
-        <module>winter-data-redis</module>
-        <module>winter-kafka</module>
-        <module>winter-rocketmq</module>
-        <module>winter-mongodb</module>
-        <module>winter-elasticsearch</module>
-        <module>winter-apollo</module>
-        <module>winter-job</module>
-        <module>winter-jwt</module>
+        <module>winter-starter-data-redis</module>
+        <module>winter-starter-kafka</module>
+        <module>winter-starter-rocketmq</module>
+        <module>winter-starter-mongodb</module>
+        <module>winter-starter-elasticsearch</module>
+        <module>winter-starter-apollo</module>
+        <module>winter-starter-job</module>
+        <module>winter-starter-jwt</module>
         <module>winter-starter-parent</module>
-        <module>winter-rbac</module>
+        <module>winter-starter-rbac</module>
         <module>winter-admin</module>
-        <module>winter-mybatis-plus</module>
-        <module>winter-tk-mybatis</module>
-        <module>winter-cache</module>
-        <module>winter-crypto</module>
-        <module>winter-trace</module>
-        <module>winter-dubbo-starter</module>
+        <module>winter-starter-mybatis-plus</module>
+        <module>winter-starter-tk-mybatis</module>
+        <module>winter-starter-cache</module>
+        <module>winter-starter-crypto</module>
+        <module>winter-starter-trace</module>
+        <module>winter-starter-dubbo</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>
@@ -55,67 +55,67 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-apollo</artifactId>
+                <artifactId>winter-starter-apollo</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-data-redis</artifactId>
+                <artifactId>winter-starter-data-redis</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-elasticsearch</artifactId>
+                <artifactId>winter-starter-elasticsearch</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-job</artifactId>
+                <artifactId>winter-starter-job</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-jwt</artifactId>
+                <artifactId>winter-starter-jwt</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-kafka</artifactId>
+                <artifactId>winter-starter-kafka</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-mongodb</artifactId>
+                <artifactId>winter-starter-mongodb</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-rocketmq</artifactId>
+                <artifactId>winter-starter-rocketmq</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-rbac</artifactId>
+                <artifactId>winter-starter-rbac</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-mybatis-plus</artifactId>
+                <artifactId>winter-starter-mybatis-plus</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-tk-mybatis</artifactId>
+                <artifactId>winter-starter-tk-mybatis</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-trace</artifactId>
+                <artifactId>winter-starter-trace</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-dubbo-starter</artifactId>
+                <artifactId>winter-starter-dubbo</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
@@ -130,7 +130,7 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-cache</artifactId>
+                <artifactId>winter-starter-cache</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>

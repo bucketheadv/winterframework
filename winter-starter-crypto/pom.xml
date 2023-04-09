@@ -9,14 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>winter-trace</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.winterframework</groupId>
-            <artifactId>winter-core</artifactId>
-        </dependency>
-    </dependencies>
+    <artifactId>winter-starter-crypto</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -24,4 +17,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.winterframework</groupId>
+            <artifactId>winter-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-dubbo-starter</artifactId>
+            <artifactId>winter-starter-dubbo</artifactId>
         </dependency>
     </dependencies>
 

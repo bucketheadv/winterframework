@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>winter-data-redis</artifactId>
+    <artifactId>winter-starter-rbac</artifactId>
 
     <dependencies>
         <dependency>
@@ -17,9 +17,12 @@
             <artifactId>winter-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
+            <groupId>org.winterframework</groupId>
+            <artifactId>winter-starter-jwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
     </dependencies>
-
 </project>
