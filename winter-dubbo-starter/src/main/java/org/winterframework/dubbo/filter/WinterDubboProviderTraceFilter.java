@@ -9,6 +9,8 @@ import org.winterframework.core.tool.StringTool;
 import org.winterframework.trace.constant.TraceConstants;
 import org.winterframework.trace.tool.MDCTool;
 
+import java.util.Arrays;
+
 /**
  * @author sven
  * Created on 2023/3/26 8:45 PM
@@ -23,9 +25,13 @@ public class WinterDubboProviderTraceFilter implements Filter {
             traceId = MDCTool.getOrCreateTraceId(TraceConstants.TRACE_KEY);
         }
         MDC.put(TraceConstants.TRACE_KEY, traceId);
-        log.info("Provider端执行invoke设置{}", TraceConstants.TRACE_KEY);
         try {
-            return invoker.invoke(invocation);
+            Result result = invoker.invoke(invocation);
+            log.info("请求参数: {}, 返回结果: {}", Arrays.toString(invocation.getArguments()), result.getValue());
+            return result;
+        } catch (Exception e) {
+            log.info("请求异常: {}", Arrays.toString(invocation.getArguments()), e);
+            throw e;
         } finally {
             MDC.clear();
         }
