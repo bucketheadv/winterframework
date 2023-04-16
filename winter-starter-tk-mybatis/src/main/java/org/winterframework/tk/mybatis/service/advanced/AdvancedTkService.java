@@ -7,7 +7,7 @@ import org.winterframework.tk.mybatis.service.base.BaseTkService;
  * Created on 2022/12/13 3:27 PM
  */
 public interface AdvancedTkService<Entity, ID> extends BaseTkService<Entity, ID> {
-	int updateByPrimaryKey(Entity record);
+	int updateByPrimaryKey(Entity entity);
 
-	int insert(Entity record);
+	int insert(Entity entity);
 }

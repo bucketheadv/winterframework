@@ -4,7 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>winter-admin</module>
         <module>winter-core</module>
+        <module>winter-web</module>
         <module>winter-starter-data-redis</module>
         <module>winter-starter-kafka</module>
         <module>winter-starter-rocketmq</module>
@@ -15,12 +17,11 @@
         <module>winter-starter-jwt</module>
         <module>winter-starter-parent</module>
         <module>winter-starter-rbac</module>
-        <module>winter-admin</module>
         <module>winter-starter-mybatis-plus</module>
         <module>winter-starter-tk-mybatis</module>
         <module>winter-starter-cache</module>
         <module>winter-starter-crypto</module>
-        <module>winter-starter-trace</module>
+        <module>winter-starter-tracer</module>
         <module>winter-starter-dubbo</module>
     </modules>
     <parent>
@@ -109,7 +110,12 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-trace</artifactId>
+                <artifactId>winter-starter-tracer</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-starter-crypto</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>

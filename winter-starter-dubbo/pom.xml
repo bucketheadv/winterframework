@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-starter-trace</artifactId>
+            <artifactId>winter-starter-tracer</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>

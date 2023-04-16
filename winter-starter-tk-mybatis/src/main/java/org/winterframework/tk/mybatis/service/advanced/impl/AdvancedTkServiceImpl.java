@@ -104,17 +104,17 @@ public abstract class AdvancedTkServiceImpl<Mapper extends AdvancedTkMapper<Enti
 	}
 
 	@Override
-	public int insertUseGeneratedKeys(Entity record) {
-		return baseMapper.insertUseGeneratedKeys(record);
+	public int insertUseGeneratedKeys(Entity entity) {
+		return baseMapper.insertUseGeneratedKeys(entity);
 	}
 
 	@Override
-	public int insert(Entity record) {
-		return baseMapper.insert(record);
+	public int insert(Entity entity) {
+		return baseMapper.insert(entity);
 	}
 
 	@Override
-	public int updateByPrimaryKey(Entity record) {
-		return baseMapper.updateByPrimaryKey(record);
+	public int updateByPrimaryKey(Entity entity) {
+		return baseMapper.updateByPrimaryKey(entity);
 	}
 }

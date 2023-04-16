@@ -16,5 +16,5 @@ public interface AdvancedUpdateByConditionMapper<T> {
 			type = ConditionProvider.class,
 			method = "dynamicSQL"
 	)
-	int updateByCondition(@Param("record") T record, @Param("example") Condition condition);
+	int updateByCondition(@Param("record") T entity, @Param("example") Condition condition);
 }
