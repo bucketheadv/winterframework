@@ -11,7 +11,7 @@ import org.winterframework.job.constants.Const;
  */
 @Getter
 @Setter
-@ConfigurationProperties(Const.configPrefix)
+@ConfigurationProperties(prefix = Const.configPrefix)
 public class JobProperties {
     /**
      * 是否启用
