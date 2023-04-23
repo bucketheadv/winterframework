@@ -2,6 +2,7 @@ package org.winterframework.web.dao.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.winterframework.crypto.annotation.EncryptField;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,5 +14,13 @@ public class UserEntity {
     @Id
     private Long id;
 
-    private String mobile;
+    @EncryptField
+    private String username;
+
+    private Integer age;
+
+    private Integer sex;
+
+    @EncryptField
+    private String address;
 }

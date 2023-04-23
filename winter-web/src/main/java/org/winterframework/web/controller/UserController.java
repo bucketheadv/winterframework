@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.winterframework.web.config.BlacklistProperties;
 import org.winterframework.web.dao.mapper.UserMapper;
 import org.winterframework.web.model.UserVO;
 
@@ -12,6 +13,13 @@ import org.winterframework.web.model.UserVO;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private BlacklistProperties blacklistProperties;
+
+    @RequestMapping("/getBlacklist")
+    public Object getBlacklist() {
+        return blacklistProperties.getUsers();
+    }
 
     @RequestMapping("/user")
     public Object getUser() {
