@@ -87,7 +87,7 @@ public class UserDefinedFilter implements Filter {
 	}
 
 	private void wrapperDoFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-		ServletRequest wrapper = new UserDefiendServletRequestWrapper(request);
+		ServletRequest wrapper = new UserDefinedServletRequestWrapper(request);
 		chain.doFilter(wrapper, response);
 	}
 

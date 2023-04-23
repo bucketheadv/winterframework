@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.function.Function;
  * Created on 2022/10/24 2:58 PM
  */
 @Slf4j
+@UtilityClass
 public class EnumTool {
 	private static final Map<String, Class<?>> map = new ConcurrentHashMap<>();
 

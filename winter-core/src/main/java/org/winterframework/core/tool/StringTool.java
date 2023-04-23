@@ -1,13 +1,14 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author sven
  * Created on 2021/12/30 11:01 下午
  */
+@UtilityClass
 public final class StringTool extends StringUtils {
-	private StringTool() {}
 
 	public static Integer convert2Int(Object o, Integer defaultVal) {
 		return convertNumber(o, defaultVal, () -> Integer.parseInt(o.toString()));

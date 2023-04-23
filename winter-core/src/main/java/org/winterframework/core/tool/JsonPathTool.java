@@ -2,6 +2,7 @@ package org.winterframework.core.tool;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.intellij.lang.annotations.Language;
 
@@ -10,9 +11,8 @@ import org.intellij.lang.annotations.Language;
  * Created on 2022/1/26 6:17 下午
  */
 @Slf4j
+@UtilityClass
 public final class JsonPathTool {
-
-    private JsonPathTool() {}
     /**
      * 通过jsonpath获取map路径数据
      * @param data 数据对象

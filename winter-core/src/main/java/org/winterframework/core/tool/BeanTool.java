@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
@@ -12,8 +13,8 @@ import java.util.List;
  * Created on 2021/12/30 10:36 下午
  */
 @Slf4j
+@UtilityClass
 public final class BeanTool {
-    private BeanTool() {}
 
     public static <T> T copyAs(Object source, Class<T> clazz) {
         try {

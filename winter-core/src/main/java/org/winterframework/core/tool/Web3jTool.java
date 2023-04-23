@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
 import org.web3j.crypto.ECDSASignature;
 import org.web3j.crypto.Hash;
 import org.web3j.crypto.Keys;
@@ -14,6 +15,7 @@ import java.util.Arrays;
  * @author qinglinl
  * Created on 2022/9/26 3:14 PM
  */
+@UtilityClass
 public class Web3jTool {
 	public static final String PERSONAL_MESSAGE_PREFIX = "\u0019Ethereum Signed Message:\n";
 

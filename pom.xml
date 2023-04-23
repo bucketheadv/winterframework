@@ -23,6 +23,7 @@
         <module>winter-starter-crypto</module>
         <module>winter-starter-tracer</module>
         <module>winter-starter-dubbo</module>
+        <module>winter-mybatis-generator</module>
     </modules>
     <parent>
         <groupId>org.winterframework</groupId>

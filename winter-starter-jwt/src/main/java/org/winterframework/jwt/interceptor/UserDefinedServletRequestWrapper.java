@@ -16,10 +16,10 @@ import java.io.InputStreamReader;
  * Created on 2022/9/27 3:11 PM
  */
 @Slf4j
-public class UserDefiendServletRequestWrapper extends HttpServletRequestWrapper {
+public class UserDefinedServletRequestWrapper extends HttpServletRequestWrapper {
 	private String body;
 
-	public UserDefiendServletRequestWrapper(HttpServletRequest request) {
+	public UserDefinedServletRequestWrapper(HttpServletRequest request) {
 		super(request);
 		if (request.getParameterMap().size() > 0) {
 			return;

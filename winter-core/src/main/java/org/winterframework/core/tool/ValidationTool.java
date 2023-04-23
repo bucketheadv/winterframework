@@ -3,6 +3,7 @@ package org.winterframework.core.tool;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
+import lombok.experimental.UtilityClass;
 import org.hibernate.validator.internal.engine.messageinterpolation.DefaultLocaleResolver;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -19,6 +20,7 @@ import java.util.Set;
  * @author qinglinl
  * Created on 2022/9/26 3:08 PM
  */
+@UtilityClass
 public final class ValidationTool {
 	public static void validate(String objectName, Object obj) throws Exception {
 		Locale locale = LocaleContextHolder.getLocale();

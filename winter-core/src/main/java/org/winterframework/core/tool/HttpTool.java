@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
 import okhttp3.*;
 import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.enums.ErrorCode;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author qinglinl
  * Created on 2022/11/1 10:28 AM
  */
+@UtilityClass
 public class HttpTool {
 	private static final Duration timeout = Duration.ofSeconds(30);
 
