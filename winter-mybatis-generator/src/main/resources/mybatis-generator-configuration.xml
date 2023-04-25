@@ -37,7 +37,7 @@
 
         <javaClientGenerator targetPackage="org.winterframework.mybatis.dao.mapper" targetProject="winter-mybatis-generator/src/main/java" type="XMLMAPPER" />
 
-        <table schema="db_order" tableName="t_trade" domainObjectName="TradeEntity"
+        <table schema="db_user" tableName="t_user" domainObjectName="UserEntity"
                enableUpdateByExample="false"
                enableCountByExample="false"
                enableDeleteByExample="false"
