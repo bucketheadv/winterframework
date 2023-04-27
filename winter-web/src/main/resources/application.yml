@@ -3,3 +3,12 @@ spring:
     url: jdbc:mysql://localhost:3306/winter_db
     username: root
     password:
+
+apollo:
+  use-default-listener: true
+  meta: http://localhost:9876
+  bootstrap:
+    namespaces: application,redis,mysql
+  cluster: default
+app:
+  id: WINTER-WEB

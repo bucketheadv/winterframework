@@ -28,7 +28,7 @@
         <hutool.version>5.8.15</hutool.version>
         <guava.version>31.0.1-jre</guava.version>
         <json-path.version>2.7.0</json-path.version>
-        <apollo.version>1.9.2</apollo.version>
+        <apollo.version>2.1.0</apollo.version>
         <guice.version>5.0.1</guice.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <jackson.version>2.14.2</jackson.version>

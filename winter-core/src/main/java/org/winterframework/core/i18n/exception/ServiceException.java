@@ -29,8 +29,8 @@ public class ServiceException extends RuntimeException implements I18nErrorCode 
 		this.i18nCode = i18nCode;
 	}
 
-	public ServiceException(I18nErrorCode i18nEnum) {
-		this(i18nEnum.getCode(), i18nEnum.getI18nCode());
+	public ServiceException(I18nErrorCode i18nErrorCode) {
+		this(i18nErrorCode.getCode(), i18nErrorCode.getI18nCode());
 	}
 
 	public ServiceException(int errorCode, String i18nCode, Throwable clauses) {

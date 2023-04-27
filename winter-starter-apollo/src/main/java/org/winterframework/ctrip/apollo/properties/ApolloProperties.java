@@ -2,6 +2,8 @@ package org.winterframework.ctrip.apollo.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author qinglinl
@@ -9,8 +11,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Configuration
+@ConfigurationProperties(prefix = "apollo")
 public class ApolloProperties {
-    private boolean enableDefaultListener = true;
-
-    private String meta;
+    /**
+     * 是否启用默认配置变更监听器, 启用后会自动更新@ConfigurationProperties注解的Bean
+     */
+    private boolean useDefaultListener = true;
 }

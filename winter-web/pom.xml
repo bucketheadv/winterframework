@@ -20,6 +20,10 @@
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
+            <artifactId>winter-starter-apollo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.winterframework</groupId>
             <artifactId>winter-starter-crypto</artifactId>
         </dependency>
         <dependency>
