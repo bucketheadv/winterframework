@@ -3,6 +3,7 @@ package org.winterframework.jwt.env;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class Environment implements Serializable {
+	@Serial
 	private static final long serialVersionUID = -3793693911012753958L;
 
 	private String platform;

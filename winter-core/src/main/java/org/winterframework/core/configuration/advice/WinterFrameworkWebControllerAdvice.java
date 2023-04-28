@@ -27,37 +27,37 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(prefix = "winter.core.advice", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler({ServiceException.class})
-	public ApiResponse<?> onServiceException(ServiceException e) {
+	public <T> ApiResponse<T> onServiceException(ServiceException e) {
 		log.error("onServiceException, ", e);
 		return buildResponse(e);
 	}
 
 	@ExceptionHandler({NoHandlerFoundException.class})
-	public ApiResponse<?> onNoHandlerFoundException(NoHandlerFoundException e) {
+	public <T> ApiResponse<T> onNoHandlerFoundException(NoHandlerFoundException e) {
 		log.error("path: {} not found", e.getRequestURL());
 		return buildResponse(ErrorCode.PATH_NOT_FOUND);
 	}
 
 	@ExceptionHandler({MissingServletRequestParameterException.class, MissingPathVariableException.class, HttpMessageNotReadableException.class})
-	public ApiResponse<?> onMissingServletRequestParameterException(Exception e) {
+	public <T> ApiResponse<T> onMissingServletRequestParameterException(Exception e) {
 		log.error("param error: ", e);
 		return buildResponse(ErrorCode.PARAM_ERROR);
 	}
 
 	@ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-	public ApiResponse<?> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+	public <T> ApiResponse<T> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		log.error("http method not supported: ", e);
 		return buildResponse(ErrorCode.METHOD_NOT_SUPPORT);
 	}
 
 	@ExceptionHandler({BindException.class})
-	public ApiResponse<?> onBindException(BindException e) {
+	public <T> ApiResponse<T> onBindException(BindException e) {
 		String msg = e.getBindingResult().getFieldErrors().stream().map(i -> I18n.getOrDefault(i.getObjectName() + "." + i.getField(), i.getField()) + " " + i.getDefaultMessage()).collect(Collectors.joining(", "));
 		return buildResponse(ErrorCode.PARAM_ERROR.getCode(), msg);
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ApiResponse<?> onException(Exception e) {
+	public <T> ApiResponse<T> onException(Exception e) {
 		log.error("", e);
 		if (e instanceof I18nErrorCode err) {
 			return buildResponse(err);
