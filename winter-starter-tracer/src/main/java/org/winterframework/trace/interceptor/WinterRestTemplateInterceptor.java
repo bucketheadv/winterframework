@@ -2,7 +2,6 @@ package org.winterframework.trace.interceptor;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +31,7 @@ public class WinterRestTemplateInterceptor implements ClientHttpRequestIntercept
         return new RestTemplate();
     }
 
-    @NotNull
+    @NonNull
     @Override
     public ClientHttpResponse intercept(@NonNull HttpRequest request,
                                         @NonNull byte[] body,

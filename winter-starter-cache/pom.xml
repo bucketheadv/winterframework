@@ -10,9 +10,7 @@
     <artifactId>winter-starter-cache</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>winter-starter-cache</name>
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>

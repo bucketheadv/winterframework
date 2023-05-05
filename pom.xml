@@ -26,10 +26,10 @@
         <module>winter-mybatis-generator</module>
     </modules>
     <parent>
-        <groupId>org.winterframework</groupId>
-        <artifactId>winter-starter-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>winter-starter-parent/pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>winter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -38,177 +38,17 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
-        <rocketmq.version>2.2.2</rocketmq.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <tk-mybatis.version>4.2.2</tk-mybatis.version>
-        <mybatis.version>3.5.9</mybatis.version>
-        <dubbo.version>3.2.0-beta.6</dubbo.version>
-        <curator.version>5.4.0</curator.version>
     </properties>
 
-    <!-- dependencyManagement定义的数据不能多重继承 -->
+    <!-- dependencyManagement定义的数据不能通过 parent 标签多重继承 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.winterframework</groupId>
-                <artifactId>winter-core</artifactId>
+                <artifactId>winter-starter-parent</artifactId>
+                <scope>import</scope>
+                <type>pom</type>
                 <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-apollo</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-data-redis</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-elasticsearch</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-job</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-jwt</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-kafka</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-mongodb</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-rocketmq</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-rbac</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-mybatis-plus</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-tk-mybatis</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-tracer</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-crypto</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-dubbo</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-admin-facade</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-admin-provider</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-cache</artifactId>
-                <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>${rocketmq.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-collections</groupId>
-                        <artifactId>commons-collections</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${apache.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-registry-zookeeper</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-client</artifactId>
-                <version>${curator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-recipes</artifactId>
-                <version>${curator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${tk-mybatis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.14.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.web3j</groupId>
-                <artifactId>core</artifactId>
-                <version>${web3j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper</artifactId>
-                <version>${page.helper.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.intellij</groupId>
-                <artifactId>annotations</artifactId>
-                <version>9.0.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
