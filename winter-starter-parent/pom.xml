@@ -15,7 +15,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
         <spring-boot.version>3.0.0</spring-boot.version>
-        <spring-cloud.version>3.1.1</spring-cloud.version>
+        <spring-cloud.version>4.0.0</spring-cloud.version>
         <jedis.version>4.3.2</jedis.version>
         <rocketmq.version>2.2.2</rocketmq.version>
         <hutool.version>5.8.15</hutool.version>
@@ -110,6 +110,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter</artifactId>
+                <version>${spring-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

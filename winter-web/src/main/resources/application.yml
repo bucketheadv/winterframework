@@ -1,14 +1,21 @@
+server:
+  port: 9090
 spring:
+  application:
+    name: winter-web
   datasource:
     url: jdbc:mysql://localhost:3306/winter_db
     username: root
     password:
 
 apollo:
-  use-default-listener: true
-  meta: http://localhost:9876
+  enable-auto-refresh: true # 配置变更时，自动刷新
+  meta: http://localhost:8080 # eureka 注册中心地址
+  config-service: http://localhost:8080 # 此项不是必填项，不填时默认从eureka读取ip地址
   bootstrap:
-    namespaces: application,redis,mysql
+    enabled: true # 开启时才会从配置中心读取数据
+    namespaces: application
   cluster: default
+  interested-key-prefixes: winter.
 app:
-  id: WINTER-WEB
+  id: ${spring.application.name} # 对应apollo上的AppId

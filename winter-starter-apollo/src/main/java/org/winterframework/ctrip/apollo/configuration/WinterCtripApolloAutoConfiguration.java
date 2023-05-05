@@ -2,18 +2,12 @@ package org.winterframework.ctrip.apollo.configuration;
 
 import com.ctrip.framework.apollo.ConfigService;
 import com.ctrip.framework.apollo.model.ConfigChange;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
-import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.winterframework.ctrip.apollo.properties.ApolloProperties;
 
 /**
@@ -23,22 +17,15 @@ import org.winterframework.ctrip.apollo.properties.ApolloProperties;
 @Slf4j
 @Configuration
 @ComponentScan(basePackages = "org.winterframework.ctrip.apollo")
-public class WinterCtripApolloAutoConfiguration implements InitializingBean, EnvironmentAware {
+public class WinterCtripApolloAutoConfiguration implements InitializingBean {
     @Autowired
     private RefreshScope refreshScope;
-
-    private Environment environment;
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RefreshScope refreshScope() {
-        return new RefreshScope();
-    }
+    @Autowired
+    private ApolloProperties apolloProperties;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        ApolloProperties apolloProperties = Binder.get(environment).bind("apollo", ApolloProperties.class).get();
-        if (apolloProperties.isUseDefaultListener()) {
+        if (apolloProperties.isEnableAutoRefresh()) {
             log.info("Apollo 开启默认配置刷新。");
             ConfigService.getAppConfig().addChangeListener(configChangeEvent -> {
                 for (String changedKey : configChangeEvent.changedKeys()) {
@@ -47,12 +34,7 @@ public class WinterCtripApolloAutoConfiguration implements InitializingBean, Env
                             changedKey, configChange.getOldValue(), configChange.getNewValue());
                 }
                 refreshScope.refreshAll();
-            });
+            }, apolloProperties.getInterestedKeys(), apolloProperties.getInterestedKeyPrefixes());
         }
-    }
-
-    @Override
-    public void setEnvironment(@NonNull Environment environment) {
-        this.environment = environment;
     }
 }
