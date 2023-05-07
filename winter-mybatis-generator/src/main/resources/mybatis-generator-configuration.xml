@@ -15,7 +15,7 @@
 <!--        </plugin>-->
 
         <commentGenerator type="org.winterframework.mybatis.generator.MySQLCommentGenerator">
-            <property name="suppressAllComments" value="true"/>
+            <property name="suppressAllComments" value="false"/>
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"

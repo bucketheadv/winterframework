@@ -14,9 +14,9 @@ import java.util.Locale;
  * @author qinglinl
  * Created on 2022/9/27 5:54 PM
  */
-@Configuration
 @Getter
 @Setter
+@Configuration
 @ConfigurationProperties(prefix = "winter.jwt")
 public class WinterJwtProperties {
 	/**
@@ -27,7 +27,7 @@ public class WinterJwtProperties {
 	/**
 	 * 是否验证签名
 	 */
-	private boolean checkSignature = false;
+	private boolean checkSign = false;
 
 	/**
 	 * 是否允许空Token
@@ -37,12 +37,12 @@ public class WinterJwtProperties {
 	/**
 	 * Token校验白名单
 	 */
-	private final List<String> tokenWhiteUriArray = new ArrayList<>();
+	private final List<String> tokenWhiteUris = new ArrayList<>();
 
 	/**
 	 * 签名校验白名单
 	 */
-	private final List<String> signatureWhiteUriArray = new ArrayList<>();
+	private final List<String> signatureWhiteUris = new ArrayList<>();
 
 	/**
 	 * 支持的语言

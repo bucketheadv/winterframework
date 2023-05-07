@@ -20,7 +20,7 @@ winter:
       - ^/api/role/.*
       - ^/api/permission/.*
       - ^/api/test/.*
-    token-white-uri-array:
+    token-white-uris:
       - ^/api/error
       - ^/api/test/.*
 logging:

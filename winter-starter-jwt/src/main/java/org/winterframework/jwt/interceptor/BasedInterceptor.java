@@ -120,11 +120,11 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 	}
 
 	public List<String> getTokenWhiteUriArray() {
-		return properties.getTokenWhiteUriArray();
+		return properties.getTokenWhiteUris();
 	}
 
 	public List<String> getSignatureWhiteUriArray() {
-		return properties.getSignatureWhiteUriArray();
+		return properties.getSignatureWhiteUris();
 	}
 
 	public boolean isAllowTokenEmpty() {
@@ -132,7 +132,7 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 	}
 
 	public boolean isCheckSign() {
-		return properties.isCheckSignature();
+		return properties.isCheckSign();
 	}
 
 	private void checkSign(HttpServletRequest request, Environment environment) {

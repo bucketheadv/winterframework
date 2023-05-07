@@ -1,16 +1,20 @@
 package org.winterframework.mybatis.generator;
 
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.internal.DefaultCommentGenerator;
 
+/**
+ * MySQL comment 注释生成器
+ */
+@Setter
+@NoArgsConstructor
 public class MySQLCommentGenerator extends DefaultCommentGenerator {
-    private boolean suppressAllComments;
 
-    public MySQLCommentGenerator() {
-        this.suppressAllComments = false;
-    }
+    private boolean suppressAllComments;
 
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {

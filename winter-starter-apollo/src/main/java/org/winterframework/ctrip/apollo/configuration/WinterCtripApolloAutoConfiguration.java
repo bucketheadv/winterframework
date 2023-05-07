@@ -30,8 +30,9 @@ public class WinterCtripApolloAutoConfiguration implements InitializingBean {
             ConfigService.getAppConfig().addChangeListener(configChangeEvent -> {
                 for (String changedKey : configChangeEvent.changedKeys()) {
                     ConfigChange configChange = configChangeEvent.getChange(changedKey);
-                    log.info("Apollo配置更新, key: {}, 由 {} 变更为 {}。",
-                            changedKey, configChange.getOldValue(), configChange.getNewValue());
+                    log.info("Apollo配置更新, 命名空间: {}, key: {}, 由 {} 变更为 {}。",
+                            configChange.getNamespace(), changedKey,
+                            configChange.getOldValue(), configChange.getNewValue());
                 }
                 refreshScope.refreshAll();
             }, apolloProperties.getInterestedKeys(), apolloProperties.getInterestedKeyPrefixes());
