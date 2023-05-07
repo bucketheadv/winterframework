@@ -6,7 +6,7 @@
     <modules>
         <module>winter-admin</module>
         <module>winter-core</module>
-        <module>winter-web</module>
+        <module>winter-mybatis-generator</module>
         <module>winter-starter-data-redis</module>
         <module>winter-starter-kafka</module>
         <module>winter-starter-rocketmq</module>
@@ -23,7 +23,7 @@
         <module>winter-starter-crypto</module>
         <module>winter-starter-tracer</module>
         <module>winter-starter-dubbo</module>
-        <module>winter-mybatis-generator</module>
+        <module>winter-web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
