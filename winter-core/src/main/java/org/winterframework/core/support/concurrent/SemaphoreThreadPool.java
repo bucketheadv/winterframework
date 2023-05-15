@@ -53,6 +53,7 @@ public class SemaphoreThreadPool {
             });
         } catch (InterruptedException e) {
             log.error("execute error, msg: ", e);
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -76,6 +77,7 @@ public class SemaphoreThreadPool {
             semaphore.acquire(threadCount);
         } catch (InterruptedException e) {
             log.error("await error, msg: ", e);
+            Thread.currentThread().interrupt();
         }
     }
 

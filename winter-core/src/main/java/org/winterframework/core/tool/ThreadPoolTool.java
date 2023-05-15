@@ -1,5 +1,7 @@
 package org.winterframework.core.tool;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -9,8 +11,8 @@ import java.util.concurrent.Future;
  * @version 1.0
  * @date 2023/4/26 6:05 PM
  */
+@UtilityClass
 public class ThreadPoolTool {
-    private ThreadPoolTool() {}
 
     /**
      * 等待所有线程完成

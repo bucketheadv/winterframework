@@ -7,6 +7,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
 import org.winterframework.crypto.properties.WinterCryptoProperties;
 import org.winterframework.crypto.utils.CryptoUtils;
 
@@ -30,7 +31,7 @@ public class EncryptInterceptor implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         ParameterHandler parameterHandler = (ParameterHandler) invocation.getTarget();
         Field parameterField = parameterHandler.getClass().getDeclaredField("parameterObject");
-        parameterField.setAccessible(true);
+        ReflectionUtils.makeAccessible(parameterField);
 
         Object parameterObject = parameterField.get(parameterHandler);
         if (parameterObject != null) {

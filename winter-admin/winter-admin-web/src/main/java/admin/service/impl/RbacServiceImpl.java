@@ -35,6 +35,7 @@ public class RbacServiceImpl extends AbstractRbacService {
 
 	private final Cache<Serializable, User> caffeineCache = Caffeine.newBuilder()
 			.expireAfterWrite(10, TimeUnit.MINUTES)
+			.maximumSize(10_000)
 			.build();
 
 	@Override
