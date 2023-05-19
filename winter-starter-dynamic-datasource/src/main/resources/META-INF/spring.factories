@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.dynamic.datasource.configuration.WinterDynamicDataSourceConfiguration
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=org.winterframework.dynamic.datasource.filter.SkipFilter

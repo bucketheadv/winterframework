@@ -23,6 +23,7 @@
         <module>winter-starter-crypto</module>
         <module>winter-starter-tracer</module>
         <module>winter-starter-dubbo</module>
+        <module>winter-starter-dynamic-datasource</module>
         <module>winter-web</module>
     </modules>
     <parent>
