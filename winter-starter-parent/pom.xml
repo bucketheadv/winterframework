@@ -191,6 +191,11 @@
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
+                <artifactId>winter-starter-dynamic-datasource</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
                 <artifactId>winter-starter-tracer</artifactId>
                 <version>${winter.version}</version>
             </dependency>

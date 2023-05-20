@@ -29,6 +29,18 @@ winter:
           - classpath*:/mapper/order/*.xml
 ```
 
+In your java configuration,
+
+```java
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@MapperScan(basePackages = {"your_mapper_package_path"}) // REQUIRED !!!
+public class MyConfiguration {
+}
+```
+
 In mybatis mapper,
 
 ```java

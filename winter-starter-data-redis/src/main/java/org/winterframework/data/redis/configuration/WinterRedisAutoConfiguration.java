@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.winterframework.data.redis.constants.Const;
 import org.winterframework.data.redis.properties.RedisConfig;
 
@@ -15,7 +15,7 @@ import org.winterframework.data.redis.properties.RedisConfig;
  * Created on 2022/1/14 10:25 下午
  */
 @Slf4j
-@Configuration
+@Component
 @ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterRedisAutoConfiguration {
     @Bean

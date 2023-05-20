@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.winterframework.dynamic.datasource.interceptor.DataSourceMethodInterceptor;
 import org.winterframework.dynamic.datasource.properties.WinterDataSourceProperties;
 
@@ -17,7 +17,7 @@ import org.winterframework.dynamic.datasource.properties.WinterDataSourcePropert
  * @version 1.0
  * @date 2023/5/15 6:26 PM
  */
-@Configuration
+@Component
 @ComponentScan(basePackages = "org.winterframework.dynamic.datasource")
 public class WinterDynamicDataSourceConfiguration implements EnvironmentAware {
     private Environment environment;

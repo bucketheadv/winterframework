@@ -85,7 +85,7 @@ public class WinterDynamicDefinitionRegistry implements BeanDefinitionRegistryPo
                     .addConstructorArgReference(dynamicDataSourceName)
                     .setPrimary(isPrimary)
                     .getBeanDefinition();
-            String platformTransactionManagerBeanName = dataSourceName + "PlatformTransactionManager";
+            String platformTransactionManagerBeanName = dataSourceName + "TransactionManager";
             registry.registerBeanDefinition(platformTransactionManagerBeanName, platformTransactionManagerBeanDefinition);
             log.info("注册事务管理器: {}", platformTransactionManagerBeanName);
         }

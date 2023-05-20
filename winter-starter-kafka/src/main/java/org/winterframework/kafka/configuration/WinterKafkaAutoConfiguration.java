@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 import org.winterframework.kafka.constants.Const;
 import org.winterframework.kafka.properties.KafkaConfig;
 
@@ -16,7 +16,7 @@ import org.winterframework.kafka.properties.KafkaConfig;
  * @author sven
  * Created on 2022/2/25 10:20 下午
  */
-@Configuration
+@Component
 @ComponentScan(basePackages = "org.winterframework.kafka")
 @ConditionalOnProperty(prefix = Const.configPrefix, value = "enabled", havingValue = "true")
 public class WinterKafkaAutoConfiguration implements EnvironmentAware {
