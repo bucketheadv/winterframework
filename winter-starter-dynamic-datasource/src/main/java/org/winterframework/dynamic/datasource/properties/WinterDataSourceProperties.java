@@ -24,7 +24,7 @@ public class WinterDataSourceProperties {
     /**
      * pointcut 切入点表达式
      */
-    private String execution = "execution(* org.*..mapper.*.*(..)) || @annotation(org.winterframework.dynamic.datasource.annotation.DataSource)";
+    private String execution = "@within(org.winterframework.dynamic.datasource.annotation.DataSource) || @annotation(org.winterframework.dynamic.datasource.annotation.DataSource)";
 
     /**
      * 数据源映射, key是数据源名称, value是数据

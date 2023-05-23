@@ -14,5 +14,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EncryptField {
+    /**
+     * 加密算法
+     */
     AlgorithmEnum algorithm() default AlgorithmEnum.AES;
+
+    /**
+     * 密钥的key, 取winter.crypto的配置下的key值
+     */
+    String key() default "default";
 }

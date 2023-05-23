@@ -10,7 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Permission {
+	/**
+	 * 权限名
+	 */
 	private String name;
 
+	/**
+	 * 权限地址
+	 */
 	private String url;
 }

@@ -1,5 +1,7 @@
 package org.winterframework.crypto.utils;
 
+import lombok.experimental.UtilityClass;
+import org.springframework.util.ReflectionUtils;
 import org.winterframework.crypto.annotation.EncryptField;
 
 import java.lang.reflect.Field;
@@ -9,18 +11,17 @@ import java.util.Objects;
  * @author sven
  * Created on 2023/3/12 5:40 PM
  */
+@UtilityClass
 public class CryptoUtils {
-    private CryptoUtils() {}
-
     public static <T> void encrypt(T paramsObject, String secretKey) throws Exception {
         Field[] declaredFields = paramsObject.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
             EncryptField encryptField = field.getAnnotation(EncryptField.class);
             if (Objects.nonNull(encryptField)) {
-                field.setAccessible(true);
+                ReflectionUtils.makeAccessible(field);
                 Object object = field.get(paramsObject);
                 if (object instanceof String value) {
-                    field.set(paramsObject, AesUtils.aesEncrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, paramsObject, AesUtils.aesEncrypt(value, encryptField.algorithm().getCode(), secretKey));
                 }
             }
         }
@@ -32,10 +33,10 @@ public class CryptoUtils {
         for (Field field : declaredFields) {
             EncryptField encryptField = field.getAnnotation(EncryptField.class);
             if (Objects.nonNull(encryptField)) {
-                field.setAccessible(true);
+                ReflectionUtils.makeAccessible(field);
                 Object object = field.get(result);
                 if (object instanceof String value) {
-                    field.set(result, AesUtils.aesDecrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, result, AesUtils.aesDecrypt(value, encryptField.algorithm().getCode(), secretKey));
                 }
             }
         }

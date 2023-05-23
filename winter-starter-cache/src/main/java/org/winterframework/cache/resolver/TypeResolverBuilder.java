@@ -6,21 +6,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import org.springframework.util.ClassUtils;
 
+import java.io.Serial;
+
 /**
  * @author qinglinl
  * Created on 2022/11/4 1:00 PM
  */
 public class TypeResolverBuilder extends ObjectMapper.DefaultTypeResolverBuilder {
+	@Serial
 	private static final long serialVersionUID = -150874719703412692L;
 
 	public TypeResolverBuilder(ObjectMapper.DefaultTyping t, PolymorphicTypeValidator ptv) {
 		super(t, ptv);
 	}
 
+	@Override
 	public ObjectMapper.DefaultTypeResolverBuilder withDefaultImpl(Class<?> defaultImpl) {
 		return this;
 	}
 
+	@Override
 	public boolean useForType(JavaType t) {
 		if (t.isJavaLangObject()) {
 			return true;

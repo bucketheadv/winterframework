@@ -8,6 +8,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
+import org.winterframework.crypto.annotation.EncryptField;
 import org.winterframework.crypto.properties.WinterCryptoProperties;
 import org.winterframework.crypto.utils.CryptoUtils;
 
@@ -32,13 +33,15 @@ public class EncryptInterceptor implements Interceptor {
         ParameterHandler parameterHandler = (ParameterHandler) invocation.getTarget();
         Field parameterField = parameterHandler.getClass().getDeclaredField("parameterObject");
         ReflectionUtils.makeAccessible(parameterField);
+        EncryptField encryptField = parameterField.getAnnotation(EncryptField.class);
 
         Object parameterObject = parameterField.get(parameterHandler);
         if (parameterObject != null) {
-            CryptoUtils.encrypt(parameterObject, winterCryptoProperties.getSecretKey());
+            String secretKey = winterCryptoProperties.getSecretKeyMap().get(encryptField.key());
+            CryptoUtils.encrypt(parameterObject, secretKey);
             Object result = invocation.proceed();
             // 加密后保存完成后再解密回去
-            CryptoUtils.decrypt(parameterObject, winterCryptoProperties.getSecretKey());
+            CryptoUtils.decrypt(parameterObject, secretKey);
             return result;
         }
         return invocation.proceed();
