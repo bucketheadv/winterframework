@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.winterframework.dynamic.datasource.constant.DataSourceKey;
 
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class WinterDataSourceProperties {
     /**
      * pointcut 切入点表达式
      */
-    private String execution = "@within(org.winterframework.dynamic.datasource.annotation.DataSource) || @annotation(org.winterframework.dynamic.datasource.annotation.DataSource)";
+    private String execution = DataSourceKey.POINTCUT;
 
     /**
      * 数据源映射, key是数据源名称, value是数据

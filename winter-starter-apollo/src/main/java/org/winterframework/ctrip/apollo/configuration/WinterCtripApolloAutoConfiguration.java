@@ -25,7 +25,7 @@ public class WinterCtripApolloAutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (apolloProperties.isEnableAutoRefresh()) {
+        if (apolloProperties.isAutoRefresh()) {
             log.info("Apollo 开启默认配置刷新。");
             ConfigService.getAppConfig().addChangeListener(configChangeEvent -> {
                 for (String changedKey : configChangeEvent.changedKeys()) {

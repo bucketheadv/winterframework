@@ -5,6 +5,8 @@ In application.yml,
 ```yaml
 winter:
   datasource:
+    # execution 非必填，仅当 Mapper 类继承自其他接口时此项需要配置(配置项目实际mapper所在包名)，否则父类接口调用时将不会根据注解动态切换数据源
+    execution: "execution(* org.winterframework.demo.dao.mapper.**.*(..))"
     dynamic:
       default:
         driver-class-name: com.mysql.cj.jdbc.Driver

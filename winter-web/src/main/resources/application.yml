@@ -9,7 +9,7 @@ spring:
     password:
 
 apollo:
-  enable-auto-refresh: true # 配置变更时，自动刷新
+  auto-refresh: true # 配置变更时，自动刷新
   meta: http://localhost:8080 # eureka 注册中心地址
   config-service: http://localhost:8080 # 此项不是必填项，不填时默认从eureka读取ip地址
   bootstrap:
