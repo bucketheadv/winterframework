@@ -1,6 +1,6 @@
-package org.winterframework.crypto.utils;
+package org.winterframework.crypto.tool;
 
-import org.springframework.stereotype.Service;
+import lombok.experimental.UtilityClass;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -13,8 +13,8 @@ import java.util.Base64;
  * @author sven
  * Created on 2023/3/11 1:42 PM
  */
-public class AesUtils {
-    private AesUtils() {}
+@UtilityClass
+public class AesTool {
 
     public static String aesDecrypt(String encryptStr, String algorithm, String secretKey) throws Exception {
         byte[] decodeBytes = Base64.getDecoder().decode(encryptStr);

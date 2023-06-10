@@ -12,7 +12,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 import org.winterframework.crypto.annotation.EncryptField;
 import org.winterframework.crypto.properties.WinterCryptoProperties;
-import org.winterframework.crypto.utils.CryptoUtils;
+import org.winterframework.crypto.tool.CryptoTool;
 
 import java.lang.reflect.Field;
 import java.sql.Statement;
@@ -46,12 +46,12 @@ public class DecryptInterceptor implements Interceptor {
         if (resultObject instanceof ArrayList<?> resultList) {
             if (!CollectionUtils.isEmpty(resultList) && CacheUtils.needToDecrypt(resultList.get(0))) {
                 for (Object o : resultList) {
-                    CryptoUtils.decrypt(o, secretKey);
+                    CryptoTool.decrypt(o, secretKey);
                 }
             }
         } else {
             if (CacheUtils.needToDecrypt(resultObject)) {
-                CryptoUtils.decrypt(resultObject, secretKey);
+                CryptoTool.decrypt(resultObject, secretKey);
             }
         }
         return resultObject;

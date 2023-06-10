@@ -1,4 +1,4 @@
-package org.winterframework.crypto.utils;
+package org.winterframework.crypto.tool;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.util.ReflectionUtils;
@@ -12,7 +12,7 @@ import java.util.Objects;
  * Created on 2023/3/12 5:40 PM
  */
 @UtilityClass
-public class CryptoUtils {
+public class CryptoTool {
     public static <T> void encrypt(T paramsObject, String secretKey) throws Exception {
         Field[] declaredFields = paramsObject.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
@@ -21,7 +21,7 @@ public class CryptoUtils {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(paramsObject);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, paramsObject, AesUtils.aesEncrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, paramsObject, AesTool.aesEncrypt(value, encryptField.algorithm().getCode(), secretKey));
                 }
             }
         }
@@ -36,7 +36,7 @@ public class CryptoUtils {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(result);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, result, AesUtils.aesDecrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, result, AesTool.aesDecrypt(value, encryptField.algorithm().getCode(), secretKey));
                 }
             }
         }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import org.winterframework.crypto.annotation.EncryptField;
 import org.winterframework.crypto.properties.WinterCryptoProperties;
-import org.winterframework.crypto.utils.CryptoUtils;
+import org.winterframework.crypto.tool.CryptoTool;
 
 import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
@@ -38,10 +38,10 @@ public class EncryptInterceptor implements Interceptor {
         Object parameterObject = parameterField.get(parameterHandler);
         if (parameterObject != null) {
             String secretKey = winterCryptoProperties.getSecretKeyMap().get(encryptField.key());
-            CryptoUtils.encrypt(parameterObject, secretKey);
+            CryptoTool.encrypt(parameterObject, secretKey);
             Object result = invocation.proceed();
             // 加密后保存完成后再解密回去
-            CryptoUtils.decrypt(parameterObject, secretKey);
+            CryptoTool.decrypt(parameterObject, secretKey);
             return result;
         }
         return invocation.proceed();
