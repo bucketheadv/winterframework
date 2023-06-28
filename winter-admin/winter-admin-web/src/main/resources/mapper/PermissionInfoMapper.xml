@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="admin.dao.mapper.PermissionInfoMapper">
-    <select id="getPermissionsByRoleId" resultType="admin.dao.entity.RolePermissionEntity">
+<mapper namespace="org.winterframework.admin.dao.mapper.PermissionInfoMapper">
+    <select id="getPermissionsByRoleId" resultType="org.winterframework.admin.dao.entity.RolePermissionEntity">
         select p1.role_id roleId, p1.permission_id permissionId, p2.permission_name permissionName, p2.uri uri
         from role_permission p1 join permission_info p2 on p1.permission_id = p2.id
         where p1.role_id = #{roleId}
     </select>
 
-    <select id="getPermissionsByRoleIds" resultType="admin.dao.entity.RolePermissionEntity">
+    <select id="getPermissionsByRoleIds" resultType="org.winterframework.admin.dao.entity.RolePermissionEntity">
         select p1.role_id roleId, p1.permission_id permissionId, p2.permission_name permissionName, p2.uri uri
         from role_permission p1 join permission_info p2 on p1.permission_id = p2.id
         where p1.role_id in

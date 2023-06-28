@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="admin.dao.mapper.RoleInfoMapper">
-    <select id="getUserRoleByUserId" resultType="admin.dao.entity.UserRoleEntity">
+<mapper namespace="org.winterframework.admin.dao.mapper.RoleInfoMapper">
+    <select id="getUserRoleByUserId" resultType="org.winterframework.admin.dao.entity.UserRoleEntity">
         select r1.role_id roleId, r1.admin_user_id adminUserId, r2.role_name roleName, r2.is_super_admin isSuperAdmin
         from user_role r1 join role_info r2 on r1.role_id = r2.id
         where r1.admin_user_id = #{userId}

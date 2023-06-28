@@ -14,7 +14,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
-        <spring-boot.version>3.0.0</spring-boot.version>
+        <spring-boot.version>3.1.0</spring-boot.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <jedis.version>4.4.1</jedis.version>
