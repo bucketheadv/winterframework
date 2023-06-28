@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
  * @date 2023/4/26 6:05 PM
  */
 @UtilityClass
-public class ThreadPoolTool {
+public class ExecutorServiceTool {
 
     /**
      * 等待所有线程完成

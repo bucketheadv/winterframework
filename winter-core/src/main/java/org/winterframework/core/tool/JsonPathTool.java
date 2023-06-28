@@ -26,7 +26,7 @@ public final class JsonPathTool {
             T result = JsonPath.read(data, jsonPath);
             return result == null ? defaultValue : result;
         } catch (PathNotFoundException ex) {
-            log.error("", ex);
+            log.error("JsonPath tryRead error", ex);
             return defaultValue;
         }
     }
