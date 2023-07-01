@@ -213,6 +213,11 @@
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-starter-web</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>

@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
-            <artifactId>winter-core</artifactId>
+            <artifactId>winter-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

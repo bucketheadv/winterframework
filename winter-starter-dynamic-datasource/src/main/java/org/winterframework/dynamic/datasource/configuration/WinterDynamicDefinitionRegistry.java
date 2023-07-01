@@ -102,7 +102,7 @@ public class WinterDynamicDefinitionRegistry implements BeanDefinitionRegistryPo
 
     private Resource[] resolveMapperLocations(String... mapperLocations) {
         if (mapperLocations == null) {
-            return new Resource[0];
+            return null;
         }
         List<Resource> resources = Lists.newArrayList();
         for (String mapperLocation : mapperLocations) {

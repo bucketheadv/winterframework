@@ -24,8 +24,9 @@
         <module>winter-starter-tracer</module>
         <module>winter-starter-dubbo</module>
         <module>winter-starter-dynamic-datasource</module>
-        <module>winter-web</module>
         <module>winter-starter-security</module>
+        <module>winter-starter-web</module>
+        <module>winter-web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

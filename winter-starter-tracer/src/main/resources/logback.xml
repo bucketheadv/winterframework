@@ -8,7 +8,7 @@
     <contextName>${application.name}</contextName>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8" class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS})|%boldYellow(%thread)|%X{X-TraceId}|%highlight(%-4level)|%red(%class{0}#%method:%L)|%msg|%magenta(%logger{35}):%boldGreen(%L%n)</pattern>
+            <pattern>%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS})|%boldYellow(%thread)|%X{X-TraceId}|%highlight(%-4level)|%red(%class{25}#%method:%L)|%msg %n</pattern>
 <!--            <pattern>%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %boldYellow([%thread]) [%X{X-TraceId}] %highlight([%-4level]) %red([%class{0}#%method:%L]) %msg - %magenta(%logger{35}):%boldGreen(%L%n)</pattern>-->
         </encoder>
     </appender>
