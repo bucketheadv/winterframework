@@ -1,1 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.trace.configuration.WinterTraceAutoConfiguration
+org.springframework.boot.SpringApplicationRunListener=org.winterframework.trace.configuration.WinterTraceAutoConfiguration
