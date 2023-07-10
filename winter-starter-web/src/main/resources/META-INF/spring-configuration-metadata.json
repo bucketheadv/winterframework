@@ -2,7 +2,7 @@
   "groups": [],
   "properties": [
     {
-      "name": "winter.core.advice.enabled",
+      "name": "winter.web.advice.enabled",
       "type": "java.lang.Boolean",
       "description": "是否启用winter配置advice"
     }

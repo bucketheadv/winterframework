@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestControllerAdvice
-@ConditionalOnProperty(prefix = "winter.core.advice", value = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "winter.web.advice", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler({ServiceException.class})
 	public <T> ApiResponse<T> onServiceException(ServiceException e) {
