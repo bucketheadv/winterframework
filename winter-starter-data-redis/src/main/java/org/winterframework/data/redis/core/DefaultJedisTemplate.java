@@ -285,6 +285,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String clientSetInfo(ClientAttributeOption attr, byte[] value) {
+        return tryGetResource(jedis -> jedis.clientSetInfo(attr, value));
+    }
+
+    @Override
     public String clientSetname(byte[] name) {
         return tryGetResource(jedis -> jedis.clientSetname(name));
     }
@@ -330,6 +335,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String clientSetInfo(ClientAttributeOption attr, String value) {
+        return tryGetResource(jedis -> jedis.clientSetInfo(attr, value));
+    }
+
+    @Override
     public String clientSetname(String name) {
         return tryGetResource(jedis -> jedis.clientSetname(name));
     }
@@ -360,6 +370,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String clientUnpause() {
+        return tryGetResource(Jedis::clientUnpause);
+    }
+
+    @Override
     public String clientNoEvictOn() {
         return tryGetResource(Jedis::clientNoEvictOn);
     }
@@ -367,6 +382,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String clientNoEvictOff() {
         return tryGetResource(Jedis::clientNoEvictOff);
+    }
+
+    @Override
+    public String clientNoTouchOn() {
+        return tryGetResource(Jedis::clientNoTouchOn);
+    }
+
+    @Override
+    public String clientNoTouchOff() {
+        return tryGetResource(Jedis::clientNoTouchOff);
     }
 
     @Override
@@ -523,6 +548,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String clusterMyId() {
         return tryGetResource(Jedis::clusterMyId);
+    }
+
+    @Override
+    public String clusterMyShardId() {
+        return tryGetResource(Jedis::clusterMyShardId);
     }
 
     @Override
@@ -1991,6 +2021,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String moduleLoadEx(String path, ModuleLoadExParams params) {
+        return tryGetResource(jedis -> jedis.moduleLoadEx(path, params));
+    }
+
+    @Override
     public String moduleUnload(String name) {
         return tryGetResource(jedis -> jedis.moduleUnload(name));
     }
@@ -2326,6 +2361,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public KeyValue<Long, Long> waitAOF(long numLocal, long numReplicas, long timeout) {
+        return tryGetResource(jedis -> jedis.waitAOF(numLocal, numReplicas, timeout));
+    }
+
+    @Override
     public String lolwut() {
         return tryGetResource(Jedis::lolwut);
     }
@@ -2333,6 +2373,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String lolwut(LolwutParams lolwutParams) {
         return tryGetResource(jedis -> jedis.lolwut(lolwutParams));
+    }
+
+    @Override
+    public String latencyDoctor() {
+        return tryGetResource(Jedis::latencyDoctor);
     }
 
     @Override
@@ -2613,6 +2658,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public Long zrevrank(byte[] key, byte[] member) {
         return tryGetResource(jedis -> jedis.zrevrank(key, member));
+    }
+
+    @Override
+    public KeyValue<Long, Double> zrankWithScore(byte[] key, byte[] member) {
+        return tryGetResource(jedis -> jedis.zrankWithScore(key, member));
+    }
+
+    @Override
+    public KeyValue<Long, Double> zrevrankWithScore(byte[] key, byte[] member) {
+        return tryGetResource(jedis -> jedis.zrevrankWithScore(key, member));
     }
 
     @Override
@@ -2983,6 +3038,16 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public Long zrevrank(String key, String member) {
         return tryGetResource(jedis -> jedis.zrevrank(key, member));
+    }
+
+    @Override
+    public KeyValue<Long, Double> zrankWithScore(String key, String member) {
+        return tryGetResource(jedis -> jedis.zrankWithScore(key, member));
+    }
+
+    @Override
+    public KeyValue<Long, Double> zrevrankWithScore(String key, String member) {
+        return tryGetResource(jedis -> jedis.zrevrankWithScore(key, member));
     }
 
     @Override
