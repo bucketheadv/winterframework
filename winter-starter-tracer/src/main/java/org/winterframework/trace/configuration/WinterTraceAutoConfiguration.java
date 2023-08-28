@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.winterframework.trace.constant.TraceConstants;
 import org.winterframework.trace.interceptor.WinterRestTemplateInterceptor;
 import org.winterframework.trace.interceptor.WinterTracerInterceptor;
-import org.winterframework.trace.tool.MDCTool;
+import org.winterframework.trace.tool.UUIDTool;
 
 import java.time.Duration;
 
@@ -36,7 +36,7 @@ public class WinterTraceAutoConfiguration implements WebMvcConfigurer, SpringApp
 
     @Override
     public void contextPrepared(ConfigurableApplicationContext context) {
-        MDC.put(TraceConstants.TRACE_KEY, MDCTool.uuid());
+        MDC.put(TraceConstants.TRACE_ID, UUIDTool.uuid());
     }
 
     @Override

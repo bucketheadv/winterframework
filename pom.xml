@@ -43,9 +43,6 @@
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <winter.version>0.0.1-SNAPSHOT</winter.version>
-        <snake.yaml.version>2.0</snake.yaml.version>
-        <json.version>20230618</json.version>
-        <fastjson2.version>2.0.34</fastjson2.version>
     </properties>
 
     <!-- dependencyManagement定义的数据不能通过 parent 标签多重继承 -->
@@ -62,21 +59,6 @@
                 <scope>import</scope>
                 <type>pom</type>
                 <version>${winter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${snake.yaml.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>${json.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.fastjson2</groupId>
-                <artifactId>fastjson2</artifactId>
-                <version>${fastjson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

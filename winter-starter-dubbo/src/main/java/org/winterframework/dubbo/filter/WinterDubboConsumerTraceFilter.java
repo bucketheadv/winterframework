@@ -5,7 +5,7 @@ import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.winterframework.trace.constant.TraceConstants;
-import org.winterframework.trace.tool.MDCTool;
+import org.winterframework.trace.tool.UUIDTool;
 
 import java.util.Arrays;
 
@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class WinterDubboConsumerTraceFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        invocation.setAttachmentIfAbsent(TraceConstants.TRACE_KEY, MDCTool.getOrCreateTraceId(TraceConstants.TRACE_KEY));
+        invocation.setAttachmentIfAbsent(TraceConstants.TRACE_ID, UUIDTool.getOrCreateTraceId(TraceConstants.TRACE_ID));
         try {
             Result result = invoker.invoke(invocation);
             log.info("请求参数: {}, 返回结果: {}", Arrays.toString(invocation.getArguments()), result.getValue());

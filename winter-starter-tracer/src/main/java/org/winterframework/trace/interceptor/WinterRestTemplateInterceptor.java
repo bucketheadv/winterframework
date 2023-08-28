@@ -12,7 +12,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.web.client.RestTemplate;
 import org.winterframework.trace.constant.TraceConstants;
-import org.winterframework.trace.tool.MDCTool;
+import org.winterframework.trace.tool.UUIDTool;
 
 import java.io.IOException;
 
@@ -36,10 +36,15 @@ public class WinterRestTemplateInterceptor implements ClientHttpRequestIntercept
     public ClientHttpResponse intercept(@NonNull HttpRequest request,
                                         @NonNull byte[] body,
                                         @NonNull ClientHttpRequestExecution execution) throws IOException {
-        String traceIdKey = TraceConstants.TRACE_KEY;
-        String traceId = MDCTool.getOrCreateTraceId(traceIdKey);
+        String traceIdKey = TraceConstants.TRACE_ID;
+        String traceId = UUIDTool.getOrCreateTraceId(traceIdKey);
         log.debug("RestTemplate设置MDC : {}", traceId);
         request.getHeaders().set(traceIdKey, traceId);
+
+        String spanIdKey = TraceConstants.SPAN_ID;
+        String spanId = UUIDTool.getOrCreateTraceId(spanIdKey).substring(0, 16);
+        request.getHeaders().set(spanIdKey, spanId);
+
         return execution.execute(request, body);
     }
 }
