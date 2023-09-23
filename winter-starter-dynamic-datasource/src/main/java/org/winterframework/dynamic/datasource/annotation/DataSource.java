@@ -1,7 +1,5 @@
 package org.winterframework.dynamic.datasource.annotation;
 
-import org.winterframework.dynamic.datasource.constant.DataSourceKey;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

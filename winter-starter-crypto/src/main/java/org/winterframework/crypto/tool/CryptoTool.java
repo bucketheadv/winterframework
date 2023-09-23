@@ -5,6 +5,7 @@ import org.springframework.util.ReflectionUtils;
 import org.winterframework.crypto.annotation.EncryptField;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Objects;
  */
 @UtilityClass
 public class CryptoTool {
-    public static <T> void encrypt(T paramsObject, String secretKey) throws Exception {
+    public static <T> void encrypt(T paramsObject, Map<String, String> secretKeyMap) throws Exception {
         Field[] declaredFields = paramsObject.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
             EncryptField encryptField = field.getAnnotation(EncryptField.class);
@@ -21,13 +22,13 @@ public class CryptoTool {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(paramsObject);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, paramsObject, AesTool.aesEncrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, paramsObject, AesTool.aesEncrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
                 }
             }
         }
     }
 
-    public static <T> void decrypt(T result, String secretKey) throws Exception {
+    public static <T> void decrypt(T result, Map<String, String> secretKeyMap) throws Exception {
         Class<?> resultClass = result.getClass();
         Field[] declaredFields = resultClass.getDeclaredFields();
         for (Field field : declaredFields) {
@@ -36,7 +37,7 @@ public class CryptoTool {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(result);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, result, AesTool.aesDecrypt(value, encryptField.algorithm().getCode(), secretKey));
+                    ReflectionUtils.setField(field, result, AesTool.aesDecrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
                 }
             }
         }
