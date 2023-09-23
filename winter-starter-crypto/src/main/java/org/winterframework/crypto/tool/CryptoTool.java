@@ -22,7 +22,7 @@ public class CryptoTool {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(paramsObject);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, paramsObject, AesTool.aesEncrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
+                    ReflectionUtils.setField(field, paramsObject, AesTool.encrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
                 }
             }
         }
@@ -37,7 +37,7 @@ public class CryptoTool {
                 ReflectionUtils.makeAccessible(field);
                 Object object = field.get(result);
                 if (object instanceof String value) {
-                    ReflectionUtils.setField(field, result, AesTool.aesDecrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
+                    ReflectionUtils.setField(field, result, AesTool.decrypt(value, encryptField.algorithm().getCode(), secretKeyMap.get(encryptField.key())));
                 }
             }
         }

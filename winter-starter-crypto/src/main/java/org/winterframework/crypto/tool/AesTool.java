@@ -16,7 +16,7 @@ import java.util.Base64;
 @UtilityClass
 public class AesTool {
 
-    public static String aesDecrypt(String encryptStr, String algorithm, String secretKey) throws Exception {
+    public static String decrypt(String encryptStr, String algorithm, String secretKey) throws Exception {
         byte[] decodeBytes = Base64.getDecoder().decode(encryptStr);
         KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 
@@ -29,7 +29,7 @@ public class AesTool {
         return new String(decryptBytes);
     }
 
-    public static String aesEncrypt(String originStr, String algorithm, String secretKey) throws Exception {
+    public static String encrypt(String originStr, String algorithm, String secretKey) throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(secretKey.getBytes());
