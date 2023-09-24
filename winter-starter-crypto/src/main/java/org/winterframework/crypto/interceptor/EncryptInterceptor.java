@@ -1,5 +1,6 @@
 package org.winterframework.crypto.interceptor;
 
+import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
@@ -29,12 +30,23 @@ public class EncryptInterceptor implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         ParameterHandler parameterHandler = (ParameterHandler) invocation.getTarget();
         Object parameterObject = parameterHandler.getParameterObject();
-        if (parameterObject != null) {
-            CryptoTool.encrypt(parameterObject, winterCryptoProperties.getSecretKeyMap());
+        if (parameterObject instanceof MapperMethod.ParamMap<?> paramMap) {
+            // 修改时
+            Object v = paramMap.values().iterator().next();
+            CryptoTool.encrypt(v, winterCryptoProperties.getSecretKeyMap());
             Object result = invocation.proceed();
             // 加密后保存完成后再解密回去
-            CryptoTool.decrypt(parameterObject, winterCryptoProperties.getSecretKeyMap());
+            CryptoTool.decrypt(v, winterCryptoProperties.getSecretKeyMap());
             return result;
+        } else {
+            // 新增时
+            if (parameterObject != null) {
+                CryptoTool.encrypt(parameterObject, winterCryptoProperties.getSecretKeyMap());
+                Object result = invocation.proceed();
+                // 加密后保存完成后再解密回去
+                CryptoTool.decrypt(parameterObject, winterCryptoProperties.getSecretKeyMap());
+                return result;
+            }
         }
         return invocation.proceed();
     }
