@@ -51,7 +51,8 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>edge-SNAPSHOT</version>
+                <!-- 1.18.30 才解决jdk21的编译问题，否则需要用edge-SNAPSHOT版本 -->
+                <version>1.18.30</version>
             </dependency>
             <dependency>
                 <groupId>org.winterframework</groupId>
