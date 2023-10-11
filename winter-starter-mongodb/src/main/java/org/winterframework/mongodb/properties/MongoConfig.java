@@ -24,5 +24,5 @@ public class MongoConfig {
     /**
      * 配置映射
      */
-    private Map<String, MongoProperties> template;
+    private Map<String, MongoProps> template;
 }

@@ -1,6 +1,7 @@
 package org.winterframework.mongodb.configuration;
 
 import com.google.common.collect.Lists;
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.mongo.MongoClientFactory;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
-import org.springframework.boot.autoconfigure.mongo.MongoPropertiesClientSettingsBuilderCustomizer;
+import org.springframework.boot.autoconfigure.mongo.StandardMongoClientSettingsBuilderCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
@@ -27,6 +28,7 @@ import org.springframework.lang.NonNull;
 import org.winterframework.mongodb.core.DefaultMappingMongoConverter;
 import org.winterframework.mongodb.core.DefaultMongoMappingContext;
 import org.winterframework.mongodb.properties.MongoConfig;
+import org.winterframework.mongodb.properties.MongoProps;
 
 import java.util.Map;
 
@@ -52,16 +54,23 @@ public class MongoDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
     @Override
     public void postProcessBeanDefinitionRegistry(@NonNull BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        Map<String, MongoProperties> configMap = mongoConfig.getTemplate();
+        Map<String, MongoProps> configMap = mongoConfig.getTemplate();
         for (String name : configMap.keySet()) {
-            MongoProperties mongoProperties = configMap.get(name);
+            MongoProps mongoProperties = configMap.get(name);
 
-            MongoPropertiesClientSettingsBuilderCustomizer builderCustomizer = new MongoPropertiesClientSettingsBuilderCustomizer(mongoProperties);
+            ConnectionString connectionString = new ConnectionString(mongoProperties.getConnectionString());
+
+            MongoProperties.Ssl ssl = new MongoProperties.Ssl();
+            ssl.setBundle(mongoProperties.getSslBundle());
+            ssl.setEnabled(mongoProperties.getSslEnabled());
+
+            StandardMongoClientSettingsBuilderCustomizer builderCustomizer = new StandardMongoClientSettingsBuilderCustomizer(
+                    connectionString, mongoProperties.getUuidRepresentation(), ssl, mongoProperties.getSslBundles());
             MongoClient mongoClient = new MongoClientFactory(Lists.newArrayList(builderCustomizer)).createMongoClient(mongoClientSettings);
 
             BeanDefinition mongoDatabaseFactorySupportBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(SimpleMongoClientDatabaseFactory.class)
                     .addConstructorArgValue(mongoClient)
-                    .addConstructorArgValue(mongoProperties.getMongoClientDatabase())
+                    .addConstructorArgValue(connectionString.getDatabase())
                     .getBeanDefinition();
             String mongoDatabaseFactorySupportKey = name + MongoDatabaseFactorySupport.class.getSimpleName();
             beanDefinitionRegistry.registerBeanDefinition(mongoDatabaseFactorySupportKey, mongoDatabaseFactorySupportBeanDefinition);

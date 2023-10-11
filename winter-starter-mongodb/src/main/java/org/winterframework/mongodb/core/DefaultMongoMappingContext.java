@@ -9,13 +9,14 @@ import org.springframework.data.mapping.model.FieldNamingStrategy;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.winterframework.mongodb.properties.MongoProps;
 
 /**
  * @author sven
  * Created on 2022/3/3 11:03 下午
  */
 public class DefaultMongoMappingContext extends MongoMappingContext {
-    public DefaultMongoMappingContext(ApplicationContext applicationContext, MongoProperties properties, MongoCustomConversions conversions) throws ClassNotFoundException {
+    public DefaultMongoMappingContext(ApplicationContext applicationContext, MongoProps properties, MongoCustomConversions conversions) throws ClassNotFoundException {
         PropertyMapper mapper = PropertyMapper.get().alwaysApplyingWhenNonNull();
         mapper.from(properties.isAutoIndexCreation()).to(this::setAutoIndexCreation);
         this.setInitialEntitySet((new EntityScanner(applicationContext)).scan(Document.class));
