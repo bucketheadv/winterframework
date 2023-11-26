@@ -8,6 +8,8 @@ spring:
   mvc:
     servlet:
       path: /api
+  application:
+    name: winter-admin-web
 winter:
   jwt:
     path-patterns:

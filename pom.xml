@@ -26,12 +26,14 @@
         <module>winter-starter-dynamic-datasource</module>
         <module>winter-starter-security</module>
         <module>winter-starter-web</module>
+        <module>winter-gateway</module>
+        <module>winter-eureka-server</module>
         <module>winter-web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0-M1</version>
+        <version>3.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.winterframework</groupId>

@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: winter-web
+          uri: lb://winter-web
+          predicates:
+            - Path=/api/web/**
+          filters:
+            - StripPrefix=2
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+  application:
+    name: winter-gateway
+server:
+  port: 8091
+
+api_whitelist: /user,/testThrow
+

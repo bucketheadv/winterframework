@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/winter_db
     username: root
-    password:
+    password: 123456
 
 apollo:
   auto-refresh: true # 配置变更时，自动刷新被@ConfigurationProperties 和 @RefreshScope注解的配置类

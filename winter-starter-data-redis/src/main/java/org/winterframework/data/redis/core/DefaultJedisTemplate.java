@@ -105,13 +105,8 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public long aclDelUser(byte[] name) {
-        return tryGetResource(jedis -> jedis.aclDelUser(name));
-    }
-
-    @Override
-    public long aclDelUser(byte[] name, byte[]... names) {
-        return tryGetResource(jedis -> jedis.aclDelUser(name, names));
+    public long aclDelUser(byte[]... names) {
+        return tryGetResource(jedis -> jedis.aclDelUser(names));
     }
 
     @Override
@@ -190,13 +185,8 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public long aclDelUser(String name) {
-        return tryGetResource(jedis -> jedis.aclDelUser(name));
-    }
-
-    @Override
-    public long aclDelUser(String name, String... names) {
-        return tryGetResource(jedis -> jedis.aclDelUser(name, names));
+    public long aclDelUser(String... names) {
+        return tryGetResource(jedis -> jedis.aclDelUser(names));
     }
 
     @Override
@@ -571,22 +561,22 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<String> configGet(String pattern) {
+    public Map<String, String> configGet(String pattern) {
         return tryGetResource(jedis -> jedis.configGet(pattern));
     }
 
     @Override
-    public List<String> configGet(String... patterns) {
+    public Map<String, String> configGet(String... patterns) {
         return tryGetResource(jedis -> jedis.configGet(patterns));
     }
 
     @Override
-    public List<byte[]> configGet(byte[] pattern) {
+    public Map<byte[], byte[]> configGet(byte[] pattern) {
         return tryGetResource(jedis -> jedis.configGet(pattern));
     }
 
     @Override
-    public List<byte[]> configGet(byte[]... patterns) {
+    public Map<byte[], byte[]> configGet(byte[]... patterns) {
         return tryGetResource(jedis -> jedis.configGet(patterns));
     }
 
@@ -601,6 +591,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String configSet(Map<String, String> parameterValues) {
+        return tryGetResource(jedis -> jedis.configSet(parameterValues));
+    }
+
+    @Override
     public String configSet(byte[] parameter, byte[] value) {
         return tryGetResource(jedis -> jedis.configSet(parameter, value));
     }
@@ -608,6 +603,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String configSet(byte[]... parameterValues) {
         return tryGetResource(jedis -> jedis.configSet(parameterValues));
+    }
+
+    @Override
+    public String configSetBinary(Map<byte[], byte[]> parameterValues) {
+        return tryGetResource(jedis -> jedis.configSetBinary(parameterValues));
     }
 
     @Override
@@ -1071,7 +1071,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public Map<byte[], byte[]> hrandfieldWithValues(byte[] key, long count) {
+    public List<Map.Entry<byte[], byte[]>> hrandfieldWithValues(byte[] key, long count) {
         return tryGetResource(jedis -> jedis.hrandfieldWithValues(key, count));
     }
 
@@ -1166,7 +1166,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public Map<String, String> hrandfieldWithValues(String key, long count) {
+    public List<Map.Entry<String, String>> hrandfieldWithValues(String key, long count) {
         return tryGetResource(jedis -> jedis.hrandfieldWithValues(key, count));
     }
 
@@ -1786,7 +1786,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<byte[]> blpop(double timeout, byte[]... keys) {
+    public KeyValue<byte[], byte[]> blpop(double timeout, byte[]... keys) {
         return tryGetResource(jedis -> jedis.blpop(timeout, keys));
     }
 
@@ -1796,7 +1796,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<byte[]> brpop(double timeout, byte[]... keys) {
+    public KeyValue<byte[], byte[]> brpop(double timeout, byte[]... keys) {
         return tryGetResource(jedis -> jedis.brpop(timeout, keys));
     }
 
@@ -1831,12 +1831,12 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyValue<byte[], List<byte[]>> blmpop(long timeout, ListDirection direction, byte[]... keys) {
+    public KeyValue<byte[], List<byte[]>> blmpop(double timeout, ListDirection direction, byte[]... keys) {
         return tryGetResource(jedis -> jedis.blmpop(timeout, direction, keys));
     }
 
     @Override
-    public KeyValue<byte[], List<byte[]>> blmpop(long timeout, ListDirection direction, int count, byte[]... keys) {
+    public KeyValue<byte[], List<byte[]>> blmpop(double timeout, ListDirection direction, int count, byte[]... keys) {
         return tryGetResource(jedis -> jedis.blmpop(timeout, direction, count, keys));
     }
 
@@ -1936,7 +1936,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyedListElement blpop(double timeout, String key) {
+    public KeyValue<String, String> blpop(double timeout, String key) {
         return tryGetResource(jedis -> jedis.blpop(timeout, key));
     }
 
@@ -1946,7 +1946,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyedListElement brpop(double timeout, String key) {
+    public KeyValue<String, String> brpop(double timeout, String key) {
         return tryGetResource(jedis -> jedis.brpop(timeout, key));
     }
 
@@ -1956,7 +1956,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyedListElement blpop(double timeout, String... keys) {
+    public KeyValue<String, String> blpop(double timeout, String... keys) {
         return tryGetResource(jedis -> jedis.blpop(timeout, keys));
     }
 
@@ -1966,7 +1966,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyedListElement brpop(double timeout, String... keys) {
+    public KeyValue<String, String> brpop(double timeout, String... keys) {
         return tryGetResource(jedis -> jedis.brpop(timeout, keys));
     }
 
@@ -2001,12 +2001,12 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyValue<String, List<String>> blmpop(long timeout, ListDirection direction, String... keys) {
+    public KeyValue<String, List<String>> blmpop(double timeout, ListDirection direction, String... keys) {
         return tryGetResource(jedis -> jedis.blmpop(timeout, direction, keys));
     }
 
     @Override
-    public KeyValue<String, List<String>> blmpop(long timeout, ListDirection direction, int count, String... keys) {
+    public KeyValue<String, List<String>> blmpop(double timeout, ListDirection direction, int count, String... keys) {
         return tryGetResource(jedis -> jedis.blmpop(timeout, direction, count, keys));
     }
 
@@ -2239,11 +2239,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public byte[] echo(byte[] string) {
         return tryGetResource(jedis -> jedis.echo(string));
-    }
-
-    @Override
-    public String quit() {
-        return tryGetResource(Jedis::quit);
     }
 
     @Override
@@ -2896,22 +2891,22 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<byte[]> bzpopmax(double timeout, byte[]... keys) {
+    public KeyValue<byte[], Tuple> bzpopmax(double timeout, byte[]... keys) {
         return tryGetResource(jedis -> jedis.bzpopmax(timeout, keys));
     }
 
     @Override
-    public List<byte[]> bzpopmin(double timeout, byte[]... keys) {
+    public KeyValue<byte[], Tuple> bzpopmin(double timeout, byte[]... keys) {
         return tryGetResource(jedis -> jedis.bzpopmin(timeout, keys));
     }
 
     @Override
-    public Set<byte[]> zdiff(byte[]... keys) {
+    public List<byte[]> zdiff(byte[]... keys) {
         return tryGetResource(jedis -> jedis.zdiff(keys));
     }
 
     @Override
-    public Set<Tuple> zdiffWithScores(byte[]... keys) {
+    public List<Tuple> zdiffWithScores(byte[]... keys) {
         return tryGetResource(jedis -> jedis.zdiffWithScores(keys));
     }
 
@@ -2921,12 +2916,17 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public Set<byte[]> zinter(ZParams zParams, byte[]... keys) {
+    public long zdiffstore(byte[] dstkey, byte[]... keys) {
+        return tryGetResource(jedis -> jedis.zdiffStore(dstkey, keys));
+    }
+
+    @Override
+    public List<byte[]> zinter(ZParams zParams, byte[]... keys) {
         return tryGetResource(jedis -> jedis.zinter(zParams, keys));
     }
 
     @Override
-    public Set<Tuple> zinterWithScores(ZParams zParams, byte[]... keys) {
+    public List<Tuple> zinterWithScores(ZParams zParams, byte[]... keys) {
         return tryGetResource(jedis -> jedis.zinterWithScores(zParams, keys));
     }
 
@@ -2951,12 +2951,12 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public Set<byte[]> zunion(ZParams zParams, byte[]... keys) {
+    public List<byte[]> zunion(ZParams zParams, byte[]... keys) {
         return tryGetResource(jedis -> jedis.zunion(zParams, keys));
     }
 
     @Override
-    public Set<Tuple> zunionWithScores(ZParams zParams, byte[]... keys) {
+    public List<Tuple> zunionWithScores(ZParams zParams, byte[]... keys) {
         return tryGetResource(jedis -> jedis.zunionWithScores(zParams, keys));
     }
 
@@ -2981,12 +2981,12 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyValue<byte[], List<Tuple>> bzmpop(long timeout, SortedSetOption option, byte[]... keys) {
+    public KeyValue<byte[], List<Tuple>> bzmpop(double timeout, SortedSetOption option, byte[]... keys) {
         return tryGetResource(jedis -> jedis.bzmpop(timeout, option, keys));
     }
 
     @Override
-    public KeyValue<byte[], List<Tuple>> bzmpop(long timeout, SortedSetOption option, int count, byte[]... keys) {
+    public KeyValue<byte[], List<Tuple>> bzmpop(double timeout, SortedSetOption option, int count, byte[]... keys) {
         return tryGetResource(jedis -> jedis.bzmpop(timeout, option, count, keys));
     }
 
@@ -3276,27 +3276,32 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyedZSetElement bzpopmax(double timeout, String... keys) {
+    public KeyValue<String, Tuple> bzpopmax(double timeout, String... keys) {
         return tryGetResource(jedis -> jedis.bzpopmax(timeout, keys));
     }
 
     @Override
-    public KeyedZSetElement bzpopmin(double timeout, String... keys) {
+    public KeyValue<String, Tuple> bzpopmin(double timeout, String... keys) {
         return tryGetResource(jedis -> jedis.bzpopmin(timeout, keys));
     }
 
     @Override
-    public Set<String> zdiff(String... keys) {
+    public List<String> zdiff(String... keys) {
         return tryGetResource(jedis -> jedis.zdiff(keys));
     }
 
     @Override
-    public Set<Tuple> zdiffWithScores(String... keys) {
+    public List<Tuple> zdiffWithScores(String... keys) {
         return tryGetResource(jedis -> jedis.zdiffWithScores(keys));
     }
 
     @Override
     public long zdiffStore(String dstkey, String... keys) {
+        return tryGetResource(jedis -> jedis.zdiffStore(dstkey, keys));
+    }
+
+    @Override
+    public long zdiffstore(String dstkey, String... keys) {
         return tryGetResource(jedis -> jedis.zdiffStore(dstkey, keys));
     }
 
@@ -3321,22 +3326,22 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public Set<String> zinter(ZParams zParams, String... keys) {
+    public List<String> zinter(ZParams zParams, String... keys) {
         return tryGetResource(jedis -> jedis.zinter(zParams, keys));
     }
 
     @Override
-    public Set<Tuple> zinterWithScores(ZParams zParams, String... keys) {
+    public List<Tuple> zinterWithScores(ZParams zParams, String... keys) {
         return tryGetResource(jedis -> jedis.zinterWithScores(zParams, keys));
     }
 
     @Override
-    public Set<String> zunion(ZParams zParams, String... keys) {
+    public List<String> zunion(ZParams zParams, String... keys) {
         return tryGetResource(jedis -> jedis.zunion(zParams, keys));
     }
 
     @Override
-    public Set<Tuple> zunionWithScores(ZParams zParams, String... keys) {
+    public List<Tuple> zunionWithScores(ZParams zParams, String... keys) {
         return tryGetResource(jedis -> jedis.zunionWithScores(zParams, keys));
     }
 
@@ -3361,12 +3366,12 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public KeyValue<String, List<Tuple>> bzmpop(long timeout, SortedSetOption option, String... keys) {
+    public KeyValue<String, List<Tuple>> bzmpop(double timeout, SortedSetOption option, String... keys) {
         return tryGetResource(jedis -> jedis.bzmpop(timeout, option, keys));
     }
 
     @Override
-    public KeyValue<String, List<Tuple>> bzmpop(long timeout, SortedSetOption option, int count, String... keys) {
+    public KeyValue<String, List<Tuple>> bzmpop(double timeout, SortedSetOption option, int count, String... keys) {
         return tryGetResource(jedis -> jedis.bzmpop(timeout, option, count, keys));
     }
 
@@ -3381,22 +3386,22 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<byte[]> xrange(byte[] key, byte[] start, byte[] end) {
+    public List<Object> xrange(byte[] key, byte[] start, byte[] end) {
         return tryGetResource(jedis -> jedis.xrange(key, start, end));
     }
 
     @Override
-    public List<byte[]> xrange(byte[] key, byte[] start, byte[] end, int count) {
+    public List<Object> xrange(byte[] key, byte[] start, byte[] end, int count) {
         return tryGetResource(jedis -> jedis.xrange(key, start, end, count));
     }
 
     @Override
-    public List<byte[]> xrevrange(byte[] key, byte[] end, byte[] start) {
+    public List<Object> xrevrange(byte[] key, byte[] end, byte[] start) {
         return tryGetResource(jedis -> jedis.xrevrange(key, end, start));
     }
 
     @Override
-    public List<byte[]> xrevrange(byte[] key, byte[] end, byte[] start, int count) {
+    public List<Object> xrevrange(byte[] key, byte[] end, byte[] start, int count) {
         return tryGetResource(jedis -> jedis.xrevrange(key, end, start, count));
     }
 
@@ -3451,11 +3456,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<Object> xpending(byte[] key, byte[] groupname, byte[] start, byte[] end, int count, byte[] consumername) {
-        return tryGetResource(jedis -> jedis.xpending(key, groupname, start, end, count, consumername));
-    }
-
-    @Override
     public List<Object> xpending(byte[] key, byte[] groupname, XPendingParams params) {
         return tryGetResource(jedis -> jedis.xpending(key, groupname, params));
     }
@@ -3496,11 +3496,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<Object> xinfoGroup(byte[] key) {
-        return tryGetResource(jedis -> jedis.xinfoGroup(key));
-    }
-
-    @Override
     public List<Object> xinfoGroups(byte[] key) {
         return tryGetResource(jedis -> jedis.xinfoGroups(key));
     }
@@ -3512,13 +3507,13 @@ public class DefaultJedisTemplate implements JedisTemplate {
 
     @Override
     @SafeVarargs
-    public final List<byte[]> xread(XReadParams xReadParams, Map.Entry<byte[], byte[]>... streams) {
+    public final List<Object> xread(XReadParams xReadParams, Map.Entry<byte[], byte[]>... streams) {
         return tryGetResource(jedis -> jedis.xread(xReadParams, streams));
     }
 
     @Override
     @SafeVarargs
-    public final List<byte[]> xreadGroup(byte[] groupname, byte[] consumer, XReadGroupParams xReadGroupParams, Map.Entry<byte[], byte[]>... streams) {
+    public final List<Object> xreadGroup(byte[] groupname, byte[] consumer, XReadGroupParams xReadGroupParams, Map.Entry<byte[], byte[]>... streams) {
         return tryGetResource(jedis -> jedis.xreadGroup(groupname, consumer, xReadGroupParams, streams));
     }
 
@@ -3613,11 +3608,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<StreamPendingEntry> xpending(String key, String groupname, StreamEntryID start, StreamEntryID end, int count, String consumername) {
-        return tryGetResource(jedis -> jedis.xpending(key, groupname, start, end, count, consumername));
-    }
-
-    @Override
     public List<StreamPendingEntry> xpending(String key, String groupname, XPendingParams xPendingParams) {
         return tryGetResource(jedis -> jedis.xpending(key, groupname, xPendingParams));
     }
@@ -3673,11 +3663,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public List<StreamGroupInfo> xinfoGroup(String key) {
-        return tryGetResource(jedis -> jedis.xinfoGroup(key));
-    }
-
-    @Override
     public List<StreamGroupInfo> xinfoGroups(String key) {
         return tryGetResource(jedis -> jedis.xinfoGroups(key));
     }
@@ -3685,6 +3670,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public List<StreamConsumersInfo> xinfoConsumers(String key, String group) {
         return tryGetResource(jedis -> jedis.xinfoConsumers(key, group));
+    }
+
+    @Override
+    public List<StreamConsumerInfo> xinfoConsumers2(String key, String group) {
+        return tryGetResource(jedis -> jedis.xinfoConsumers2(key, group));
     }
 
     @Override
@@ -3710,6 +3700,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public byte[] get(byte[] key) {
         return tryGetResource(jedis -> jedis.get(key), true);
+    }
+
+    @Override
+    public byte[] setGet(byte[] key, byte[] value) {
+        return tryGetResource(jedis -> jedis.setGet(key, value));
     }
 
     @Override
@@ -3863,11 +3858,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
-    public LCSMatchResult strAlgoLCSKeys(byte[] keyA, byte[] keyB, StrAlgoLCSParams params) {
-        return tryGetResource(jedis -> jedis.strAlgoLCSKeys(keyA, keyB, params));
-    }
-
-    @Override
     public LCSMatchResult lcs(byte[] keyA, byte[] keyB, LCSParams params) {
         return tryGetResource(jedis -> jedis.lcs(keyA, keyB, params));
     }
@@ -3885,6 +3875,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public String get(String key) {
         return tryGetResource(jedis -> jedis.get(key), true);
+    }
+
+    @Override
+    public String setGet(String key, String value) {
+        return tryGetResource(jedis -> jedis.setGet(key, value));
     }
 
     @Override
@@ -4035,11 +4030,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public long bitop(BitOP op, String destKey, String... srcKeys) {
         return tryGetResource(jedis -> jedis.bitop(op, destKey, srcKeys));
-    }
-
-    @Override
-    public LCSMatchResult strAlgoLCSKeys(String keyA, String keyB, StrAlgoLCSParams params) {
-        return tryGetResource(jedis -> jedis.strAlgoLCSKeys(keyA, keyB, params));
     }
 
     @Override
