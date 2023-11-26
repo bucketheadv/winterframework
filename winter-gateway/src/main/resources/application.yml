@@ -19,3 +19,13 @@ server:
 
 api_whitelist: /user,/testThrow
 
+winter:
+  data:
+    redis:
+      enabled: true
+      primary: main
+      template:
+        main:
+          master:
+            host: localhost
+            port: 6379

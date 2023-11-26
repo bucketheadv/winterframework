@@ -2,6 +2,7 @@ package org.winterframework.data.redis.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author sven
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ToString
 public class RedisProperties {
     /**
      * host

@@ -29,7 +29,6 @@ public abstract class AbstractExceptionHandler {
         Map<String, Object> resMap = Maps.newHashMap();
         resMap.put("code", ErrorCode.SYSTEM_ERROR.getCode());
         resMap.put("message", I18n.get(ErrorCode.SYSTEM_ERROR.getI18nCode()));
-        resMap.put("body", null);
         return resMap;
     }
 }
