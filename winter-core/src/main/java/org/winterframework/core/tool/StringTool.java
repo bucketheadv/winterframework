@@ -3,6 +3,8 @@ package org.winterframework.core.tool;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.function.Supplier;
+
 /**
  * @author sven
  * Created on 2021/12/30 11:01 下午
@@ -63,18 +65,13 @@ public final class StringTool extends StringUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends Number> T convertNumber(Object o, T defaultVal, ConvertCallback<T> convertCallback) {
+	private static <T extends Number> T convertNumber(Object o, T defaultVal, Supplier<T> convertCallback) {
 		if (o == null) {
 			return defaultVal;
 		}
 		if (defaultVal.getClass().isInstance(o)) {
 			return (T) o;
 		}
-		return convertCallback.invoke();
-	}
-
-	@FunctionalInterface
-	public interface ConvertCallback<T> {
-		T invoke();
+		return convertCallback.get();
 	}
 }

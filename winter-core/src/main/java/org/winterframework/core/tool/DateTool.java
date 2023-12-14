@@ -2,6 +2,7 @@ package org.winterframework.core.tool;
 
 import cn.hutool.core.date.DateUtil;
 import lombok.experimental.UtilityClass;
+import org.winterframework.core.support.enums.TimeZoneEnum;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -18,11 +19,11 @@ public final class DateTool extends DateUtil {
     /**
      * 将时间戳转换为带时区时间对象
      * @param timeMillis 时间戳/毫秒
-     * @param zoneId 时区id（ 如 UTC+8 ）
+     * @param timezone 时区
      * @return ZonedDateTime
      */
-    public static ZonedDateTime fromTimeMillis(long timeMillis, String zoneId) {
-        return fromTimeMillis(timeMillis, ZoneId.of(zoneId));
+    public static ZonedDateTime fromTimeMillis(long timeMillis, TimeZoneEnum timezone) {
+        return fromTimeMillis(timeMillis, ZoneId.of(timezone.getZone()));
     }
 
     /**
@@ -59,11 +60,11 @@ public final class DateTool extends DateUtil {
      * 转换带时区时间对象所在时区，转换前后两个时间的时间戳不变
      * 如 2023-09-07T11:28:29.114382[UTC+08:00] 转换后为 2023-09-07T03:28:29.114382Z[UTC]
      * @param zonedDateTime 时区对象
-     * @param zoneId 目标时区
+     * @param timezone 目标时区
      * @return ZonedDateTime
      */
-    public static ZonedDateTime convertToZoneId(ZonedDateTime zonedDateTime, String zoneId) {
-        return convertToZoneId(zonedDateTime, ZoneId.of(zoneId));
+    public static ZonedDateTime convertToZoneId(ZonedDateTime zonedDateTime, TimeZoneEnum timezone) {
+        return convertToZoneId(zonedDateTime, ZoneId.of(timezone.getZone()));
     }
 
     /**
@@ -94,6 +95,15 @@ public final class DateTool extends DateUtil {
     }
 
     /**
+     * 获取当前时间
+     * @param timezone 时区
+     * @return ZonedDateTime
+     */
+    public static ZonedDateTime now(TimeZoneEnum timezone) {
+        return now(ZoneId.of(timezone.getZone()));
+    }
+
+    /**
      * 解析字符串时间
      * @param text 字符串时间
      * @param pattern 格式
@@ -110,7 +120,7 @@ public final class DateTool extends DateUtil {
      * @return ZonedDateTime
      */
     public static ZonedDateTime fromUTCLocalDateTime(LocalDateTime utcLocalDateTime) {
-        return fromLocalDateTime(utcLocalDateTime, "UTC");
+        return fromLocalDateTime(utcLocalDateTime, TimeZoneEnum.UTC);
     }
 
     /**
@@ -119,17 +129,17 @@ public final class DateTool extends DateUtil {
      * @return LocalDateTime
      */
     public static LocalDateTime toUTCLocalDateTime(ZonedDateTime zonedDateTime) {
-        return zonedDateTime.toInstant().atZone(ZoneId.of("UTC")).toLocalDateTime();
+        return zonedDateTime.toInstant().atZone(ZoneId.of(TimeZoneEnum.UTC.getZone())).toLocalDateTime();
     }
 
     /**
      * 将LocalDateTime转化为ZonedDateTime，直接加上时区信息，不做任何转换
      * @param localDateTime localDateTime
-     * @param zoneId 该时间所属时区
+     * @param timezone 该时间所属时区
      * @return ZonedDateTime
      */
-    public static ZonedDateTime fromLocalDateTime(LocalDateTime localDateTime, String zoneId) {
-        return localDateTime.atZone(ZoneId.of(zoneId));
+    public static ZonedDateTime fromLocalDateTime(LocalDateTime localDateTime, TimeZoneEnum timezone) {
+        return fromLocalDateTime(localDateTime, ZoneId.of(timezone.getZone()));
     }
 
     /**
