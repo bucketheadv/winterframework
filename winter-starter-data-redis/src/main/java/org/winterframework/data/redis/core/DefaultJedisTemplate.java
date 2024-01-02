@@ -50,7 +50,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
         try (Jedis jedis = jedisPool.getResource()){
             return callback.apply(jedis);
         } catch (Exception e) {
-            log.error("tryGetResource error: ", e);
             throw new RuntimeException(e);
         }
     }
@@ -523,6 +522,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     @Override
     public List<Object> clusterSlots() {
         return tryGetResource(Jedis::clusterSlots);
+    }
+
+    @Override
+    public List<ClusterShardInfo> clusterShards() {
+        return tryGetResource(jedis -> jedis.clusterShards());
     }
 
     @Override
@@ -2371,6 +2375,11 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     @Override
+    public String reset() {
+        return tryGetResource(jedis -> jedis.reset());
+    }
+
+    @Override
     public String latencyDoctor() {
         return tryGetResource(Jedis::latencyDoctor);
     }
@@ -4062,6 +4071,48 @@ public class DefaultJedisTemplate implements JedisTemplate {
             callback.apply(pipeline);
             return pipeline.syncAndReturnAll();
         }, true);
+    }
+
+    @Override
+    public long publish(byte[] channel, byte[] message) {
+        return tryGetResource(jedis -> jedis.publish(channel, message), false);
+    }
+
+    @Override
+    public long publish(String channel, String message) {
+        return tryGetResource(jedis -> jedis.publish(channel, message), false);
+    }
+
+    @Override
+    public void subscribe(JedisPubSub jedisPubSub, String... channels) {
+        tryGetResource(jedis -> {
+            jedis.subscribe(jedisPubSub, channels);
+            return null;
+        });
+    }
+
+    @Override
+    public void subscribe(BinaryJedisPubSub jedisPubSub, byte[]... channels) {
+        tryGetResource(jedis -> {
+            jedis.subscribe(jedisPubSub, channels);
+            return null;
+        });
+    }
+
+    @Override
+    public void psubscribe(JedisPubSub jedisPubSub, String... patterns) {
+        tryGetResource(jedis -> {
+            jedis.psubscribe(jedisPubSub, patterns);
+            return null;
+        });
+    }
+
+    @Override
+    public void psubscribe(BinaryJedisPubSub jedisPubSub, byte[]... patterns) {
+        tryGetResource(jedis -> {
+            jedis.psubscribe(jedisPubSub, patterns);
+            return null;
+        });
     }
 
     @Override

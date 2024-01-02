@@ -109,7 +109,7 @@ public class RocketMQBeanDefinition implements BeanDefinitionRegistryPostProcess
         String topicName = consumerConfig.getTopic();
         Assert.hasText(nameServer, "[rocketmq.name-server] must not be null");
         Assert.hasText(groupName, "[rocketmq.consumer.group] must not be null");
-        Assert.hasText(topicName, "[rocketmq.consumer.topic] must not be null");
+//        Assert.hasText(topicName, "[rocketmq.consumer.topic] must not be null");
         String accessChannel = rocketMQProperties.getAccessChannel();
         MessageModel messageModel = MessageModel.valueOf(consumerConfig.getMessageModel());
         SelectorType selectorType = SelectorType.valueOf(consumerConfig.getSelectorType());

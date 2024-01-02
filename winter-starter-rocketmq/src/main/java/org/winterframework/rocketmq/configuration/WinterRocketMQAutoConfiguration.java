@@ -33,6 +33,12 @@ public class WinterRocketMQAutoConfiguration implements EnvironmentAware {
 
     @Bean
     @ConditionalOnMissingBean
+    public RocketMQMessageConverter messageConverter() {
+        return new RocketMQMessageConverter();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
     public RocketMQBeanDefinition rocketMQBeanDefinition(RocketMQConfig rocketMQConfig, RocketMQMessageConverter messageConverter) {
         return new RocketMQBeanDefinition(rocketMQConfig, messageConverter);
     }

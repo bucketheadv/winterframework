@@ -1,0 +1,21 @@
+winter:
+  data:
+    redis:
+      enabled: true
+      primary: main
+      template:
+        main:
+          master:
+            host: localhost
+            port: 6379
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+  web:
+    resources:
+      static-locations: classpath:/templates/
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: tio-server-producer

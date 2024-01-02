@@ -28,6 +28,7 @@
         <module>winter-starter-web</module>
         <module>winter-gateway</module>
         <module>winter-eureka-server</module>
+        <module>winter-starter-tio</module>
         <module>winter-web</module>
     </modules>
     <parent>
@@ -62,6 +63,11 @@
                 <scope>import</scope>
                 <type>pom</type>
                 <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>5.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

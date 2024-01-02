@@ -40,7 +40,7 @@ public class RedisProperties {
     /**
      * 线程池最小闲置线程数
      */
-    private int minIdle = 0;
+    private int minIdle = 4;
 
     /**
      * 是否在创建时测试该连接是否还可用
