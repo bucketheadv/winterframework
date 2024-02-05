@@ -1,7 +1,7 @@
 package org.winterframework.tio.server.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.winterframework.core.tool.JSONTool;
 import org.winterframework.data.redis.core.JedisTemplate;
@@ -14,8 +14,9 @@ import org.winterframework.tio.server.entity.User;
  */
 @Slf4j
 @Service
+@AllArgsConstructor
 public class UserService {
-    @Autowired
+
     private JedisTemplate jedisTemplate;
 
     public void addOnlineUser(User user) {

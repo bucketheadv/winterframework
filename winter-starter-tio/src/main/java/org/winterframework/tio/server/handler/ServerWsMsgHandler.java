@@ -1,7 +1,7 @@
 package org.winterframework.tio.server.handler;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
@@ -24,13 +24,13 @@ import org.winterframework.tio.server.service.UserService;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class ServerWsMsgHandler implements IWsMsgHandler {
 
-    @Autowired
     private JedisTemplate jedisTemplate;
-    @Autowired
+
     private MsgService msgService;
-    @Autowired
+
     private UserService userService;
 
     private final Snowflake snowflake = new Snowflake(0, 0);

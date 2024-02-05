@@ -1,8 +1,8 @@
 package org.winterframework.tio.server.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
@@ -25,10 +25,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class MsgService {
-    @Autowired
     private JedisTemplate jedisTemplate;
-    @Autowired
+
     private RocketMQTemplate rocketMQTemplate;
 
     public boolean existUser(String userId) {
