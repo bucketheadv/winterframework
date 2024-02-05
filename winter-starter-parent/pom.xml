@@ -15,11 +15,12 @@
         <spring-boot.version>3.3.0-M1</spring-boot.version>
         <spring-cloud.version>2023.0.0-RC1</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <spring-kafka.version>3.1.1</spring-kafka.version>
         <jedis.version>5.1.0</jedis.version>
         <rocketmq.version>2.2.2</rocketmq.version>
-        <hutool.version>5.8.20</hutool.version>
-        <guava.version>31.0.1-jre</guava.version>
-        <json-path.version>2.7.0</json-path.version>
+        <hutool.version>5.8.25</hutool.version>
+        <guava.version>33.0.0-jre</guava.version>
+        <json-path.version>2.9.0</json-path.version>
         <apollo.version>2.1.0</apollo.version>
         <guice.version>5.0.1</guice.version>
         <xxl-job.version>2.4.0</xxl-job.version>
@@ -32,11 +33,12 @@
         <mybatis.spring.version>3.0.1</mybatis.spring.version>
         <tk-mybatis.version>4.2.2</tk-mybatis.version>
         <mybatis.version>3.5.9</mybatis.version>
-        <dubbo.version>3.2.2</dubbo.version>
-        <curator.version>5.4.0</curator.version>
+        <dubbo.version>3.2.11</dubbo.version>
+        <curator.version>5.6.0</curator.version>
         <sharding-jdbc.version>5.3.2</sharding-jdbc.version>
         <druid.version>1.2.3</druid.version>
         <fastjson2.version>2.0.34</fastjson2.version>
+        <etcd.version>0.7.7</etcd.version>
     </properties>
 
     <dependencyManagement>
@@ -74,7 +76,7 @@
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -214,6 +216,11 @@
             <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-starter-web</artifactId>
+                <version>${winter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.winterframework</groupId>
+                <artifactId>winter-starter-etcd</artifactId>
                 <version>${winter.version}</version>
             </dependency>
             <dependency>

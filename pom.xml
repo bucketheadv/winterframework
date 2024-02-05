@@ -12,6 +12,7 @@
         <module>winter-starter-rocketmq</module>
         <module>winter-starter-mongodb</module>
         <module>winter-starter-elasticsearch</module>
+        <module>winter-starter-etcd</module>
         <module>winter-starter-apollo</module>
         <module>winter-starter-job</module>
         <module>winter-starter-jwt</module>
@@ -68,6 +69,16 @@
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>5.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.etcd</groupId>
+                <artifactId>jetcd-core</artifactId>
+                <version>0.7.7</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
