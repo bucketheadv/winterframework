@@ -3,6 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.0-M1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <groupId>org.winterframework</groupId>
     <artifactId>winter-starter-parent</artifactId>
@@ -39,6 +45,8 @@
         <druid.version>1.2.3</druid.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <etcd.version>0.7.7</etcd.version>
+        <jwt.version>0.11.5</jwt.version>
+        <tio.version>3.8.5.v20230901-RELEASE</tio.version>
     </properties>
 
     <dependencyManagement>
@@ -294,9 +302,45 @@
                 <version>${sharding-jdbc.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.t-io</groupId>
+                <artifactId>tio-core</artifactId>
+                <version>${tio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.t-io</groupId>
+                <artifactId>tio-websocket-client</artifactId>
+                <version>${tio.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.t-io/tio-websocket-server -->
+            <dependency>
+                <groupId>org.t-io</groupId>
+                <artifactId>tio-websocket-server</artifactId>
+                <version>${tio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.etcd</groupId>
+                <artifactId>jetcd-core</artifactId>
+                <version>${etcd.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.intellij</groupId>

@@ -33,16 +33,13 @@
         <module>winter-web</module>
     </modules>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.0-M1</version>
+        <groupId>org.winterframework</groupId>
+        <artifactId>winter-starter-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.winterframework</groupId>
     <artifactId>winter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>winter</name>
-    <description>winter</description>
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,12 +50,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <!-- 1.18.30 才解决jdk21的编译问题，否则需要用edge-SNAPSHOT版本 -->
-                <version>1.18.30</version>
-            </dependency>
-            <dependency>
                 <groupId>org.winterframework</groupId>
                 <artifactId>winter-starter-parent</artifactId>
                 <scope>import</scope>
@@ -66,19 +57,10 @@
                 <version>${winter.version}</version>
             </dependency>
             <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>5.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.jayway.jsonpath</groupId>
-                <artifactId>json-path</artifactId>
-                <version>2.9.0</version>
-            </dependency>
-            <dependency>
-                <groupId>io.etcd</groupId>
-                <artifactId>jetcd-core</artifactId>
-                <version>0.7.7</version>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <!-- 1.18.30 才解决jdk21的编译问题，否则需要用edge-SNAPSHOT版本 -->
+                <version>1.18.30</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

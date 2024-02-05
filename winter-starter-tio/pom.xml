@@ -56,18 +56,15 @@
         <dependency>
             <groupId>org.t-io</groupId>
             <artifactId>tio-core</artifactId>
-            <version>3.8.5.v20230901-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.t-io</groupId>
             <artifactId>tio-websocket-client</artifactId>
-            <version>3.8.5.v20230901-RELEASE</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.t-io/tio-websocket-server -->
         <dependency>
             <groupId>org.t-io</groupId>
             <artifactId>tio-websocket-server</artifactId>
-            <version>3.8.5.v20230901-RELEASE</version>
         </dependency>
     </dependencies>
 
