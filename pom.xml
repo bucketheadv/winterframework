@@ -56,12 +56,6 @@
                 <type>pom</type>
                 <version>${winter.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <!-- 1.18.30 才解决jdk21的编译问题，否则需要用edge-SNAPSHOT版本 -->
-                <version>1.18.30</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -103,7 +97,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
