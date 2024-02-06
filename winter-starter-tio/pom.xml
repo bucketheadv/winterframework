@@ -11,9 +11,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>winter-starter-tio</name>
 
-    <properties>
-        <java.version>21</java.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.winterframework</groupId>
