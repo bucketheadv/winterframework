@@ -35,13 +35,13 @@
         <page.helper.version>5.3.2</page.helper.version>
         <apache.commons.version>4.4</apache.commons.version>
         <rocketmq.version>2.2.2</rocketmq.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <mybatis.spring.version>3.0.1</mybatis.spring.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <mybatis.spring.version>3.0.3</mybatis.spring.version>
         <tk-mybatis.version>4.2.2</tk-mybatis.version>
         <mybatis.version>3.5.9</mybatis.version>
         <dubbo.version>3.2.11</dubbo.version>
         <curator.version>5.6.0</curator.version>
-        <sharding-jdbc.version>5.3.2</sharding-jdbc.version>
+        <sharding-jdbc.version>5.4.1</sharding-jdbc.version>
         <druid.version>1.2.3</druid.version>
         <fastjson2.version>2.0.34</fastjson2.version>
         <etcd.version>0.7.7</etcd.version>
@@ -256,6 +256,11 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
                 <version>${mybatis.spring.version}</version>
             </dependency>
             <dependency>
