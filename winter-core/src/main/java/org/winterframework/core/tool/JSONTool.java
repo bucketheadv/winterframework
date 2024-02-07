@@ -28,12 +28,18 @@ public final class JSONTool implements ApplicationContextAware {
         init(om);
     }
 
-    private static void init(ObjectMapper om) {
-        if (om != null) {
+    private static void setDefaultObjectMapper(ObjectMapper objectMapper) {
+        if (objectMapper != null) {
+            om = objectMapper;
+        }
+    }
+
+    private static void init(ObjectMapper objectMapper) {
+        if (objectMapper != null) {
             // 时间序列化为时间戳
-            om.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             // 未知属性时，不拋出异常
-            om.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
+            objectMapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
         }
     }
 
@@ -70,24 +76,17 @@ public final class JSONTool implements ApplicationContextAware {
     }
 
     public static <T> T convert2Value(Object value, Class<T> clazz) {
-        try {
-            return om.convertValue(value, clazz);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        }
+        return om.convertValue(value, clazz);
     }
 
     public static <T> List<T> convert2List(Object value, Class<T> clazz) {
-        try {
-            return om.convertValue(value, om.getTypeFactory().constructCollectionType(List.class, clazz));
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        }
+        return om.convertValue(value, om.getTypeFactory().constructCollectionType(List.class, clazz));
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        om = applicationContext.getBean(ObjectMapper.class);
-        init(om);
+        ObjectMapper objectMapper = applicationContext.getBean(ObjectMapper.class);
+        setDefaultObjectMapper(objectMapper);
+        init(objectMapper);
     }
 }

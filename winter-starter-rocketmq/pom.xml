@@ -39,16 +39,4 @@
             <artifactId>commons-collections4</artifactId>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.winterframework</groupId>
-                <artifactId>winter-starter-parent</artifactId>
-                <version>${project.parent.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
