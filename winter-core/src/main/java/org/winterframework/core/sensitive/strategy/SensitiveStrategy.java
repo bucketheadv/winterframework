@@ -18,7 +18,7 @@ public enum SensitiveStrategy {
         return s.replaceAll("(\\S)\\S(\\S*)", "$1*$2");
     }),
     /**
-     * Id card sensitive type.
+     * id card sensitive type.
      */
     ID_CARD(s -> s.replaceAll("(\\d{3})\\d{11}(\\w{4})", "$1***********$2")),
     /**
@@ -31,19 +31,19 @@ public enum SensitiveStrategy {
     ADDRESS(s -> s.replaceAll("(\\S{3})\\S{3}(\\S*)\\S{4}", "$1****$2****"));
 
 
-    private final Function<String, String> desensitizer;
+    private final Function<String, String> desensitizeFunc;
 
     /**
      * 定义构造函数，传入一个函数
      */
-    SensitiveStrategy(UnaryOperator<String> desensitizer) {
-        this.desensitizer = desensitizer;
+    SensitiveStrategy(UnaryOperator<String> desensitizeFunc) {
+        this.desensitizeFunc = desensitizeFunc;
     }
 
     /**
      * getter方法
      */
-    public Function<String, String> desensitizer() {
-        return desensitizer;
+    public Function<String, String> desensitizeFunc() {
+        return desensitizeFunc;
     }
 }

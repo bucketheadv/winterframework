@@ -20,7 +20,7 @@ public class SensitiveJsonSerializer extends JsonSerializer<String> implements C
     private SensitiveStrategy strategy;
     @Override
     public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(strategy.desensitizer().apply(s));
+        jsonGenerator.writeString(strategy.desensitizeFunc().apply(s));
     }
 
     @Override

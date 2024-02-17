@@ -48,6 +48,7 @@
         <jwt.version>0.11.5</jwt.version>
         <tio.version>3.8.5.v20230901-RELEASE</tio.version>
         <lombok.version>1.18.30</lombok.version>
+        <joda-time.version>2.12.7</joda-time.version>
     </properties>
 
     <dependencyManagement>
@@ -353,6 +354,11 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.intellij</groupId>
