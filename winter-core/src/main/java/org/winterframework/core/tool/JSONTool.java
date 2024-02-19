@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +18,8 @@ import java.util.Map;
  * Created on 2021/12/30 10:43 下午
  */
 @Slf4j
-@Component("JSONTool")
-public final class JSONTool implements ApplicationContextAware {
+@Configuration("jsonTool")
+public class JSONTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
     private JSONTool() {}
