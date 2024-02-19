@@ -40,6 +40,7 @@ public final class JSONTool implements ApplicationContextAware {
             objectMapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             // 未知属性时，不拋出异常
             objectMapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
+            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         }
     }
 
