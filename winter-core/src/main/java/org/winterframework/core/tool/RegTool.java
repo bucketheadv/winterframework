@@ -12,11 +12,12 @@ import java.util.Collection;
 @UtilityClass
 public class RegTool extends ReUtil {
 	public static boolean isMatch(String s, Collection<String> patterns) {
-		if (StringTool.isNotBlank(s)) {
-			for (String pattern : patterns) {
-				if (isMatch(pattern, s)) {
-					return true;
-				}
+		if (StringTool.isBlank(s)) {
+			return false;
+		}
+		for (String pattern : patterns) {
+			if (isMatch(pattern, s)) {
+				return true;
 			}
 		}
 		return false;
