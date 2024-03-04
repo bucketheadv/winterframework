@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.winterframework.admin.dao.entity.PermissionInfoEntity;
 import org.winterframework.admin.dao.entity.RolePermissionEntity;
 import org.winterframework.tk.mybatis.mapper.base.BaseTkMapper;
+import tk.mybatis.mapper.common.base.select.SelectAllMapper;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Created on 2022/9/30 3:12 PM
  */
 @Mapper
-public interface PermissionInfoMapper extends BaseTkMapper<PermissionInfoEntity, Long> {
+public interface PermissionInfoMapper extends BaseTkMapper<PermissionInfoEntity, Long>, SelectAllMapper<PermissionInfoEntity> {
 	/**
 	 * 根据角色id获取所有权限
 	 * @param roleId 角色id

@@ -58,11 +58,6 @@ public abstract class BaseTkServiceImpl<Mapper extends BaseTkMapper<Entity, ID>,
 	}
 
 	@Override
-	public List<Entity> selectAll() {
-		return baseMapper.selectAll();
-	}
-
-	@Override
 	public int selectCount(Entity entity) {
 		return baseMapper.selectCount(entity);
 	}

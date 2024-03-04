@@ -11,7 +11,7 @@ import tk.mybatis.mapper.provider.base.BaseSelectProvider;
  */
 @RegisterMapper
 public interface BaseTkSelectMapper<Entity, ID> extends SelectOneMapper<Entity>,
-		SelectMapper<Entity>, SelectAllMapper<Entity>,
+		SelectMapper<Entity>,
 		SelectCountMapper<Entity> {
 	@SelectProvider(
 			type = BaseSelectProvider.class,

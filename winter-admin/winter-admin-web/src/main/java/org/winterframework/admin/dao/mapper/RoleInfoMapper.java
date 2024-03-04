@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.winterframework.admin.dao.entity.RoleInfoEntity;
 import org.winterframework.admin.dao.entity.UserRoleEntity;
 import org.winterframework.tk.mybatis.mapper.base.BaseTkMapper;
+import tk.mybatis.mapper.common.base.select.SelectAllMapper;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Created on 2022/9/30 3:11 PM
  */
 @Mapper
-public interface RoleInfoMapper extends BaseTkMapper<RoleInfoEntity, Long> {
+public interface RoleInfoMapper extends BaseTkMapper<RoleInfoEntity, Long>, SelectAllMapper<RoleInfoEntity> {
 	/**
 	 * 获取用户角色信息
 	 * @param userId 用户id

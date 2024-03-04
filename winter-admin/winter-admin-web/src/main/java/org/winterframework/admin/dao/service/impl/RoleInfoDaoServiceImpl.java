@@ -29,4 +29,9 @@ public class RoleInfoDaoServiceImpl extends BaseTkServiceImpl<RoleInfoMapper, Ro
 	public void createAdminUserRole(Long adminUserId, List<Long> roleIds) {
 		baseMapper.createAdminUserRole(adminUserId, roleIds);
 	}
+
+	@Override
+	public List<RoleInfoEntity> selectAll() {
+		return baseMapper.selectAll();
+	}
 }

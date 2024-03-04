@@ -29,4 +29,9 @@ public class PermissionInfoDaoServiceImpl extends BaseTkServiceImpl<PermissionIn
 	public void createRolePermissions(Long roleId, List<Long> permissionIds) {
 		baseMapper.createRolePermissions(roleId, permissionIds);
 	}
+
+	@Override
+	public List<PermissionInfoEntity> selectAll() {
+		return baseMapper.selectAll();
+	}
 }
