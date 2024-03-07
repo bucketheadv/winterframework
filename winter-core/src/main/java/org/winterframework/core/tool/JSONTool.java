@@ -22,8 +22,6 @@ import java.util.Map;
 public class JSONTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
-    private JSONTool() {}
-
     static {
         init(om);
     }
