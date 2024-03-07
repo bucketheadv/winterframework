@@ -1,15 +1,9 @@
 package org.winterframework.app;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.winterframework.core.filter.StartUpLoadFilter;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableAutoConfiguration
-@ComponentScan(excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = StartUpLoadFilter.class)
-})
+@SpringBootApplication
 public class WinterAppApplication {
 
     public static void main(String[] args) {

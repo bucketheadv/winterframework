@@ -1,4 +1,4 @@
-package org.winterframework.core.filter;
+package org.winterframework.core.startup;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.TypeExcludeFilter;

@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -19,12 +19,12 @@ public class AutoloadProperties {
     public static final String AUTOLOAD_EXCLUDE = "winter.autoload";
 
     /**
-     * 过滤黑名单，黑名单内的将不会加载
+     * 过滤黑名单(支持正则表达式)，黑名单内的Bean将不会加载
      */
-    private Set<String> excludes = new HashSet<>();
+    private Set<String> excludes = new LinkedHashSet<>();
 
     /**
-     * 过滤的白名单，白名单内的将必然加载
+     * 过滤的白名单(支持正则表达式)，白名单内的Bean将必然加载
      */
-    private Set<String> includes = new HashSet<>();
+    private Set<String> includes = new LinkedHashSet<>();
 }

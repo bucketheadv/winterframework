@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.winterframework.core.configuration.WinterCoreAutoConfiguration
-org.springframework.context.ApplicationContextInitializer=org.winterframework.core.support.ApplicationContextHolder
+org.springframework.context.ApplicationContextInitializer=org.winterframework.core.support.ApplicationContextHolder,\
+  org.winterframework.core.startup.StartUpContextInitializer
 org.springframework.boot.env.EnvironmentPostProcessor=org.winterframework.core.support.ApplicationContextHolder
