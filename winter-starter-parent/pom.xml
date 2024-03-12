@@ -50,6 +50,7 @@
         <tio.version>3.8.5.v20230901-RELEASE</tio.version>
         <lombok.version>1.18.30</lombok.version>
         <joda-time.version>2.12.7</joda-time.version>
+        <dynamic-tp.version>1.1.6.1-3.x</dynamic-tp.version>
     </properties>
 
     <dependencyManagement>
@@ -365,6 +366,11 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
+                <version>${dynamic-tp.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.intellij</groupId>

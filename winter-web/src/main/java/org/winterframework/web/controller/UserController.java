@@ -1,7 +1,9 @@
 package org.winterframework.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.dynamictp.core.executor.DtpExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,9 @@ public class UserController {
     private UserMapper userMapper;
     @Autowired
     private BlacklistProperties blacklistProperties;
+    @Autowired
+    @Qualifier("dtpExecutor1")
+    private DtpExecutor dtpExecutor;
 
     @RequestMapping("/getBlacklist")
     public Object getBlacklist() {

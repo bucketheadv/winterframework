@@ -10,11 +10,11 @@ spring:
 
 apollo:
   auto-refresh: true # 配置变更时，自动刷新被@ConfigurationProperties 和 @RefreshScope注解的配置类
-  meta: http://localhost:8081 # eureka 注册中心地址
-  config-service: http://localhost:8081 # 此项不是必填项，不填时默认从eureka读取ip地址
+  meta: http://localhost:8080 # eureka 注册中心地址
+  config-service: http://localhost:8080 # 此项不是必填项，不填时默认从eureka读取ip地址
   bootstrap:
     enabled: true # 开启时才会从配置中心读取数据
-    namespaces: application
+    namespaces: application,user-center-dtp
   cluster: default
   interested-key-prefixes: winter.
 #app:
