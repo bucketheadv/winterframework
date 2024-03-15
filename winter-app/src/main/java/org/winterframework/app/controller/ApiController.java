@@ -1,8 +1,10 @@
 package org.winterframework.app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.winterframework.core.support.ApiResponse;
+import org.winterframework.data.redis.core.JedisTemplate;
 
 /**
  * @author qinglin.liu
@@ -10,8 +12,12 @@ import org.winterframework.core.support.ApiResponse;
  */
 @RestController
 public class ApiController {
+    @Autowired
+    private JedisTemplate jedisTemplate;
+
     @GetMapping("/api")
     public ApiResponse<?> api() {
-        return ApiResponse.builder().data("haha").build();
+        String value = jedisTemplate.get("api");
+        return ApiResponse.builder().data(value).build();
     }
 }

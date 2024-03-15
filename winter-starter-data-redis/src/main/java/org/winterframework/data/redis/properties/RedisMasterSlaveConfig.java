@@ -2,6 +2,7 @@ package org.winterframework.data.redis.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.winterframework.data.redis.constants.LoadBalanceEnum;
 
 import java.util.List;
 
@@ -16,6 +17,12 @@ public class RedisMasterSlaveConfig {
      * 主库配置
      */
     private RedisProperties master;
+
+    /**
+     * 从库负载均衡算法
+     * 轮询算法会先ping，ping不通时自动跳到下一节点
+     */
+    private LoadBalanceEnum loadBalance = LoadBalanceEnum.ROUND_ROBIN;
 
     /**
      * 从库配置

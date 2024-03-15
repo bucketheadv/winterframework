@@ -3,21 +3,28 @@ package org.winterframework.data.redis.core;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.winterframework.core.tool.StringTool;
 import org.winterframework.data.redis.commands.JedisCallback;
 import org.winterframework.data.redis.commands.JedisMultiCallback;
 import org.winterframework.data.redis.commands.JedisPipelineCallback;
+import org.winterframework.data.redis.constants.LoadBalanceEnum;
 import redis.clients.jedis.*;
 import redis.clients.jedis.Module;
 import redis.clients.jedis.args.*;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.jedis.params.*;
 import redis.clients.jedis.resps.*;
 import redis.clients.jedis.util.KeyValue;
 import redis.clients.jedis.util.Pool;
 
+import java.net.ConnectException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author sven
@@ -31,10 +38,15 @@ public class DefaultJedisTemplate implements JedisTemplate {
 
     private final String name;
 
-    public DefaultJedisTemplate(String name, JedisPool masterPool, List<JedisPool> slavePools) {
+    private final LoadBalanceEnum loadBalance;
+
+    private final AtomicLong counter = new AtomicLong(0);
+
+    public DefaultJedisTemplate(String name, JedisPool masterPool, List<JedisPool> slavePools, LoadBalanceEnum loadBalance) {
         this.name = name;
         this.masterPool = masterPool;
         this.slavePools = slavePools;
+        this.loadBalance = loadBalance;
     }
 
     private <T> T tryGetResource(JedisCallback<T> callback) {
@@ -42,6 +54,42 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     private <T> T tryGetResource(JedisCallback<T> callback, boolean slave) {
+        if (loadBalance == LoadBalanceEnum.ROUND_ROBIN) {
+            return roundRobinGetResource(callback, slave);
+        } else {
+            return randomGetResource(callback, slave);
+        }
+    }
+
+    private <T> T roundRobinGetResource(JedisCallback<T> callback, boolean slave) {
+        if (slave && CollectionUtil.isNotEmpty(slavePools)) {
+            Set<Integer> idxSet = new HashSet<>();
+            int n = (int) getCounterValue() % slavePools.size();
+            while (!idxSet.contains(n)) {
+                JedisPool jedisPool = slavePools.get(n);
+                idxSet.add(n);
+                try (Jedis jedis = jedisPool.getResource()) {
+                    if ("PONG".equalsIgnoreCase(jedis.ping())) {
+                        return callback.apply(jedis);
+                    }
+                } catch (JedisConnectionException e) {
+                    log.error("redis执行异常, template: {}, error: {}", name, ExceptionUtils.getStackTrace(e));
+                }
+                n = (n + 1) % slavePools.size();
+            }
+            log.warn("no available redis slave nodes, template name: {}, trying to use master node", name);
+        }
+        try (Jedis jedis = masterPool.getResource()){
+            return callback.apply(jedis);
+        }
+    }
+
+    private long getCounterValue() {
+        long value = counter.getAndIncrement();
+        return Math.abs(value);
+    }
+
+    private <T> T randomGetResource(JedisCallback<T> callback, boolean slave) {
         JedisPool jedisPool = masterPool;
         if (slave && CollectionUtil.isNotEmpty(slavePools)) {
             int n = RandomUtil.randomInt(slavePools.size());
@@ -49,8 +97,6 @@ public class DefaultJedisTemplate implements JedisTemplate {
         }
         try (Jedis jedis = jedisPool.getResource()){
             return callback.apply(jedis);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 

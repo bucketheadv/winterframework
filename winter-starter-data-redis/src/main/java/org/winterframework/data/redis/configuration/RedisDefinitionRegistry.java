@@ -81,6 +81,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
                     .addConstructorArgValue(key)
                     .addConstructorArgValue(masterPool)
                     .addConstructorArgValue(slavePools)
+                    .addConstructorArgValue(v.getLoadBalance())
                     .setPrimary(primary)
                     .setDestroyMethodName("close")
                     .getBeanDefinition();
