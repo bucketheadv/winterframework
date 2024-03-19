@@ -1,6 +1,7 @@
 package org.winterframework.job.configuration;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
+import com.xxl.job.core.util.NetUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,15 +34,15 @@ public class WinterJobAutoConfiguration implements EnvironmentAware {
     @Bean
     @ConditionalOnMissingBean
     public XxlJobSpringExecutor xxlJobSpringExecutor(JobProperties jobProperties) {
-        String appName = jobProperties.getAppName();
-        appName = StringTool.defaultIfBlank(appName, applicationName);
+        String appName = StringTool.defaultIfBlank(jobProperties.getAppName(), applicationName);
         XxlJobSpringExecutor executor = new XxlJobSpringExecutor();
         executor.setAppname(appName);
         executor.setAdminAddresses(jobProperties.getAdminAddresses());
         executor.setAccessToken(jobProperties.getAccessToken());
         executor.setAddress(jobProperties.getAddress());
         executor.setIp(jobProperties.getIp());
-        executor.setPort(jobProperties.getPort());
+        int port = NetUtil.findAvailablePort(jobProperties.getPort());
+        executor.setPort(port);
         executor.setLogPath(jobProperties.getLogPath());
         executor.setLogRetentionDays(jobProperties.getLogRetentionDays());
         return executor;
