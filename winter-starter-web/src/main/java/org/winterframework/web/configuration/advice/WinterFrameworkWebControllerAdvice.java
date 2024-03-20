@@ -1,6 +1,7 @@
 package org.winterframework.web.configuration.advice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.enums.ErrorCode;
@@ -31,8 +33,15 @@ public class WinterFrameworkWebControllerAdvice {
 	@ResponseStatus(HttpStatus.OK)
 	@ExceptionHandler({ServiceException.class})
 	public <T> ApiResponse<T> onServiceException(ServiceException e) {
-		log.error("onServiceException, ", e);
+		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(e);
+	}
+
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler({NoResourceFoundException.class})
+	public <T> ApiResponse<T> onNoResourceFoundException(NoResourceFoundException e) {
+		log.error("{}", e.getMessage());
+		return buildResponse(ErrorCode.PATH_NOT_FOUND);
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -45,14 +54,14 @@ public class WinterFrameworkWebControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler({MissingServletRequestParameterException.class, MissingPathVariableException.class, HttpMessageNotReadableException.class})
 	public <T> ApiResponse<T> onMissingServletRequestParameterException(Exception e) {
-		log.error("param error: ", e);
+		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(ErrorCode.PARAM_ERROR);
 	}
 
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	@ExceptionHandler({HttpRequestMethodNotSupportedException.class})
 	public <T> ApiResponse<T> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-		log.error("http method not supported: ", e);
+		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(ErrorCode.METHOD_NOT_SUPPORT);
 	}
 
@@ -66,7 +75,7 @@ public class WinterFrameworkWebControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public <T> ApiResponse<T> onException(Exception e) {
-		log.error("", e);
+		log.error("{}", ExceptionUtils.getStackTrace(e));
 		if (e instanceof I18nErrorCode err) {
 			return buildResponse(err);
 		}

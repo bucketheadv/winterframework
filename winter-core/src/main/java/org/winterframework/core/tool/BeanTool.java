@@ -17,6 +17,9 @@ import java.util.List;
 public final class BeanTool {
 
     public static <T> T copyAs(Object source, Class<T> clazz) {
+        if (source == null) {
+            return null;
+        }
         try {
             T obj = clazz.getDeclaredConstructor().newInstance();
             BeanUtils.copyProperties(source, obj);
