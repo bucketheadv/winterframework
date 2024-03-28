@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.winterframework.core.tool.StringTool;
 import org.winterframework.data.redis.commands.JedisCallback;
 import org.winterframework.data.redis.commands.JedisMultiCallback;
 import org.winterframework.data.redis.commands.JedisPipelineCallback;
@@ -19,7 +18,6 @@ import redis.clients.jedis.resps.*;
 import redis.clients.jedis.util.KeyValue;
 import redis.clients.jedis.util.Pool;
 
-import java.net.ConnectException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
