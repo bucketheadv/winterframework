@@ -26,7 +26,7 @@ public class StartUpLoadFilter extends TypeExcludeFilter {
             Environment env = ApplicationContextHolder.getApplicationContext().getEnvironment();
             autoloadProperties = Binder.get(env).bind(AutoloadProperties.AUTOLOAD_EXCLUDE, AutoloadProperties.class).get();
         } catch (Exception e) {
-            log.warn("绑定 {} 失败, {}", AutoloadProperties.AUTOLOAD_EXCLUDE, e.getMessage());
+            log.warn("{} 绑定不成功, {}", AutoloadProperties.AUTOLOAD_EXCLUDE, e.getMessage());
         }
     }
 
