@@ -1,5 +1,6 @@
 package org.winterframework.core.tool;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.experimental.UtilityClass;
 import org.quartz.CronExpression;
 
@@ -30,7 +31,7 @@ public class CronTool {
             if (tmp == null) {
                 break;
             }
-            dateList.add(DateTool.formatDateTime(tmp));
+            dateList.add(DateUtil.formatDateTime(tmp));
             now = tmp;
         }
         return dateList;
