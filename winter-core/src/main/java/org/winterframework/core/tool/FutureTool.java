@@ -12,13 +12,13 @@ import java.util.concurrent.Future;
  * @date 2023/4/26 6:05 PM
  */
 @UtilityClass
-public class ExecutorServiceTool {
-
+public class FutureTool {
     /**
+     * 2024-06-05 19:11 Modified
      * 等待所有线程完成
      * @param futures futures列表
      */
-    public static void awaitFuturesComplete(List<Future<?>> futures) {
+    public static void awaitAll(List<Future<?>> futures) {
         for (Future<?> future : futures) {
             try {
                 future.get();
