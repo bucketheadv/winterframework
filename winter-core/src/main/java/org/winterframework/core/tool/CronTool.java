@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author qinglin.liu
@@ -22,8 +23,9 @@ public class CronTool {
      * @return
      * @throws ParseException
      */
-    public static List<String> getNextValidTimeAfter(String cron, int count) throws ParseException {
+    public static List<String> getNextValidTimeAfter(String cron, TimeZone timeZone, int count) throws ParseException {
         CronExpression cronExpression = new CronExpression(cron);
+        cronExpression.setTimeZone(timeZone);
         Date now = new Date();
         List<String> dateList = new ArrayList<>();
         for (int i = 0; i < count; i++) {

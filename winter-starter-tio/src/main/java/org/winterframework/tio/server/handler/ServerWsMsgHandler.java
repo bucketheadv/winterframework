@@ -11,7 +11,6 @@ import org.tio.utils.hutool.Snowflake;
 import org.tio.websocket.common.WsRequest;
 import org.tio.websocket.server.handler.IWsMsgHandler;
 import org.winterframework.core.tool.JSONTool;
-import org.winterframework.data.redis.core.JedisTemplate;
 import org.winterframework.tio.server.support.Const;
 import org.winterframework.tio.server.entity.Msg;
 import org.winterframework.tio.server.entity.User;
@@ -26,8 +25,6 @@ import org.winterframework.tio.server.service.UserService;
 @Component
 @AllArgsConstructor
 public class ServerWsMsgHandler implements IWsMsgHandler {
-
-    private JedisTemplate jedisTemplate;
 
     private MsgService msgService;
 
