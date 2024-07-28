@@ -112,20 +112,31 @@ public class DateTool {
      * 以指定时区初始化时间
      * 如 2024-04-16 00:00:00，GMT+03:00，将返回2024-04-16 00:00:00+03:00 所代表的时间
      * @param dateStr 如 2024-04-16 00:00:00
-     * @param timezone 目标时区 如 GMT+03:00
+     * @param timeZone 目标时区 如 GMT+03:00
      * @return DateTime
      */
-    public static DateTime parseTimeZoneRetainFields(String dateStr, String timezone) {
+    public static DateTime parseTimeZoneRetainFields(String dateStr, String timeZone) {
+        return parseTimeZoneRetainFields(dateStr, getDateTimeZone(timeZone));
+    }
+
+    /**
+     * 以指定时区初始化时间
+     * 如 2024-04-16 00:00:00，GMT+03:00，将返回2024-04-16 00:00:00+03:00 所代表的时间
+     * @param dateStr 如 2024-04-16 00:00:00
+     * @param timeZone 目标时区 如 GMT+03:00
+     * @return DateTime
+     */
+    public static DateTime parseTimeZoneRetainFields(String dateStr, DateTimeZone timeZone) {
         DateTime dateTime = DateTime.parse(dateStr, DATE_TIME_FORMAT);
-        return dateTime.withZoneRetainFields(getDateTimeZone(timezone));
+        return dateTime.withZoneRetainFields(timeZone);
     }
 
     /**
      * 解析时区，支持多种格式，但建议使用 GMT+08:00 这样的格式
-     * @param timezone 时区 如 GMT+08:00
+     * @param timeZone 时区 如 GMT+08:00
      * @return DateTimeZone
      */
-    public static DateTimeZone getDateTimeZone(String timezone) {
-        return DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone));
+    public static DateTimeZone getDateTimeZone(String timeZone) {
+        return DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZone));
     }
 }
