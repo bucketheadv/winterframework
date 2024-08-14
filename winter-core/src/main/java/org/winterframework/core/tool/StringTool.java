@@ -3,6 +3,9 @@ package org.winterframework.core.tool;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.function.Supplier;
 
 /**
@@ -62,6 +65,28 @@ public final class StringTool extends StringUtils {
 
 	public static String toStringOrNull(Object obj) {
 		return null == obj ? null : obj.toString();
+	}
+
+	public static String formatBigDecimalKmbValue(BigDecimal value) {
+		// 向下取整
+		return formatKmbValue(value.doubleValue(), RoundingMode.DOWN);
+	}
+
+	/**
+	 * 将数字转化为kmb格式输出
+	 * @param value
+	 * @return
+	 */
+	public static String formatKmbValue(double value, RoundingMode roundingMode) {
+		String[] arr = {"", "K", "M", "B", "T", "P", "E"};
+		int index = 0;
+		while ((value / 1000) >= 1) {
+			value = value / 1000;
+			index++;
+		}
+		DecimalFormat decimalFormat = new DecimalFormat("#.#");
+		decimalFormat.setRoundingMode(roundingMode);
+		return String.format("%s%s", decimalFormat.format(value), arr[index]);
 	}
 
 	@SuppressWarnings("unchecked")
