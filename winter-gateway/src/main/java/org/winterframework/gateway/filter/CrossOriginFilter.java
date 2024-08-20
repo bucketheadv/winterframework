@@ -12,7 +12,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import reactor.core.publisher.Mono;
 
 /**
@@ -46,11 +46,11 @@ public class CrossOriginFilter implements GlobalFilter {
             if (request.getMethod() == HttpMethod.OPTIONS) {
                 response.setStatusCode(HttpStatus.OK);
                 log.info("CrossOriginFilter 网关跨域 OPTIONS 请求返回 requestUrlPath:{},origin:{},headers:{}", requestUrlPath,
-                        JSONTool.toJSONString(response.getHeaders()), JSONTool.toJSONString(headers));
+                        JsonTool.toJsonString(response.getHeaders()), JsonTool.toJsonString(headers));
                 return Mono.empty();
             }
             log.info("CrossOriginFilter 网关跨域 请求返回 requestUrlPath:{},origin:{},headers:{}", requestUrlPath,
-                    JSONTool.toJSONString(response.getHeaders()), JSONTool.toJSONString(headers));
+                    JsonTool.toJsonString(response.getHeaders()), JsonTool.toJsonString(headers));
             return chain.filter(exchange);
         }
         return chain.filter(exchange);

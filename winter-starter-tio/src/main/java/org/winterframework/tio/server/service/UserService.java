@@ -3,7 +3,7 @@ package org.winterframework.tio.server.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.data.redis.core.JedisTemplate;
 import org.winterframework.tio.server.support.Const;
 import org.winterframework.tio.server.entity.User;
@@ -21,7 +21,7 @@ public class UserService {
 
     public void addOnlineUser(User user) {
         jedisTemplate.doInMasterPipeline(pipeline -> {
-            pipeline.set(Const.WS_USER_PREFIX + user.getUsername(), JSONTool.toJSONString(user));
+            pipeline.set(Const.WS_USER_PREFIX + user.getUsername(), JsonTool.toJsonString(user));
             pipeline.sadd(Const.WS_USER_ONLINE, user.getUsername());
         });
     }

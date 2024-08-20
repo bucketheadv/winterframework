@@ -15,7 +15,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.winterframework.core.support.ApiResponse;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.gateway.service.UserService;
 import org.winterframework.gateway.utils.IpUtils;
 import reactor.core.publisher.Mono;
@@ -94,7 +94,7 @@ public class AccessFilter implements GlobalFilter {
         ApiResponse<?> message = new ApiResponse<>();
         message.setCode(code);
         message.setMessage(msg);
-        byte[] bytes = JSONTool.toJSONString(message).getBytes(StandardCharsets.UTF_8);
+        byte[] bytes = JsonTool.toJsonString(message).getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bytes);
         // 指定编码，否则在浏览器中会中文乱码
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");

@@ -10,7 +10,7 @@ import org.tio.utils.lock.SetWithLock;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsResponse;
 import org.winterframework.core.tool.CollectionTool;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.data.redis.core.JedisTemplate;
 import org.winterframework.tio.server.support.Const;
 import org.winterframework.tio.server.configuration.TioInitConfig;
@@ -38,7 +38,7 @@ public class MsgService {
 
     public void sendToUserChannel(String userId, Msg msg) {
         if (!existUser(userId)) {
-            rocketMQTemplate.syncSend(Const.WS_MSG_TOPIC_CHANNEL, JSONTool.toJSONString(msg));
+            rocketMQTemplate.syncSend(Const.WS_MSG_TOPIC_CHANNEL, JsonTool.toJsonString(msg));
             return;
         }
         sendToUser(userId, msg);
@@ -62,7 +62,7 @@ public class MsgService {
     }
 
     public void sendToGroupChannel(Msg msg) {
-        rocketMQTemplate.syncSend(Const.WS_GROUP_MSG_TOPIC_CHANNEL, JSONTool.toJSONString(msg));
+        rocketMQTemplate.syncSend(Const.WS_GROUP_MSG_TOPIC_CHANNEL, JsonTool.toJsonString(msg));
     }
 
     public void sendToGroup(String group, Msg msg) {
@@ -91,7 +91,7 @@ public class MsgService {
         if (channelContext == null) {
             return;
         }
-        WsResponse response = WsResponse.fromText(JSONTool.toJSONString(msg), WsPacket.CHARSET_NAME);
+        WsResponse response = WsResponse.fromText(JsonTool.toJsonString(msg), WsPacket.CHARSET_NAME);
         Tio.sendToId(channelContext.tioConfig, channelContext.getId(), response);
     }
 

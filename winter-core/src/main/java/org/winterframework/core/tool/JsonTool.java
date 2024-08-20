@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration("jsonTool")
-public class JSONTool implements ApplicationContextAware {
+public class JsonTool implements ApplicationContextAware {
     private static ObjectMapper om = new ObjectMapper();
 
     static {
@@ -42,7 +42,7 @@ public class JSONTool implements ApplicationContextAware {
         }
     }
 
-    public static String toJSONString(Object obj) {
+    public static String toJsonString(Object obj) {
         try {
             return om.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
@@ -53,6 +53,23 @@ public class JSONTool implements ApplicationContextAware {
     public static <T> T parseObject(String str, Class<T> clazz) {
         try {
             return om.readValue(str, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 解析 T<R> 格式的泛型类
+     * @param jsonString
+     * @param c1
+     * @param c2
+     * @return
+     * @param <T>
+     * @param <R>
+     */
+    public static <T, R> T parseGeneric(String jsonString, Class<T> c1, Class<R> c2) {
+        try {
+            return om.readValue(jsonString, om.getTypeFactory().constructParametricType(c1, c2));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

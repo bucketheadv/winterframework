@@ -7,7 +7,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.tio.server.support.Const;
 import org.winterframework.tio.server.entity.Msg;
 import org.winterframework.tio.server.service.MsgService;
@@ -34,7 +34,7 @@ public class GroupChannelMessageConsumer implements RocketMQListener<MessageExt>
     public void onMessage(MessageExt messageExt) {
         String body = new String(messageExt.getBody(), StandardCharsets.UTF_8);
         log.info("消费到跨服group channel消息: {}", body);
-        Msg msg = JSONTool.parseObject(body, Msg.class);
+        Msg msg = JsonTool.parseObject(body, Msg.class);
         msgService.sendToGroup(msg.getTo(), msg);
     }
 }

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.exception.ServiceException;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.jwt.env.Environment;
 import org.winterframework.jwt.support.enums.WebErrorCode;
 import org.winterframework.jwt.support.enums.EnvironmentType;
@@ -138,7 +138,7 @@ public class JwtsHelper {
 		for (String s : ts) {
 			try {
 				String decodedString = new String(Decoders.BASE64.decode(s), StandardCharsets.UTF_8);
-				JSONObject jsonObject = JSONTool.parseObject(decodedString, JSONObject.class);
+				JSONObject jsonObject = JsonTool.parseObject(decodedString, JSONObject.class);
 				assert jsonObject != null;
 				Long expTime = jsonObject.getLong("exp");
 				long current = System.currentTimeMillis() / 1000L;

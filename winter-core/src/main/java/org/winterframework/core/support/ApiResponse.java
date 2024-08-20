@@ -14,6 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class ApiResponse<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1714714325730785477L;

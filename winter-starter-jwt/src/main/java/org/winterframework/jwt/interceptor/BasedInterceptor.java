@@ -16,7 +16,7 @@ import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
 import org.winterframework.core.i18n.enums.ErrorCode;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.core.tool.RegTool;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.jwt.properties.WinterJwtProperties;
@@ -93,7 +93,7 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 		ApiResponse<?> apiResponse = new ApiResponse<>();
 		apiResponse.setCode(i18nEnum.getCode());
 		apiResponse.setMessage(I18n.get(i18nEnum.getI18nCode()));
-		HttpServletHelper.writeResponse(response, JSONTool.toJSONString(apiResponse));
+		HttpServletHelper.writeResponse(response, JsonTool.toJsonString(apiResponse));
 	}
 
 	private void checkToken(HttpServletRequest servletRequest, Environment environment, String uri, Object handler) {

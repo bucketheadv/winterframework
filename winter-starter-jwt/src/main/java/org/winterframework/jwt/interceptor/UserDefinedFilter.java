@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.support.ApiResponse;
 import org.winterframework.core.i18n.enums.ErrorCode;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.core.tool.StringTool;
 import org.winterframework.jwt.env.Environment;
 
@@ -80,7 +80,7 @@ public class UserDefinedFilter implements Filter {
 			EnvironmentHolder.clear();
 			long currentCostTime = System.currentTimeMillis() - currentTime;
 			if (costTime <= 0 || currentCostTime > costTime) {
-				log.info("current request is too longer time, gzip: {}, uri: {}, cost time: {}, env: {}", isGzip(httpServletRequest), httpServletRequest.getRequestURI(), currentCostTime, JSONTool.toJSONString(env));
+				log.info("current request is too longer time, gzip: {}, uri: {}, cost time: {}, env: {}", isGzip(httpServletRequest), httpServletRequest.getRequestURI(), currentCostTime, JsonTool.toJsonString(env));
 			}
 			MDC.clear();
 		}

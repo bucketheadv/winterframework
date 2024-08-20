@@ -10,7 +10,7 @@ import org.tio.http.common.HttpResponse;
 import org.tio.utils.hutool.Snowflake;
 import org.tio.websocket.common.WsRequest;
 import org.tio.websocket.server.handler.IWsMsgHandler;
-import org.winterframework.core.tool.JSONTool;
+import org.winterframework.core.tool.JsonTool;
 import org.winterframework.tio.server.support.Const;
 import org.winterframework.tio.server.entity.Msg;
 import org.winterframework.tio.server.entity.User;
@@ -73,7 +73,7 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 
     @Override
     public Object onText(WsRequest wsRequest, String text, ChannelContext channelContext) throws Exception {
-        Msg msg = JSONTool.parseObject(text, Msg.class);
+        Msg msg = JsonTool.parseObject(text, Msg.class);
         msg.setFrom(channelContext.userid);
         msg.setTimestamp(System.currentTimeMillis());
         if (Const.Action.HEART_BEAT_REQ.val() != msg.getAction()) {

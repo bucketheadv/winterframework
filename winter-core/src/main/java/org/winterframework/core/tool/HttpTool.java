@@ -34,7 +34,7 @@ public class HttpTool {
 
 	public static <T> T postJSON(String url, Map<String, Object> params, Map<String, Object> headers, Class<T> clazz) throws IOException {
 		MediaType mediaType = MediaType.parse("application/json");
-		String postBody = JSONTool.toJSONString(params);
+		String postBody = JsonTool.toJsonString(params);
 		Request.Builder builder = new Request.Builder().url(url);
 		if (CollectionTool.isEmpty(headers)) {
 			headers = new HashMap<>();
@@ -94,7 +94,7 @@ public class HttpTool {
 				if (clazz == String.class) {
 					return cast(str);
 				}
-				return JSONTool.parseObject(str, clazz);
+				return JsonTool.parseObject(str, clazz);
 			}
 		}
 		return null;
