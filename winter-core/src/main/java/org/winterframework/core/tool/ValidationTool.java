@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.validator.internal.engine.messageinterpolation.DefaultLocaleResolver;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,7 +31,7 @@ public final class ValidationTool {
 				.buildValidatorFactory()) {
 			result = validatorFactory.getValidator().validate(obj);
 		}
-		if (CollectionTool.isNotEmpty(result)) {
+		if (CollectionUtils.isNotEmpty(result)) {
 			BindingResult br = new MapBindingResult(new HashMap<>(), objectName);
 			for (ConstraintViolation<Object> cv : result) {
 				br.rejectValue(cv.getPropertyPath().toString(), cv.getMessageTemplate(), cv.getMessage());

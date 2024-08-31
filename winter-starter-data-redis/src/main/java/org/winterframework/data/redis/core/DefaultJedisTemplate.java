@@ -1,9 +1,9 @@
 package org.winterframework.data.redis.core;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.winterframework.core.tool.RandomTool;
 import org.winterframework.data.redis.commands.JedisCallback;
 import org.winterframework.data.redis.commands.JedisMultiCallback;
 import org.winterframework.data.redis.commands.JedisPipelineCallback;
@@ -60,7 +60,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     }
 
     private <T> T roundRobinGetResource(JedisCallback<T> callback, boolean slave) {
-        if (slave && CollectionUtil.isNotEmpty(slavePools)) {
+        if (slave && CollectionUtils.isNotEmpty(slavePools)) {
             Set<Integer> idxSet = new HashSet<>();
             int n = (int) getCounterValue() % slavePools.size();
             while (!idxSet.contains(n)) {
@@ -89,8 +89,8 @@ public class DefaultJedisTemplate implements JedisTemplate {
 
     private <T> T randomGetResource(JedisCallback<T> callback, boolean slave) {
         JedisPool jedisPool = masterPool;
-        if (slave && CollectionUtil.isNotEmpty(slavePools)) {
-            int n = RandomUtil.randomInt(slavePools.size());
+        if (slave && CollectionUtils.isNotEmpty(slavePools)) {
+            int n = RandomTool.random(slavePools.size());
             jedisPool = slavePools.get(n);
         }
         try (Jedis jedis = jedisPool.getResource()){
@@ -102,7 +102,7 @@ public class DefaultJedisTemplate implements JedisTemplate {
     public void close() {
         log.info("[{}] shutdown, bye.", name);
         masterPool.close();
-        if (CollectionUtil.isNotEmpty(slavePools)) {
+        if (CollectionUtils.isNotEmpty(slavePools)) {
             slavePools.forEach(Pool::close);
         }
     }

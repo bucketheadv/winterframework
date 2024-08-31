@@ -1,6 +1,6 @@
 package org.winterframework.rbac.service.impl;
 
-import org.winterframework.core.tool.CollectionTool;
+import org.apache.commons.collections4.CollectionUtils;
 import org.winterframework.rbac.model.Permission;
 import org.winterframework.rbac.model.Role;
 import org.winterframework.rbac.model.User;
@@ -20,7 +20,7 @@ public abstract class AbstractRbacService implements RbacService {
 		if (user == null) {
 			return false;
 		}
-		if (CollectionTool.isEmpty(user.getRoles())) {
+		if (CollectionUtils.isEmpty(user.getRoles())) {
 			return false;
 		}
 
@@ -41,7 +41,7 @@ public abstract class AbstractRbacService implements RbacService {
 		if (role.isSuperAdmin()) {
 			return true;
 		}
-		if (CollectionTool.isEmpty(role.getPermissions())) {
+		if (CollectionUtils.isEmpty(role.getPermissions())) {
 			return false;
 		}
 		for (Permission permission : role.getPermissions()) {

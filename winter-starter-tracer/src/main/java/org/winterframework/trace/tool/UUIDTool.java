@@ -1,9 +1,10 @@
 package org.winterframework.trace.tool;
 
-import cn.hutool.core.lang.UUID;
 import lombok.experimental.UtilityClass;
 import org.slf4j.MDC;
 import org.winterframework.core.tool.StringTool;
+
+import java.util.UUID;
 
 /**
  * @author sven

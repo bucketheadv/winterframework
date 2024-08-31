@@ -1,14 +1,15 @@
 package org.winterframework.core.tool;
 
-import cn.hutool.core.util.RandomUtil;
 import lombok.experimental.UtilityClass;
+
+import java.util.Random;
 
 /**
  * @author qinglinl
  * Created on 2022/10/10 2:44 PM
  */
 @UtilityClass
-public class RandomTool extends RandomUtil {
+public class RandomTool {
     /**
      * 根据机率随机获取
      * @param probArr 概率列表
@@ -27,5 +28,9 @@ public class RandomTool extends RandomUtil {
             }
         }
         return 0;
+    }
+
+    public static int random(int max) {
+        return new Random().nextInt(max);
     }
 }

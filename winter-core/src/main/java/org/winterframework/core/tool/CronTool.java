@@ -1,10 +1,10 @@
 package org.winterframework.core.tool;
 
-import cn.hutool.core.date.DateUtil;
 import lombok.experimental.UtilityClass;
 import org.quartz.CronExpression;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,19 +23,27 @@ public class CronTool {
      * @return
      * @throws ParseException
      */
-    public static List<String> getNextValidTimeAfter(String cron, TimeZone timeZone, int count) throws ParseException {
+    public static List<String> getNextTriggerTime(String cron,
+                                                  TimeZone timeZone,
+                                                  int count) throws ParseException {
         CronExpression cronExpression = new CronExpression(cron);
         cronExpression.setTimeZone(timeZone);
         Date now = new Date();
         List<String> dateList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            Date tmp = cronExpression.getNextValidTimeAfter(now);
-            if (tmp == null) {
+            Date nextTriggerTime = cronExpression.getNextValidTimeAfter(now);
+            if (nextTriggerTime == null) {
                 break;
             }
-            dateList.add(DateUtil.formatDateTime(tmp));
-            now = tmp;
+
+            dateList.add(formatDateTime(nextTriggerTime));
+            now = nextTriggerTime;
         }
         return dateList;
+    }
+
+    private String formatDateTime(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
     }
 }

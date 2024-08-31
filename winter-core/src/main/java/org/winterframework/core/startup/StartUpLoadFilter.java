@@ -1,6 +1,7 @@
 package org.winterframework.core.startup;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.env.Environment;
@@ -8,7 +9,6 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.winterframework.core.props.AutoloadProperties;
 import org.winterframework.core.support.ApplicationContextHolder;
-import org.winterframework.core.tool.CollectionTool;
 
 import java.io.IOException;
 
@@ -36,14 +36,14 @@ public class StartUpLoadFilter extends TypeExcludeFilter {
         if (autoloadProperties == null) {
             return false;
         }
-        if (CollectionTool.isNotEmpty(autoloadProperties.getIncludes())) {
+        if (CollectionUtils.isNotEmpty(autoloadProperties.getIncludes())) {
             for (String whitelist : autoloadProperties.getIncludes()) {
                 if (className.matches(whitelist)) {
                     return false;
                 }
             }
         }
-        if (CollectionTool.isNotEmpty(autoloadProperties.getExcludes())) {
+        if (CollectionUtils.isNotEmpty(autoloadProperties.getExcludes())) {
             for (String pattern : autoloadProperties.getExcludes()) {
                 if (className.matches(pattern)) {
                     return true;

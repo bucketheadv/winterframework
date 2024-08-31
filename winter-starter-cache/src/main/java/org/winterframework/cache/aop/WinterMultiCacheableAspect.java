@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +19,6 @@ import org.winterframework.cache.generator.WinterCacheKeyGenerator;
 import org.winterframework.cache.model.SpELContext;
 import org.winterframework.cache.tool.ColTool;
 import org.winterframework.cache.tool.SpELTool;
-import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.data.redis.core.JedisTemplate;
 
 import java.lang.reflect.Method;
@@ -54,7 +54,7 @@ public class WinterMultiCacheableAspect {
 		Expression keyExpression = spELContext.getExpressionParser().parseExpression(multiCacheable.key());
 		List<?> idList = keyExpression.getValue(spELContext.getEvaluationContext(), List.class);
 		assert idList != null;
-		
+
 		String prefix = multiCacheable.prefix();
 
 		RedisSerializer<Object> redisSerializer = new GenericJackson2JsonRedisSerializer();
@@ -65,7 +65,7 @@ public class WinterMultiCacheableAspect {
 			keys.add(key);
 		}
 
-		if (CollectionTool.isEmpty(keys)) {
+		if (CollectionUtils.isEmpty(keys)) {
 			return joinPoint.proceed(args);
 		}
 
@@ -88,7 +88,7 @@ public class WinterMultiCacheableAspect {
 		Class<?> returnClass = method.getReturnType();
 
 		Map<Object, Object> missingResultMap = Maps.newHashMap();
-		if (CollectionTool.isNotEmpty(missingIdList)) {
+		if (CollectionUtils.isNotEmpty(missingIdList)) {
 			args[multiCacheable.idsIndex()] = missingIdList;
 			List<?> missingResultList;
 			if (Map.class.isAssignableFrom(returnClass)) {
@@ -99,7 +99,7 @@ public class WinterMultiCacheableAspect {
 			} else {
 				throw new RuntimeException("Unsupported Return Type: " + returnClass);
 			}
-			if (CollectionTool.isNotEmpty(missingResultList)) {
+			if (CollectionUtils.isNotEmpty(missingResultList)) {
 				jedisTemplate.doInMasterPipeline(pipeline -> {
 					for (Object o : missingResultList) {
 						Object id = ColTool.getColValue(o, multiCacheable.col());

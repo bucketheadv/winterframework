@@ -2,6 +2,7 @@ package org.winterframework.tio.server.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.stereotype.Component;
 import org.tio.core.ChannelContext;
@@ -9,7 +10,6 @@ import org.tio.core.Tio;
 import org.tio.utils.lock.SetWithLock;
 import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsResponse;
-import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.JsonTool;
 import org.winterframework.data.redis.core.JedisTemplate;
 import org.winterframework.tio.server.support.Const;
@@ -77,7 +77,7 @@ public class MsgService {
         readLock.lock();
         try {
             Set<ChannelContext> channels = withLockChannels.getObj();
-            if (CollectionTool.isNotEmpty(channels)) {
+            if (CollectionUtils.isNotEmpty(channels)) {
                 for (ChannelContext channel : channels) {
                     sendToUserChannel(channel.userid, msg);
                 }

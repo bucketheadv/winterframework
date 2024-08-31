@@ -3,6 +3,7 @@ package org.winterframework.cache.aop;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,7 +15,6 @@ import org.winterframework.cache.annotation.MultiCacheEvict;
 import org.winterframework.cache.generator.WinterCacheKeyGenerator;
 import org.winterframework.cache.model.SpELContext;
 import org.winterframework.cache.tool.SpELTool;
-import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.data.redis.core.JedisTemplate;
 
 import java.lang.reflect.Method;
@@ -56,7 +56,7 @@ public class WinterMultiCacheEvictAspect {
 		}
 
 		Object result = joinPoint.proceed(joinPoint.getArgs());
-		if (CollectionTool.isNotEmpty(keys)) {
+		if (CollectionUtils.isNotEmpty(keys)) {
 			jedisTemplate.doInMasterPipeline(pipeline -> {
 				for (String key : keys) {
 					pipeline.del(key);

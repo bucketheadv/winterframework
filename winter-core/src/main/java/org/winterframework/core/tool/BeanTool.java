@@ -2,6 +2,7 @@ package org.winterframework.core.tool;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public final class BeanTool {
 
     public static <T> List<T> copyList(Collection<?> c, Class<T> clazz) {
         List<T> result = new ArrayList<>();
-        if (CollectionTool.isEmpty(c)) {
+        if (CollectionUtils.isEmpty(c)) {
             return result;
         }
         for (Object o : c) {

@@ -1,7 +1,7 @@
 package org.winterframework.data.redis.configuration;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -65,7 +65,7 @@ public class RedisDefinitionRegistry implements BeanDefinitionRegistryPostProces
 
             JedisPool masterPool = buildJedisPool(v.getMaster());
             List<JedisPool> slavePools = new ArrayList<>();
-            if (CollectionUtil.isNotEmpty(v.getSlaves())) {
+            if (CollectionUtils.isNotEmpty(v.getSlaves())) {
                 for (RedisProperties slave : v.getSlaves()) {
                     slavePools.add(buildJedisPool(slave));
                 }

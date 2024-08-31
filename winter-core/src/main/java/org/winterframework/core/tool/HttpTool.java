@@ -2,6 +2,7 @@ package org.winterframework.core.tool;
 
 import lombok.experimental.UtilityClass;
 import okhttp3.*;
+import org.apache.commons.collections4.MapUtils;
 import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.enums.ErrorCode;
 
@@ -36,11 +37,11 @@ public class HttpTool {
 		MediaType mediaType = MediaType.parse("application/json");
 		String postBody = JsonTool.toJsonString(params);
 		Request.Builder builder = new Request.Builder().url(url);
-		if (CollectionTool.isEmpty(headers)) {
+		if (MapUtils.isEmpty(headers)) {
 			headers = new HashMap<>();
 		}
 		headers.putIfAbsent("Accept", "application/json;charset=utf-8");
-		if (CollectionTool.isNotEmpty(headers)) {
+		if (MapUtils.isNotEmpty(headers)) {
 			headers.forEach((k, v) -> builder.addHeader(k, StringTool.toStringOrNull(v)));
 		}
 		Request request = builder.post(RequestBody.create(postBody, mediaType)).build();
@@ -57,7 +58,7 @@ public class HttpTool {
 
 	public static <T> T postEncodedForm(String url, Map<String, Object> params, Class<T> clazz) throws IOException {
 		FormBody.Builder builder = new FormBody.Builder();
-		if (CollectionTool.isNotEmpty(params)) {
+		if (MapUtils.isNotEmpty(params)) {
 			params.forEach((k, v) -> builder.add(k, StringTool.toStringOrNull(v)));
 		}
 		Request request = new Request.Builder()
@@ -71,7 +72,7 @@ public class HttpTool {
 		MediaType mediaType = MediaType.parse("multipart/form-data");
 		assert mediaType != null;
 		MultipartBody.Builder builder = new MultipartBody.Builder().setType(mediaType);
-		if (CollectionTool.isNotEmpty(params)) {
+		if (MapUtils.isNotEmpty(params)) {
 			params.forEach((k, v) -> builder.addFormDataPart(k, StringTool.toStringOrNull(v)));
 		}
 

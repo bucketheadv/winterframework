@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import jakarta.annotation.Resource;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.winterframework.admin.dao.entity.RoleInfoEntity;
@@ -16,7 +17,6 @@ import org.winterframework.admin.model.dto.UpdateRoleDTO;
 import org.winterframework.admin.model.vo.ListAdminUserRoleVO;
 import org.winterframework.admin.service.RoleService;
 import org.winterframework.core.tool.BeanTool;
-import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 			roleInfoEntity.setCreateTime(now);
 			roleInfoEntity.setUpdateTime(now);
 			roleInfoDaoService.insertSelective(roleInfoEntity);
-			if (CollectionTool.isNotEmpty(req.getPermissionIds())) {
+			if (CollectionUtils.isNotEmpty(req.getPermissionIds())) {
 				permissionInfoDaoService.createRolePermissions(roleInfoEntity.getId(), req.getPermissionIds());
 			}
 		} else {
@@ -58,14 +58,14 @@ public class RoleServiceImpl implements RoleService {
 			// 需要删除的权限
 			List<Long> toDelPermissionIds = Lists.newArrayList(rolePermissionIds);
 			toDelPermissionIds.removeAll(req.getPermissionIds());
-			if (CollectionTool.isNotEmpty(toDelPermissionIds)) {
+			if (CollectionUtils.isNotEmpty(toDelPermissionIds)) {
 				permissionInfoDaoService.deleteRolePermission(roleInfoEntity.getId(), toDelPermissionIds);
 			}
 
 			// 需要新增的权限
 			List<Long> toAddPermissionIds = Lists.newArrayList(req.getPermissionIds());
 			toAddPermissionIds.removeAll(rolePermissionIds);
-			if (CollectionTool.isNotEmpty(toAddPermissionIds)) {
+			if (CollectionUtils.isNotEmpty(toAddPermissionIds)) {
 				permissionInfoDaoService.createRolePermissions(roleInfoEntity.getId(), toAddPermissionIds);
 			}
 		}

@@ -1,8 +1,5 @@
 package org.winterframework.core.tool;
 
-import cn.hutool.core.collection.CollectionUtil;
-import lombok.experimental.UtilityClass;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -12,8 +9,7 @@ import java.util.List;
  * @author sven
  * Created on 2022/3/1 10:38 下午
  */
-@UtilityClass
-public final class CollectionTool extends CollectionUtil {
+public final class CollectionTool {
     /**
      * 将数组进行分组，每组最多多少个元素
      * @param list

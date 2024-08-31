@@ -3,6 +3,7 @@ package org.winterframework.admin.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import jakarta.annotation.Resource;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
@@ -15,7 +16,6 @@ import org.winterframework.admin.model.dto.UpdateAdminUserDTO;
 import org.winterframework.admin.service.AdminUserService;
 import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.tool.BeanTool;
-import org.winterframework.core.tool.CollectionTool;
 import org.winterframework.core.tool.StringTool;
 import tk.mybatis.mapper.entity.Condition;
 
@@ -63,17 +63,17 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 			// 需要删除的角色
 			List<Long> toDelRoleIds = Lists.newArrayList(userRoleIds);
-			if (CollectionTool.isNotEmpty(req.getRoleIds())) {
+			if (CollectionUtils.isNotEmpty(req.getRoleIds())) {
 				toDelRoleIds.removeAll(req.getRoleIds());
 			}
-			if (CollectionTool.isNotEmpty(toDelRoleIds)) {
+			if (CollectionUtils.isNotEmpty(toDelRoleIds)) {
 				roleInfoDaoService.deleteAdminUserRole(entity.getId(), toDelRoleIds);
 			}
 			// 需要新增的角色
-			if (CollectionTool.isNotEmpty(req.getRoleIds())) {
+			if (CollectionUtils.isNotEmpty(req.getRoleIds())) {
 				List<Long> toAddRoleIds = Lists.newArrayList(req.getRoleIds());
 				toAddRoleIds.removeAll(userRoleIds);
-				if (CollectionTool.isNotEmpty(toAddRoleIds)) {
+				if (CollectionUtils.isNotEmpty(toAddRoleIds)) {
 					roleInfoDaoService.createAdminUserRole(entity.getId(), toAddRoleIds);
 				}
 			}

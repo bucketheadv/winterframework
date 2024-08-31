@@ -1,6 +1,5 @@
 package org.winterframework.jwt.support.helper;
 
-import cn.hutool.json.JSONObject;
 import com.google.common.collect.Maps;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -13,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.tool.JsonTool;
+import org.winterframework.core.tool.StringTool;
 import org.winterframework.jwt.env.Environment;
 import org.winterframework.jwt.support.enums.WebErrorCode;
 import org.winterframework.jwt.support.enums.EnvironmentType;
@@ -138,11 +138,11 @@ public class JwtsHelper {
 		for (String s : ts) {
 			try {
 				String decodedString = new String(Decoders.BASE64.decode(s), StandardCharsets.UTF_8);
-				JSONObject jsonObject = JsonTool.parseObject(decodedString, JSONObject.class);
+				Map<String, Object> jsonObject = JsonTool.parseMap(decodedString, String.class, Object.class);
 				assert jsonObject != null;
-				Long expTime = jsonObject.getLong("exp");
+				long expTime = StringTool.convert2Long(jsonObject.get("exp"));
 				long current = System.currentTimeMillis() / 1000L;
-				if (expTime != null && current > expTime) {
+				if (current > expTime) {
 					log.warn("verify token failed, the token has expired, exp time: {}, current time: {}", expTime, current);
 					throwsServiceException(WebErrorCode.TOKEN_INVALID);
 				}
