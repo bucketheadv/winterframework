@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.function.Supplier;
 
 /**
  * @author sven
@@ -15,59 +14,59 @@ import java.util.function.Supplier;
 @UtilityClass
 public final class StringTool extends StringUtils {
 
-	public static Integer convert2Int(Object o, Integer defaultVal) {
-		return convertNumber(o, defaultVal, () -> Integer.parseInt(o.toString()));
+	public Integer convert2Int(Object o, Integer defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).intValue();
 	}
 
-	public static int convert2Int(Object o) {
+	public int convert2Int(Object o) {
 		return convert2Int(o, 0);
 	}
 
-	public static Long convert2Long(Object o, Long defaultVal) {
-		return convertNumber(o, defaultVal, () -> Long.parseLong(o.toString()));
+	public Long convert2Long(Object o, Long defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).longValue();
 	}
 
-	public static long convert2Long(Object o) {
+	public long convert2Long(Object o) {
 		return convert2Long(o, 0L);
 	}
 
-	public static Double convert2Double(Object o, Double defaultVal) {
-		return convertNumber(o, defaultVal, () -> Double.parseDouble(o.toString()));
+	public Double convert2Double(Object o, Double defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).doubleValue();
 	}
 
-	public static double convert2Double(Object o) {
+	public double convert2Double(Object o) {
 		return convert2Double(o, 0.0);
 	}
 
-	public static Float convert2Float(Object o, Float defaultVal) {
-		return convertNumber(o, defaultVal, () -> Float.parseFloat(o.toString()));
+	public Float convert2Float(Object o, Float defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).floatValue();
 	}
 
-	public static float convert2Float(Object o) {
+	public float convert2Float(Object o) {
 		return convert2Float(o, 0.0f);
 	}
 
-	public static Byte convert2Byte(Object o, Byte defaultVal) {
-		return convertNumber(o, defaultVal, () -> Byte.parseByte(o.toString()));
+	public Byte convert2Byte(Object o, Byte defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).byteValue();
 	}
 
-	public static byte convert2Byte(Object o) {
+	public byte convert2Byte(Object o) {
 		return convert2Byte(o, (byte) 0);
 	}
 
-	public static Short convert2Short(Object o, Short defaultVal) {
-		return convertNumber(o, defaultVal, () -> Short.valueOf(o.toString()));
+	public Short convert2Short(Object o, Short defaultVal) {
+		return toBigDecimal(o, BigDecimal.valueOf(defaultVal)).shortValue();
 	}
 
-	public static short convert2Short(Object o) {
+	public short convert2Short(Object o) {
 		return convert2Short(o, (short) 0);
 	}
 
-	public static String toStringOrNull(Object obj) {
+	public String toStringOrNull(Object obj) {
 		return null == obj ? null : obj.toString();
 	}
 
-	public static String formatBigDecimalKmbValue(BigDecimal value) {
+	public String formatBigDecimalKmbValue(BigDecimal value) {
 		// 向下取整
 		return formatKmbValue(value.doubleValue(), RoundingMode.DOWN);
 	}
@@ -77,7 +76,7 @@ public final class StringTool extends StringUtils {
 	 * @param value
 	 * @return
 	 */
-	public static String formatKmbValue(double value, RoundingMode roundingMode) {
+	public String formatKmbValue(double value, RoundingMode roundingMode) {
 		String[] arr = {"", "K", "M", "B", "T", "P", "E"};
 		int index = 0;
 		while ((value / 1000) >= 1) {
@@ -89,14 +88,10 @@ public final class StringTool extends StringUtils {
 		return String.format("%s%s", decimalFormat.format(value), arr[index]);
 	}
 
-	@SuppressWarnings("unchecked")
-	private static <T extends Number> T convertNumber(Object o, T defaultVal, Supplier<T> convertCallback) {
-		if (o == null) {
+	private BigDecimal toBigDecimal(Object o, BigDecimal defaultVal) {
+		if (null == o) {
 			return defaultVal;
 		}
-		if (defaultVal.getClass().isInstance(o)) {
-			return (T) o;
-		}
-		return convertCallback.get();
+		return new BigDecimal(o.toString());
 	}
 }

@@ -4,7 +4,6 @@ import tk.mybatis.mapper.MapperException;
 import tk.mybatis.mapper.entity.EntityColumn;
 import tk.mybatis.mapper.mapperhelper.EntityHelper;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.Set;
 
 /**
@@ -20,10 +19,5 @@ public class ReflectTool {
 		} else {
 			throw new MapperException("继承 selectList 方法的实体类[" + entityClass.getCanonicalName() + "]中必须只有一个带有 @Id 注解的字段");
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> Class<T> getGenericClass(Class<?> clazz, int index) {
-		return (Class<T>) ((ParameterizedType)clazz.getGenericSuperclass()).getActualTypeArguments()[index];
 	}
 }
