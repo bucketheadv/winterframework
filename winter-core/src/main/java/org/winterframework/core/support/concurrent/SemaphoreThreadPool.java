@@ -42,10 +42,10 @@ public class SemaphoreThreadPool implements ApplicationListener<ContextClosedEve
         return new SemaphoreThreadPool(CPU_CORE_SIZE * 2);
     }
 
-    public void execute(Runnable command) {
+    public Future<?> execute(Runnable command) {
         try {
             semaphore.acquire();
-            pool.execute(() -> {
+            return pool.submit(() -> {
                 try {
                     command.run();
                 } catch (Exception e) {
@@ -58,6 +58,7 @@ public class SemaphoreThreadPool implements ApplicationListener<ContextClosedEve
             log.error("execute error, msg: ", e);
             Thread.currentThread().interrupt();
         }
+        return null;
     }
 
     /**
