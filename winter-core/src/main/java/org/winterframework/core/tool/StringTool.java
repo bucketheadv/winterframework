@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.text.DecimalFormat;
 
 /**
@@ -69,6 +71,20 @@ public final class StringTool extends StringUtils {
 	public String formatBigDecimalKmbValue(BigDecimal value) {
 		// 向下取整
 		return formatKmbValue(value.doubleValue(), RoundingMode.DOWN);
+	}
+
+	public String md5(String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] result = md.digest(input.getBytes(StandardCharsets.UTF_8));
+			StringBuilder sb = new StringBuilder();
+			for (byte b : result) {
+				sb.append(String.format("%02x", b));
+			}
+			return sb.toString();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
