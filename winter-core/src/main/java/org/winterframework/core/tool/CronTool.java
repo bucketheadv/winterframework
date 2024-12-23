@@ -1,14 +1,14 @@
 package org.winterframework.core.tool;
 
 import lombok.experimental.UtilityClass;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.quartz.CronExpression;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * @author qinglin.liu
@@ -24,26 +24,21 @@ public class CronTool {
      * @throws ParseException
      */
     public static List<String> getNextTriggerTime(String cron,
-                                                  TimeZone timeZone,
+                                                  DateTimeZone dateTimeZone,
                                                   int count) throws ParseException {
         CronExpression cronExpression = new CronExpression(cron);
-        cronExpression.setTimeZone(timeZone);
         Date now = new Date();
+        cronExpression.setTimeZone(dateTimeZone.toTimeZone());
         List<String> dateList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Date nextTriggerTime = cronExpression.getNextValidTimeAfter(now);
             if (nextTriggerTime == null) {
                 break;
             }
-
-            dateList.add(formatDateTime(nextTriggerTime));
+            DateTime realTriggerTime = new DateTime(nextTriggerTime).withZone(dateTimeZone);
+            dateList.add(realTriggerTime.toString("yyyy-MM-dd HH:mm:ss"));
             now = nextTriggerTime;
         }
         return dateList;
-    }
-
-    private String formatDateTime(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
     }
 }
