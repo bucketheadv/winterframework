@@ -4,7 +4,7 @@ import org.winterframework.admin.model.vo.ListRoutesVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 
 /**
  * @author qinglinl
@@ -14,7 +14,7 @@ import org.winterframework.core.support.ApiResponse;
 @RequestMapping("/routes")
 public class RoutesController extends BaseController {
 	@GetMapping
-	public ApiResponse<ListRoutesVO> listRoutes() {
+	public ApiData<ListRoutesVO> listRoutes() {
 		ListRoutesVO listRoutesVO = new ListRoutesVO();
 		return build(listRoutesVO);
 	}

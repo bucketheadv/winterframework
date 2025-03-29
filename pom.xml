@@ -36,7 +36,7 @@
         <groupId>org.winterframework</groupId>
         <artifactId>winter-starter-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>winter-starter-parent/pom.xml</relativePath>
     </parent>
     <artifactId>winter</artifactId>
     <version>0.0.1-SNAPSHOT</version>

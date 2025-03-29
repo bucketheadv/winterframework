@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.I18n;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.rbac.exception.RbacPermDeniedException;
 
 /**
@@ -17,13 +17,13 @@ import org.winterframework.rbac.exception.RbacPermDeniedException;
 @RestControllerAdvice
 public class AdminControllerAdvice {
 	@ExceptionHandler(RbacPermDeniedException.class)
-	public <T> ApiResponse<T> onRbacPermDeniedException(RbacPermDeniedException e) {
+	public <T> ApiData<T> onRbacPermDeniedException(RbacPermDeniedException e) {
 		log.error("Permission Denied", e);
 		return buildResponse(BizErrorCode.USER_HAS_NO_RBAC_PERM);
 	}
 
-	private <T> ApiResponse<T> buildResponse(I18nErrorCode enumerable) {
-		ApiResponse<T> response = new ApiResponse<>();
+	private <T> ApiData<T> buildResponse(I18nErrorCode enumerable) {
+		ApiData<T> response = new ApiData<>();
 		response.setCode(enumerable.getCode());
 		response.setMessage(I18n.get(enumerable.getI18nCode()));
 		response.setTimestamp(System.currentTimeMillis());

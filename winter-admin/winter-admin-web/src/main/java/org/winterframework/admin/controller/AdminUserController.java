@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.winterframework.admin.dao.entity.AdminUserEntity;
 import org.winterframework.admin.service.AdminUserService;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.BeanTool;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
@@ -29,7 +29,7 @@ public class AdminUserController extends BaseController {
 
 	@RbacPerm
 	@GetMapping("/detail")
-	public ApiResponse<UserDetailVO> detail(@RequestParam Long id) {
+	public ApiData<UserDetailVO> detail(@RequestParam Long id) {
 		AdminUserEntity adminUserEntity = adminUserService.getById(id);
 		UserDetailVO res = BeanTool.copyAs(adminUserEntity, UserDetailVO.class);
 		return build(res);
@@ -37,14 +37,14 @@ public class AdminUserController extends BaseController {
 
 	@RbacPerm
 	@PostMapping("/update")
-	public ApiResponse<Void> update(@RequestBody @Valid UpdateAdminUserDTO req) {
+	public ApiData<Void> update(@RequestBody @Valid UpdateAdminUserDTO req) {
 		adminUserService.updateAdminUser(req);
 		return build(ErrorCode.OK);
 	}
 
 	@RbacPerm
 	@GetMapping("/list")
-	ApiResponse<PageInfo<ListUserVO>> list(@Valid ListUserDTO req) {
+    ApiData<PageInfo<ListUserVO>> list(@Valid ListUserDTO req) {
 		PageInfo<AdminUserEntity> pageInfo = adminUserService.selectList(req);
 		PageInfo<ListUserVO> result = PageTool.convert(pageInfo, ListUserVO.class);
 		return build(result);
@@ -52,7 +52,7 @@ public class AdminUserController extends BaseController {
 
 	@RbacPerm
 	@PostMapping("/delete")
-	ApiResponse<Void> delete(@RequestBody @Valid DeleteAdminUserDTO req) {
+    ApiData<Void> delete(@RequestBody @Valid DeleteAdminUserDTO req) {
 		int num = adminUserService.deleteByIds(req.getIds());
 		if (num > 0) {
 			return build(ErrorCode.OK);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.jwt.support.helper.JwtsHelper;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ public class AuthController extends BaseController {
 	private AuthService authService;
 
 	@PostMapping("/login")
-	public ApiResponse<LoginVO> login(@RequestBody LoginDTO loginDTO) {
+	public ApiData<LoginVO> login(@RequestBody LoginDTO loginDTO) {
 		AdminUserEntity adminUserEntity = authService.loginByEmail(loginDTO.getName(), loginDTO.getPassword());
 		String token = JwtsHelper.encrypt(adminUserEntity.getId());
 		LoginVO loginVO = new LoginVO();
@@ -37,7 +37,7 @@ public class AuthController extends BaseController {
 		user.setAvatar("https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png");
 		loginVO.setUser(user);
 		loginVO.setToken(token);
-		ApiResponse<LoginVO> response = build(loginVO);
+		ApiData<LoginVO> response = build(loginVO);
 		response.setMessage("欢迎回来");
 		return response;
 	}

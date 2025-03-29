@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.winterframework.core.i18n.I18n;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.JsonTool;
 import org.winterframework.core.tool.StringTool;
@@ -72,7 +72,7 @@ public class UserDefinedFilter implements Filter {
 			wrapperDoFilter(httpServletRequest, httpServletResponse, filterChain);
 		} catch (Exception e) {
 			log.error("user defined filter doFilter failed, uri: {}, error msg: {}, env: {}", httpServletRequest.getRequestURI(), e.getMessage(), env, e);
-			HttpServletHelper.writeResponse(httpServletResponse, ApiResponse.builder()
+			HttpServletHelper.writeResponse(httpServletResponse, ApiData.builder()
 							.code(ErrorCode.SYSTEM_ERROR.getCode())
 							.message(I18n.get(ErrorCode.SYSTEM_ERROR.getI18nCode()))
 					.build());

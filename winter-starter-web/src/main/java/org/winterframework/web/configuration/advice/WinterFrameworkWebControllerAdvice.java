@@ -18,7 +18,7 @@ import org.winterframework.core.i18n.I18n;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.i18n.exception.ServiceException;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 
 import java.util.stream.Collectors;
 
@@ -32,49 +32,49 @@ import java.util.stream.Collectors;
 public class WinterFrameworkWebControllerAdvice {
 	@ResponseStatus(HttpStatus.OK)
 	@ExceptionHandler({ServiceException.class})
-	public <T> ApiResponse<T> onServiceException(ServiceException e) {
+	public <T> ApiData<T> onServiceException(ServiceException e) {
 		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(e);
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler({NoResourceFoundException.class})
-	public <T> ApiResponse<T> onNoResourceFoundException(NoResourceFoundException e) {
+	public <T> ApiData<T> onNoResourceFoundException(NoResourceFoundException e) {
 		log.error("{}", e.getMessage());
 		return buildResponse(ErrorCode.PATH_NOT_FOUND);
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler({NoHandlerFoundException.class})
-	public <T> ApiResponse<T> onNoHandlerFoundException(NoHandlerFoundException e) {
+	public <T> ApiData<T> onNoHandlerFoundException(NoHandlerFoundException e) {
 		log.error("path: {} not found", e.getRequestURL());
 		return buildResponse(ErrorCode.PATH_NOT_FOUND);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler({MissingServletRequestParameterException.class, MissingPathVariableException.class, HttpMessageNotReadableException.class})
-	public <T> ApiResponse<T> onMissingServletRequestParameterException(Exception e) {
+	public <T> ApiData<T> onMissingServletRequestParameterException(Exception e) {
 		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(ErrorCode.PARAM_ERROR);
 	}
 
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	@ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-	public <T> ApiResponse<T> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+	public <T> ApiData<T> onHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		log.error("{}", ExceptionUtils.getStackTrace(e));
 		return buildResponse(ErrorCode.METHOD_NOT_SUPPORT);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler({BindException.class})
-	public <T> ApiResponse<T> onBindException(BindException e) {
+	public <T> ApiData<T> onBindException(BindException e) {
 		String msg = e.getBindingResult().getFieldErrors().stream().map(i -> I18n.getOrDefault(i.getObjectName() + "." + i.getField(), i.getField()) + " " + i.getDefaultMessage()).collect(Collectors.joining(", "));
 		return buildResponse(ErrorCode.PARAM_ERROR.getCode(), msg);
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public <T> ApiResponse<T> onException(Exception e) {
+	public <T> ApiData<T> onException(Exception e) {
 		log.error("{}", ExceptionUtils.getStackTrace(e));
 		if (e instanceof I18nErrorCode err) {
 			return buildResponse(err);
@@ -82,15 +82,15 @@ public class WinterFrameworkWebControllerAdvice {
 		return buildResponse(ErrorCode.SYSTEM_ERROR);
 	}
 
-	private <T> ApiResponse<T> buildResponse(int code, String message) {
-		ApiResponse<T> apiResponse = new ApiResponse<>();
-		apiResponse.setCode(code);
-		apiResponse.setMessage(message);
-		apiResponse.setTimestamp(System.currentTimeMillis());
-		return apiResponse;
+	private <T> ApiData<T> buildResponse(int code, String message) {
+		ApiData<T> apiData = new ApiData<>();
+		apiData.setCode(code);
+		apiData.setMessage(message);
+		apiData.setTimestamp(System.currentTimeMillis());
+		return apiData;
 	}
 
-	private <T> ApiResponse<T> buildResponse(I18nErrorCode i18nEnum) {
+	private <T> ApiData<T> buildResponse(I18nErrorCode i18nEnum) {
 		return buildResponse(i18nEnum.getCode(), I18n.get(i18nEnum.getI18nCode()));
 	}
 }

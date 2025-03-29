@@ -14,7 +14,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.tool.JsonTool;
 import org.winterframework.gateway.service.UserService;
 import org.winterframework.gateway.utils.IpUtils;
@@ -91,7 +91,7 @@ public class AccessFilter implements GlobalFilter {
      * @return
      */
     private Mono<Void> returnResponse(ServerHttpResponse response, Integer code, String msg) {
-        ApiResponse<?> message = new ApiResponse<>();
+        ApiData<?> message = new ApiData<>();
         message.setCode(code);
         message.setMessage(msg);
         byte[] bytes = JsonTool.toJsonString(message).getBytes(StandardCharsets.UTF_8);

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.winterframework.core.i18n.api.I18nErrorCode;
 import org.winterframework.core.i18n.exception.ServiceException;
 import org.winterframework.core.i18n.I18n;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.core.tool.JsonTool;
 import org.winterframework.core.tool.RegTool;
@@ -90,10 +90,10 @@ public class BasedInterceptor implements AsyncHandlerInterceptor {
 	}
 
 	private void writeResponse(I18nErrorCode i18nEnum, HttpServletResponse response) {
-		ApiResponse<?> apiResponse = new ApiResponse<>();
-		apiResponse.setCode(i18nEnum.getCode());
-		apiResponse.setMessage(I18n.get(i18nEnum.getI18nCode()));
-		HttpServletHelper.writeResponse(response, JsonTool.toJsonString(apiResponse));
+		ApiData<?> apiData = new ApiData<>();
+		apiData.setCode(i18nEnum.getCode());
+		apiData.setMessage(I18n.get(i18nEnum.getI18nCode()));
+		HttpServletHelper.writeResponse(response, JsonTool.toJsonString(apiData));
 	}
 
 	private void checkToken(HttpServletRequest servletRequest, Environment environment, String uri, Object handler) {

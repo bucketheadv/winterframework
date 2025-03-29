@@ -19,7 +19,7 @@ public class UserEntity {
 
     private Integer age;
 
-    private Integer sex;
+    private Integer gender;
 
     @EncryptField
     private String address;

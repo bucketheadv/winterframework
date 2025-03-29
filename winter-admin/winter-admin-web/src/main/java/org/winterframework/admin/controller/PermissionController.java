@@ -10,7 +10,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.winterframework.admin.service.PermissionService;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
 
@@ -27,26 +27,26 @@ public class PermissionController extends BaseController {
 	private PermissionService permissionService;
 	@RbacPerm
 	@GetMapping("/list")
-	public ApiResponse<PageInfo<PermissionInfoEntity>> list(@Valid ListPermissionDTO req) {
+	public ApiData<PageInfo<PermissionInfoEntity>> list(@Valid ListPermissionDTO req) {
 		return build(permissionService.selectByQuery(req));
 	}
 
 	@RbacPerm
 	@GetMapping("/detail")
-	public ApiResponse<PermissionInfoEntity> detail(@RequestParam Long id) {
+	public ApiData<PermissionInfoEntity> detail(@RequestParam Long id) {
 		return build(permissionService.getById(id));
 	}
 
 	@RbacPerm
 	@PostMapping("/update")
-	public ApiResponse<Void> update(@RequestBody @Valid UpdatePermissionDTO req) {
+	public ApiData<Void> update(@RequestBody @Valid UpdatePermissionDTO req) {
 		permissionService.updatePermission(req);
 		return build(ErrorCode.OK);
 	}
 
 	@RbacPerm
 	@PostMapping("/delete")
-	public ApiResponse<Void> delete(@RequestBody @Valid DeletePermissionDTO req) {
+	public ApiData<Void> delete(@RequestBody @Valid DeletePermissionDTO req) {
 		int num = permissionService.deleteByIds(req.getIds());
 		if (num > 0) {
 			return build(ErrorCode.OK);
@@ -55,7 +55,7 @@ public class PermissionController extends BaseController {
 	}
 
 	@GetMapping("/listRolePermissions")
-	public ApiResponse<List<ListRolePermissionVO>> listRolePermissions(@RequestParam(value = "roleId", required = false) Long roleId) {
+	public ApiData<List<ListRolePermissionVO>> listRolePermissions(@RequestParam(value = "roleId", required = false) Long roleId) {
 		return build(permissionService.listRolePermissions(roleId));
 	}
 }

@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import org.winterframework.core.support.ApiResponse;
+import org.winterframework.core.support.ApiData;
 import org.winterframework.core.i18n.enums.ErrorCode;
 import org.winterframework.rbac.configuration.aop.annotation.RbacPerm;
 
@@ -28,26 +28,26 @@ public class RoleController extends BaseController {
 
 	@RbacPerm
 	@GetMapping("/list")
-	public ApiResponse<PageInfo<RoleInfoEntity>> list(@Valid ListRoleDTO req) {
+	public ApiData<PageInfo<RoleInfoEntity>> list(@Valid ListRoleDTO req) {
 		return build(roleService.selectByQuery(req));
 	}
 
 	@RbacPerm
 	@GetMapping("/detail")
-	public ApiResponse<RoleInfoEntity> detail(@RequestParam Long id) {
+	public ApiData<RoleInfoEntity> detail(@RequestParam Long id) {
 		return build(roleService.getById(id));
 	}
 
 	@RbacPerm
 	@PostMapping("/update")
-	public ApiResponse<Void> update(@RequestBody @Valid UpdateRoleDTO req) {
+	public ApiData<Void> update(@RequestBody @Valid UpdateRoleDTO req) {
 		roleService.updateRole(req);
 		return build(ErrorCode.OK);
 	}
 
 	@RbacPerm
 	@PostMapping("/delete")
-	public ApiResponse<Void> delete(@RequestBody @Valid DeleteRoleDTO req) {
+	public ApiData<Void> delete(@RequestBody @Valid DeleteRoleDTO req) {
 		int num = roleService.deleteByIds(req.getIds());
 		if (num > 0) {
 			return build(ErrorCode.OK);
@@ -56,7 +56,7 @@ public class RoleController extends BaseController {
 	}
 
 	@GetMapping("/listAdminUserRoles")
-	public ApiResponse<List<ListAdminUserRoleVO>> listAdminUserRoles(@RequestParam(value = "adminUserId", required = false) Long adminUserId) {
+	public ApiData<List<ListAdminUserRoleVO>> listAdminUserRoles(@RequestParam(value = "adminUserId", required = false) Long adminUserId) {
 		return build(roleService.listAdminUserRoles(adminUserId));
 	}
 }
